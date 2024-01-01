@@ -15,7 +15,7 @@ app.set("views", "views");
 
 // GET routes
 app.get("/", (req, res) => {
-    res.send("index");
+    res.render("index");
 });
 
 // Run Server using the http socket server created.
