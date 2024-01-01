@@ -1,0 +1,16 @@
+{
+  "name": "dbms-todo-project",
+  "version": "1.0.0",
+  "description": "Me and Kavya's Project for our DBMS Laboratory.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "devstart": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}
