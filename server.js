@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("/public"));
+app.use(express.static("public"));
 
 // View engine and views path
 app.set("view engine", "ejs");
