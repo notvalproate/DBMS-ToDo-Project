@@ -3,8 +3,8 @@ POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-    "username": "kanva",
-    "password": "password"
+    "username": "sentient",
+    "password": "ilikevaporeon"
 }
 
 ###
@@ -13,14 +13,14 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "kanva",
-    "password": "password"
+    "username": "sentient",
+    "password": "ilikevaporeon"
 }
 
 ###
 
 GET http://localhost:3000/account
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbnZhIiwicGFzc3dvcmQiOiIkMmIkMTAkUWxwamV1bnlsekNtWU43YmE3VVMvT0ZVNU91WHJXLmlZNjd4c2s1MVNOL2MvQUlXL3pnc0ciLCJpYXQiOjE3MDU1OTU3NzcsImV4cCI6MTcwNTU5NTgwN30.RzeEK1VX1Ls92LuDf77zXlSJAZ7w7qHeMQkfYOkkgHU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbnRpZW50IiwicGFzc3dvcmQiOiIkMmIkMTAkL25EeHZrUVBHZWdqVm4yRXVHZC80ZW80eS9PTFY1SFRSODc4L2IzZUd2Z2hEbUg5ZTg5VU8iLCJpYXQiOjE3MDU1OTcxOTksImV4cCI6MTcwNTU5NzI1OX0.6Pj4dcYDSTBii95A3o0MfwxYHb0C2pu1BwFlBJHDz3M
 
 ###
 
@@ -28,7 +28,7 @@ POST http://localhost:3000/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbnZhIiwicGFzc3dvcmQiOiIkMmIkMTAkUWxwamV1bnlsekNtWU43YmE3VVMvT0ZVNU91WHJXLmlZNjd4c2s1MVNOL2MvQUlXL3pnc0ciLCJpYXQiOjE3MDU1OTU3Nzd9.LOmus5xrRgZIiigkdbOJLnLnX1t1Pu7PAxi992PGPGY"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbnRpZW50IiwicGFzc3dvcmQiOiIkMmIkMTAkL25EeHZrUVBHZWdqVm4yRXVHZC80ZW80eS9PTFY1SFRSODc4L2IzZUd2Z2hEbUg5ZTg5VU8iLCJpYXQiOjE3MDU1OTcxOTl9.gBppAsonch2ajW6uJ8LektD9WRq8wJANTjduwkphIwo"
 }
 
 ###
@@ -37,5 +37,5 @@ DELETE http://localhost:3000/logout
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbnZhIiwicGFzc3dvcmQiOiIkMmIkMTAkUWxwamV1bnlsekNtWU43YmE3VVMvT0ZVNU91WHJXLmlZNjd4c2s1MVNOL2MvQUlXL3pnc0ciLCJpYXQiOjE3MDU1OTU3Nzd9.LOmus5xrRgZIiigkdbOJLnLnX1t1Pu7PAxi992PGPGY"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbnRpZW50IiwicGFzc3dvcmQiOiIkMmIkMTAkL25EeHZrUVBHZWdqVm4yRXVHZC80ZW80eS9PTFY1SFRSODc4L2IzZUd2Z2hEbUg5ZTg5VU8iLCJpYXQiOjE3MDU1OTcxMTl9.bw2RNfffevFHTSWcuoxT5hFma4rxXHAlwpiBLo5JDBQ"
 }

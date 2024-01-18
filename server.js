@@ -21,19 +21,11 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 // GET routes
-app.get("/", authenticateToken, (req, res) => {
-    if(req.authenticated) {
-        res.redirect("/account");
-    }
-
+app.get("/", (req, res) => {
     res.render("login");
 });
 
-app.get("/signup", authenticateToken, (req, res) => {
-    if(req.authenticated) {
-        res.redirect("/account");
-    }
-
+app.get("/signup", (req, res) => {
     res.render("signup");
 });
 
@@ -59,11 +51,7 @@ app.post("/signup", async (req, res) => {
     }
 });
 
-app.get("/login", authenticateToken, (req, res) => {
-    if(req.authenticated) {
-        res.redirect("/account");
-    }
-
+app.get("/login", (req, res) => {
     res.render("login");
 })
 
