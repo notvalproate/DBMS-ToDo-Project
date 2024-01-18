@@ -121,6 +121,12 @@ function authenticateToken(req, res, next) {
     });
 }
 
+app.delete("/logout", (req, res) => {
+    const refreshToken = req.body.token;
+    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+    res.sendStatus(204);
+});
+
 
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
