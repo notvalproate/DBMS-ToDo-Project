@@ -1,11 +1,21 @@
-GET http://localhost:3000/users
+GET http://localhost:3000/signup
 
 ###
 
-POST http://localhost:3000/users
+POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
     "username": "kanva",
+    "password": "password2"
+}
+
+###
+
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+    "username": "valproate",
     "password": "password"
 }
