@@ -8,6 +8,9 @@ require("dotenv").config();
 // Server Setup
 const app = express();
 
+let users = [];
+let refreshTokens = [];
+
 // Middleware
 app.use(bodyParser.json());
 app.use(express.static("public"));
@@ -18,16 +21,12 @@ app.set("views", "views");
 
 // GET routes
 app.get("/", (req, res) => {
-    res.render("index");
+    res.render("signup");
 });
-
-let users = [];
-let refreshTokens = [];
 
 app.get("/signup", (req, res) => {
-    res.json(users);
+    res.render("signup");
 });
-
 
 app.post("/signup", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
