@@ -44,9 +44,9 @@ app.post("/signup", async (req, res) => {
             password: hashedPassword,
         });
 
-        res.status(201).send();
+        res.status(201).render("signupresult", { successful: true });
     } catch (e) {
-        res.status(500).send();
+        res.status(500).render("signupresult", { successful: false });
     }
 });
 

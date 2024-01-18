@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do Site</title>
+    <link rel="stylesheet" href="css/result.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="result-wrapper">
+        <% if (successful) { %>
+            <h1 class="result-title">Account Successfully Created</h1>
+            <p class="result-subtitle"><a href="/login">Click here</a> to go to the login page.</p>
+        <% } else { %>
+            <h1 class="result-title">Account Not Created</h1>
+            <p class="result-subtitle">Due to some internal error, your account could not be created. <a href="/signup">Click here</a> to try again.</p>
+        <% } %>
+    </div>
+</body>
+</html>
