@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "username": "kanva",
-    "password": "password2"
+    "password": "password"
 }
 
 ###
@@ -16,6 +16,16 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "valproate",
+    "username": "kanva",
     "password": "password"
 }
+
+###
+
+GET http://localhost:3000/account
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZhbHByb2F0ZSIsInBhc3N3b3JkIjoiJDJiJDEwJG00NERwQVVLcGw3RkNkb2c3YlRxdi5PODI4eVhVOXRGeFBHSVlsdGpNcGxtdEZLN1Q4MmhHIiwiaWF0IjoxNzA1NTg1NjEyfQ.3fD_oDbVBoOp3cFv7oM70aYAYsNFLMyyl8kl03P2pRI
+
+###
+
+GET http://localhost:3000/account
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImthbnZhIiwicGFzc3dvcmQiOiIkMmIkMTAkN2tRUXRWZU9jeEdvVm04Z1VsbTZldWJINGhiRVU4cjlOa3dQQUMyd3pEaGJ4M0ZrSWVaaWUiLCJpYXQiOjE3MDU1ODU2NjZ9.ZHe47KD7r8jufSHb19uRp3Yhd161FQ-9bwMJ--Foglg

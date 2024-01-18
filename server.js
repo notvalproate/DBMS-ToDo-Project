@@ -2,6 +2,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 // Server Setup
 const app = express();
@@ -26,6 +28,13 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
+    const user = users.find((user) => user.username === req.body.username);
+
+    if(user != null) {
+        res.status(400).send("User already exists!");
+        return;
+    }
+
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
@@ -43,13 +52,14 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
 
-    if (user == null) {
+    if (user === null) {
         return res.status(400).send("Cannot find user!");
     }
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            res.send("Success");
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+            res.json({ accessToken: accessToken }).send("Success");
         } else {
             res.send("Not allowed");
         }
@@ -57,6 +67,28 @@ app.post("/login", async (req, res) => {
         res.status(500).send();
     }
 });
+
+app.get("/account", authenticateToken, async (req, res) => {
+    res.send(`Accessing account of user: ${req.user.username}`);
+});
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+
+    if(token == null) {
+        return res.sendStatus(401);
+    }
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err) {
+            return res.sendStatus(403);
+        }
+
+        req.user = user;
+        next();
+    });
+}
 
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
