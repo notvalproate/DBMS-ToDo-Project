@@ -68,12 +68,11 @@ app.post("/token", (req, res) => {
         }
 
         refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-        res.sendStatus(204);
 
         const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
-        const newRefreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+        const newRefreshToken = jwt.sign({ username: user.username, password: user.password }, process.env.REFRESH_TOKEN_SECRET);
         refreshTokens.push(newRefreshToken);
-        res.json({ accessToken: accessToken, refreshToken: newRefreshToken }).send("Success");
+        res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
     });
 });
 
