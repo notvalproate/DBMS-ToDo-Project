@@ -21,7 +21,7 @@ app.set("views", "views");
 
 // GET routes
 app.get("/", (req, res) => {
-    res.render("signup");
+    res.render("login");
 });
 
 app.get("/signup", (req, res) => {
