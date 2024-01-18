@@ -12,7 +12,7 @@ let users = [];
 let refreshTokens = [];
 
 // Middleware
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // View engine and views path
@@ -50,30 +50,9 @@ app.post("/signup", async (req, res) => {
     }
 });
 
-app.post("/token", (req, res) => {
-    const refreshToken = req.body.token;
-
-    if(refreshToken == null) {
-        return res.sendStatus(401);
-    }
-
-    if(!refreshTokens.includes(refreshToken)) {
-        return res.sendStatus(403);
-    }
-
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if(err) {
-            return res.sendStatus(403);
-        }
-
-        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
-        const newRefreshToken = jwt.sign({ username: user.username, password: user.password }, process.env.REFRESH_TOKEN_SECRET);
-        refreshTokens.push(newRefreshToken);
-        res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
-    });
-});
+app.get("/login", (req, res) => {
+    res.render("login");
+})
 
 app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
@@ -101,7 +80,6 @@ app.get("/account", authenticateToken, async (req, res) => {
     res.send(`Accessing account of user: ${req.user.username}`);
 });
 
-
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
@@ -119,6 +97,31 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
+
+app.post("/token", (req, res) => {
+    const refreshToken = req.body.token;
+
+    if(refreshToken == null) {
+        return res.sendStatus(401);
+    }
+
+    if(!refreshTokens.includes(refreshToken)) {
+        return res.sendStatus(403);
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if(err) {
+            return res.sendStatus(403);
+        }
+
+        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+
+        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+        const newRefreshToken = jwt.sign({ username: user.username, password: user.password }, process.env.REFRESH_TOKEN_SECRET);
+        refreshTokens.push(newRefreshToken);
+        res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
+    });
+});
 
 app.delete("/logout", (req, res) => {
     const refreshToken = req.body.token;

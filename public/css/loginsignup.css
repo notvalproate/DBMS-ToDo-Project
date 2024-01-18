@@ -32,6 +32,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     row-gap: 30px;
 }
 
@@ -55,4 +56,21 @@ body {
     padding-left: 10px;
     font-size: 1rem;
     font-weight: 600;
+}
+
+.submit-button {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: #CECFC7;
+    color: #23022E;
+    font-weight: 600;
+    transition: 200ms ease;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    color: #CECFC7;
+    background-color: #23022E;
 }
