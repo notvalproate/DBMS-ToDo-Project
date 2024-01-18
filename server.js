@@ -21,11 +21,19 @@ app.set("view engine", "ejs");
 app.set("views", "views");
 
 // GET routes
-app.get("/", (req, res) => {
+app.get("/", authenticateToken, (req, res) => {
+    if(req.authenticated) {
+        res.redirect("/account");
+    }
+
     res.render("login");
 });
 
-app.get("/signup", (req, res) => {
+app.get("/signup", authenticateToken, (req, res) => {
+    if(req.authenticated) {
+        res.redirect("/account");
+    }
+
     res.render("signup");
 });
 
@@ -51,7 +59,11 @@ app.post("/signup", async (req, res) => {
     }
 });
 
-app.get("/login", (req, res) => {
+app.get("/login", authenticateToken, (req, res) => {
+    if(req.authenticated) {
+        res.redirect("/account");
+    }
+
     res.render("login");
 })
 
@@ -64,7 +76,7 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
             const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
             refreshTokens.push(refreshToken);
             res.json({ accessToken: accessToken, refreshToken: refreshToken }).send("Success");
@@ -75,7 +87,6 @@ app.post("/login", async (req, res) => {
         res.status(500).send();
     }
 });
-
 
 app.get("/account", authenticateToken, async (req, res) => {
     res.send(`Accessing account of user: ${req.user.username}`);
@@ -95,6 +106,7 @@ function authenticateToken(req, res, next) {
         }
 
         req.user = user;
+        req.authenticated = true;
         next();
     });
 }
@@ -117,7 +129,7 @@ app.post("/token", (req, res) => {
 
         refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
 
-        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
         const newRefreshToken = jwt.sign({ username: user.username, password: user.password }, process.env.REFRESH_TOKEN_SECRET);
         refreshTokens.push(newRefreshToken);
         res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
