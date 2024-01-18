@@ -13,6 +13,7 @@ let refreshTokens = [];
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // View engine and views path
@@ -57,7 +58,7 @@ app.get("/login", (req, res) => {
 app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
 
-    if (user === null) {
+    if (user == null) {
         return res.status(400).send("Cannot find user!");
     }
 
