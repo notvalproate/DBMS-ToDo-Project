@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const app = express();
 
 // Middleware
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static("public"));
 
 // View engine and views path
@@ -17,6 +17,25 @@ app.set("views", "views");
 app.get("/", (req, res) => {
     res.render("index");
 });
+
+const users = [];
+
+app.get("/users", (req, res) => {
+    res.json(users);
+})
+
+app.post("/users", (req, res) => {
+    console.log(req.body);
+
+    const user = {
+        username: req.body.username,   
+        password: req.body.password
+    }
+
+    users.push(user);
+
+    res.status(201).send();
+})
 
 // Run Server using the http socket server created.
 app.listen(3000, () => {
