@@ -21,11 +21,13 @@ app.get("/", (req, res) => {
     res.render("index");
 });
 
-const users = [];
+let users = [];
+let refreshTokens = [];
 
 app.get("/signup", (req, res) => {
     res.json(users);
 });
+
 
 app.post("/signup", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
@@ -49,6 +51,32 @@ app.post("/signup", async (req, res) => {
     }
 });
 
+app.post("/token", (req, res) => {
+    const refreshToken = req.body.token;
+
+    if(refreshToken == null) {
+        return res.sendStatus(401);
+    }
+
+    if(!refreshTokens.includes(refreshToken)) {
+        return res.sendStatus(403);
+    }
+
+    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+        if(err) {
+            return res.sendStatus(403);
+        }
+
+        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
+        res.sendStatus(204);
+
+        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+        const newRefreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+        refreshTokens.push(newRefreshToken);
+        res.json({ accessToken: accessToken, refreshToken: newRefreshToken }).send("Success");
+    });
+});
+
 app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
 
@@ -58,8 +86,10 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-            res.json({ accessToken: accessToken }).send("Success");
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+            refreshTokens.push(refreshToken);
+            res.json({ accessToken: accessToken, refreshToken: refreshToken }).send("Success");
         } else {
             res.send("Not allowed");
         }
@@ -68,9 +98,11 @@ app.post("/login", async (req, res) => {
     }
 });
 
+
 app.get("/account", authenticateToken, async (req, res) => {
     res.send(`Accessing account of user: ${req.user.username}`);
 });
+
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -89,6 +121,7 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
+
 
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
