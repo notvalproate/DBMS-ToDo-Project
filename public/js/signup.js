@@ -38,9 +38,14 @@ $(document).ready(() => {
     const submitButton = $(".submit-button");
     const repasswordInput = $("#repassword");
     const passwordInput = $("#password");
+    const usernameInput = $("#username");
     const passwordAlert = $(".password-match");
 
     let passwordMatching = false;
+
+    usernameInput.on("input", (e) => {
+        e.target.value = removeSpaces(e.target.value);
+    })
 
     passwordInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
@@ -71,6 +76,10 @@ $(document).ready(() => {
 
     submitButton.click((e) => {
         e.preventDefault();
+
+        if($("#username").val().length === 0) {
+            return;
+        }
 
         if(passwordMatching) {
             form.submit();
