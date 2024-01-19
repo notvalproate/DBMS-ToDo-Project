@@ -79,15 +79,22 @@ body {
     position: relative;
 }
 
-.icons {
+.icon-wrapper {
     position: absolute;
-    right: 5px;
+    right: 0;
     top: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
     transform: translateY(-50%);
     font-size: 1.4rem;
     color: #573280;
+    background-color: #CECFC7;
 }
 
-.icons:hover {
+.icon-wrapper:hover {
     cursor: pointer;
 }

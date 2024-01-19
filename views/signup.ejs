@@ -4,10 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Site</title>
+
     <link rel="stylesheet" href="css/loginsignup.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="login-wrapper">
@@ -19,15 +23,27 @@
             </div>
             <div class="input-wrapper">
                 <label class="input-label" for="password">Password</label>
-                <input class="input-box" type="password" id="password" name="password" autocomplete="off" required>
+                <div class="password-wrapper">
+                    <input class="input-box" type="password" id="password" name="password" autocomplete="off" required>
+                    <div class="icon-wrapper" id="password-toggle">
+                        <i class="fa-regular fa-eye-slash" id="password-icon"></i>
+                    </div>
+                </div>
             </div>
             <div class="input-wrapper">
                 <label class="input-label" for="repassword">Re-Enter Password</label>
-                <input class="input-box" type="password" id="repassword" name="repassword" autocomplete="off" required>
+                <div class="password-wrapper">
+                    <input class="input-box" type="password" id="repassword" name="repassword" autocomplete="off" required>
+                    <div class="icon-wrapper" id="repassword-toggle">
+                        <i class="fa-regular fa-eye-slash" id="repassword-icon"></i>
+                    </div>
+                </div>
             </div>
             <button class="submit-button" type="submit">Sign Up</button>
         </form>
         <span class="dont-have">Already have an account? <a href="/login">Click here</a> to login instead!</span>
     </div>
+
+    <script src="js/signup.js" charset="utf-8"></script>
 </body>
 </html>
