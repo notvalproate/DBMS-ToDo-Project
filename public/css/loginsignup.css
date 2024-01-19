@@ -98,3 +98,12 @@ body {
 .icon-wrapper:hover {
     cursor: pointer;
 }
+
+.dont-have {
+    color: #573280;
+    text-decoration: none;
+}
+
+.dont-have:hover {
+    text-decoration: underline;
+}
