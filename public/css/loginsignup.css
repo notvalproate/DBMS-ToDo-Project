@@ -74,3 +74,20 @@ body {
     color: #CECFC7;
     background-color: #23022E;
 }
+
+.password-wrapper {
+    position: relative;
+}
+
+.icons {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.4rem;
+    color: #573280;
+}
+
+.icons:hover {
+    cursor: pointer;
+}

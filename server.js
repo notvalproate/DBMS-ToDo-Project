@@ -5,11 +5,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+
 // Server Setup
 const app = express();
 
 let users = [];
 let refreshTokens = [];
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,14 +22,17 @@ app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-// GET routes
+
+// Routes
 app.get("/", (req, res) => {
     res.render("login");
 });
 
+
 app.get("/signup", (req, res) => {
     res.render("signup");
 });
+
 
 app.post("/signup", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
@@ -51,9 +56,11 @@ app.post("/signup", async (req, res) => {
     }
 });
 
+
 app.get("/login", (req, res) => {
     res.render("login");
 })
+
 
 app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
@@ -76,9 +83,11 @@ app.post("/login", async (req, res) => {
     }
 });
 
+
 app.get("/account", authenticateToken, async (req, res) => {
     res.send(`Accessing account of user: ${req.user.username}`);
 });
+
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
@@ -98,6 +107,7 @@ function authenticateToken(req, res, next) {
         next();
     });
 }
+
 
 app.post("/token", (req, res) => {
     const refreshToken = req.body.token;
@@ -123,6 +133,7 @@ app.post("/token", (req, res) => {
         res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
     });
 });
+
 
 app.delete("/logout", (req, res) => {
     const refreshToken = req.body.token;

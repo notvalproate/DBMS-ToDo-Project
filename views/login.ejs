@@ -4,10 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To-Do Site</title>
+
     <link rel="stylesheet" href="css/loginsignup.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="login-wrapper">
@@ -19,7 +22,10 @@
             </div>
             <div class="input-wrapper">
                 <label class="input-label" for="password">Password</label>
-                <input class="input-box" type="password" id="password" name="password" autocomplete="off" required>
+                <div class="password-wrapper">
+                    <input class="input-box" type="password" id="password" name="password" autocomplete="off" required>
+                    <i class="fa-regular fa-eye icons"></i>
+                </div>
             </div>
             <button class="submit-button" type="submit">Submit</button>
         </form>
