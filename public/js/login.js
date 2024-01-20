@@ -38,7 +38,6 @@ $(document).ready(() => {
             success: (data) => {
                 passwordAlert.addClass("opacity-zero");
                 document.cookie = `ACT=${data.accessToken}`;
-                document.cookie = `RCT=${data.refreshToken}`;
                 window.location.replace("/account");
             },
             error: (data) => {

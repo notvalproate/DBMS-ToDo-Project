@@ -11,7 +11,6 @@ require("dotenv").config();
 const app = express();
 
 let users = [];
-let refreshTokens = [];
 
 
 // Middleware
@@ -26,12 +25,12 @@ app.set("views", "views");
 
 
 // Routes
-app.get("/", (req, res) => {
+app.get("/", redirectIfAuthenticated, (req, res) => {
     res.render("login");
 });
 
 
-app.get("/signup", (req, res) => {
+app.get("/signup", redirectIfAuthenticated, (req, res) => {
     res.render("signup");
 });
 
@@ -59,7 +58,7 @@ app.post("/signup", async (req, res) => {
 });
 
 
-app.get("/login", (req, res) => {
+app.get("/login", redirectIfAuthenticated, (req, res) => {
     res.render("login");
 })
 
@@ -73,10 +72,8 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
-            const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
-            refreshTokens.push(refreshToken);
-            res.json({ accessToken: accessToken, refreshToken: refreshToken });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+            res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
         }
@@ -98,15 +95,14 @@ function authenticateToken(req, res, next) {
 
     if(cookies.ACT) {
         token = cookies.ACT;
-    }
-
-    if(token == null) {
+    } else {
         return res.status(401).redirect("/login");
     }
 
+
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
         if(err) {
-            return res.status(403).redirect("/login");
+            return res.redirect("/login");
         }
 
         req.user = user;
@@ -115,31 +111,31 @@ function authenticateToken(req, res, next) {
     });
 }
 
+function redirectIfAuthenticated(req, res, next) {
+    let authenticated = false;
 
-app.post("/token", (req, res) => {
-    const refreshToken = req.body.token;
+    const cookies = req.cookies;
 
-    if(refreshToken == null) {
-        return res.sendStatus(401);
+    let token = null;
+
+    if(cookies.ACT) {
+        token = cookies.ACT;
+    } else {
+        next();
     }
 
-    if(!refreshTokens.includes(refreshToken)) {
-        return res.sendStatus(403);
-    }
-
-    jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-        if(err) {
-            return res.sendStatus(403);
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(!err) {
+            authenticated = true;
         }
-
-        refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
-
-        const accessToken = jwt.sign({ username: user.username, password: user.password }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
-        const newRefreshToken = jwt.sign({ username: user.username, password: user.password }, process.env.REFRESH_TOKEN_SECRET);
-        refreshTokens.push(newRefreshToken);
-        res.json({ accessToken: accessToken, refreshToken: newRefreshToken });
     });
-});
+
+    if(authenticated) {
+        return res.redirect("/account");
+    }
+    
+    next();
+}
 
 
 app.delete("/logout", (req, res) => {
