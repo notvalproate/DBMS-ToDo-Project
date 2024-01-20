@@ -3,8 +3,8 @@ POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-    "username": "sentient",
-    "password": "ilikevaporeon"
+    "username": "susmitha",
+    "password": "password"
 }
 
 ###
@@ -13,14 +13,14 @@ POST http://localhost:3000/login
 Content-Type: application/json
 
 {
-    "username": "sentient",
-    "password": "ilikevaporeon"
+    "username": "susmitha",
+    "password": "password"
 }
 
 ###
 
 GET http://localhost:3000/account
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbnRpZW50IiwicGFzc3dvcmQiOiIkMmIkMTAkL25EeHZrUVBHZWdqVm4yRXVHZC80ZW80eS9PTFY1SFRSODc4L2IzZUd2Z2hEbUg5ZTg5VU8iLCJpYXQiOjE3MDU1OTcxOTksImV4cCI6MTcwNTU5NzI1OX0.6Pj4dcYDSTBii95A3o0MfwxYHb0C2pu1BwFlBJHDz3M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1c21pdGhhIiwicGFzc3dvcmQiOiIkMmIkMTAkN0ZXYi56ZnRwNVZub3VMYVhLckFCT3RpNzRWTnRua2xVQjZBNzNpdEJSSlp2TXZWNC9oeksiLCJpYXQiOjE3MDU2ODAwNzAsImV4cCI6MTcwNTY4MDA4NX0.9fiV6cCuIV4Wli5IUpfB3B4EU1g2jHlhiQYPao72Ut8
 
 ###
 
@@ -28,7 +28,7 @@ POST http://localhost:3000/token
 Content-Type: application/json
 
 {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InNlbnRpZW50IiwicGFzc3dvcmQiOiIkMmIkMTAkL25EeHZrUVBHZWdqVm4yRXVHZC80ZW80eS9PTFY1SFRSODc4L2IzZUd2Z2hEbUg5ZTg5VU8iLCJpYXQiOjE3MDU1OTcxOTl9.gBppAsonch2ajW6uJ8LektD9WRq8wJANTjduwkphIwo"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1c21pdGhhIiwicGFzc3dvcmQiOiIkMmIkMTAkN0ZXYi56ZnRwNVZub3VMYVhLckFCT3RpNzRWTnRua2xVQjZBNzNpdEJSSlp2TXZWNC9oeksiLCJpYXQiOjE3MDU2ODAwNzB9.wwwb8r46ZVRBmOZf-hsmYjassZWozPt2_4Xgg45q_70"
 }
 
 ###

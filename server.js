@@ -66,7 +66,7 @@ app.post("/login", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
 
     if (user == null) {
-        return res.status(400).send("Cannot find user!");
+        return res.status(400).send("Username or password is incorrect!");
     }
 
     try {
@@ -74,12 +74,12 @@ app.post("/login", async (req, res) => {
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
             const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
             refreshTokens.push(refreshToken);
-            res.json({ accessToken: accessToken, refreshToken: refreshToken }).send("Success");
+            res.status(201).json({ accessToken: accessToken, refreshToken: refreshToken }).send("Success");
         } else {
-            res.send("Not allowed");
+            res.status(401).send("Username or password is incorrect!");
         }
     } catch (e) {
-        res.status(500).send();
+        res.status(500).send("Error logging in, Please try again!");
     }
 });
 
