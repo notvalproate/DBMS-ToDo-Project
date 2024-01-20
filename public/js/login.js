@@ -36,7 +36,10 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: (data) => {
-                console.log(data);
+                passwordAlert.addClass("opacity-zero");
+                document.cookie = `ACT=${data.accessToken}`;
+                document.cookie = `RCT=${data.refreshToken}`;
+                window.location.replace("/account");
             },
             error: (data) => {
                 requestProcessing = false;

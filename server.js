@@ -3,6 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+var cookieParser = require('cookie-parser')
 require("dotenv").config();
 
 
@@ -17,6 +18,7 @@ let refreshTokens = [];
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static("public"));
+app.use(cookieParser());
 
 // View engine and views path
 app.set("view engine", "ejs");
@@ -74,7 +76,7 @@ app.post("/login", async (req, res) => {
             const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
             const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
             refreshTokens.push(refreshToken);
-            res.status(201).json({ accessToken: accessToken, refreshToken: refreshToken }).send("Success");
+            res.json({ accessToken: accessToken, refreshToken: refreshToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
         }
@@ -90,8 +92,13 @@ app.get("/account", authenticateToken, async (req, res) => {
 
 
 function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
+    const cookies = req.cookies;
+
+    let token = null;
+
+    if(cookies.ACT) {
+        token = cookies.ACT;
+    }
 
     if(token == null) {
         return res.status(401).redirect("/login");
