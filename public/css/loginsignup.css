@@ -134,6 +134,10 @@ body {
     height: 40px;
 }
 
+.submit-button:hover {
+    background-color: #be56ff;
+}
+
 .label-text{
     font-size: 20px;
 }
