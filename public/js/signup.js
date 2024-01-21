@@ -34,9 +34,10 @@ $(document).ready(() => {
     });
 
 
-    const form = $(".login-box");
+    const form = $(".form-container");
     const submitButton = $(".submit-button");
     const repasswordInput = $("#repassword");
+    const repasswordInputWrapper = $("#repassword-wrapper");
     const passwordInput = $("#password");
     const usernameInput = $("#username");
     const passwordAlert = $(".password-match");
@@ -50,7 +51,7 @@ $(document).ready(() => {
     passwordInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
         if(e.target.value.length === 0) {
-            repasswordInput.removeClass("password-wrong")
+            repasswordInputWrapper.removeClass("password-wrong")
             passwordAlert.addClass("opacity-zero");
         }
 
@@ -64,11 +65,11 @@ $(document).ready(() => {
     repasswordInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
         if($("#password").val() !== $("#repassword").val()) {
-            repasswordInput.addClass("password-wrong");
+            repasswordInputWrapper.addClass("password-wrong");
             passwordAlert.removeClass("opacity-zero");
             passwordMatching = false;
         } else {
-            repasswordInput.removeClass("password-wrong")
+            repasswordInputWrapper.removeClass("password-wrong")
             passwordAlert.addClass("opacity-zero");
             passwordMatching = true;
         }

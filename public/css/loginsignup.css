@@ -1,127 +1,166 @@
 body {
     margin: 0;
     padding: 0;
+}
+
+.wrapper {
     display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.left {
     height: 100vh;
-    background-color: #23022E;
+    width: 40vw;
+    display: flex;
+    justify-content: center;
 }
 
-.login-wrapper {
+.master-text {
+    margin-top: 25vh;
+    font-size: 75px;
+    position: relative;
+    height: fit-content;
+    font-family: 'Stint Ultra Expanded', serif;
+    color: #974dc5;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 50px;
+    transform: translate(-50%, -60%);
+    font-family: 'Marck Script', cursive;
+    color: black;
+}
+
+.right {
+    font-family: 'Sofia Sans', sans-serif;
+    height: 100vh;
+    width: 60vw;
+    padding-left: 5vw;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #974dc5, rgba(151, 77, 197, 0));
+}
+
+.form-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 40px;
-    border-radius: 10px;
-    row-gap: 30px;
-    background-color: #eff8e2;
-    color: #573280;
-    font-family: 'Montserrat', sans-serif;
-    box-shadow: 6px 6px 0px #CECFC7;
+    row-gap: 6vh;
 }
 
-.login-title {
+.form-title {
     margin: 0;
-    font-size: 3rem;
-    font-weight: 600;
+    color: white;
+    font-size: 3.5rem;
+    width: 100%;
 }
 
-.login-box {
+.form-inputs-wrapper {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    row-gap: 30px;
+    row-gap: 2vh;
 }
 
 .input-wrapper {
     display: flex;
-    flex-direction: column;
-    row-gap: 5px;
-}
-
-.input-label {
-    font-size: 1.2rem;
+    border-radius: 10px;
 }
 
 .input-box {
     border: none;
-    color: #23022E;
-    background-color: #CECFC7;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 270px;
+    height: 50px;
+    padding: 0;
+    padding-left: 20px;
+}
+
+.input-box:focus {
+    outline: none;
+}
+
+#username {
+    border-radius: 10px;
     width: 300px;
-    height: 40px;
-    border-radius: 5px;
-    padding-left: 10px;
-    font-size: 1rem;
-    font-weight: 600;
 }
 
-.submit-button {
-    margin-top: 20px;
-    width: 100px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    background-color: #CECFC7;
-    color: #23022E;
-    font-weight: 600;
-    transition: 200ms ease;
-}
-
-.submit-button:hover {
-    cursor: pointer;
-    color: #CECFC7;
-    background-color: #23022E;
-}
-
-.password-wrapper {
-    position: relative;
-}
-
-.icon-wrapper {
-    position: absolute;
-    right: 0;
-    top: 50%;
+.password-toggle {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: white;
+    width: 30px;
+    height: 50px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    border-radius: 5px;
-    transform: translateY(-50%);
-    font-size: 1.4rem;
-    color: #573280;
-    background-color: #CECFC7;
+    align-items: center;
 }
 
-.icon-wrapper:hover {
+.password-toggle:hover {
     cursor: pointer;
 }
 
-.dont-have {
-    color: #573280;
-    text-decoration: none;
-}
-
-.dont-have:hover {
-    text-decoration: underline;
-}
-
-.password-match {
-    position: absolute;
-    font-size: 0.8rem;
-    color: red;
-    bottom: 0;
-    left: 0;
-    transform: translateY(120%);
+.icons {
+    color: #974dc5 !important;
 }
 
 .password-wrong {
     outline: 2px red solid;
 }
 
+.password-match {
+    font-size: 0.8rem;
+    color: red;
+}
+
 .opacity-zero {
     opacity: 0%;
+}
+
+.submit-button {
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    padding: 0;
+    background-color: #9e00ff;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+}
+
+.label-text{
+    font-size: 20px;
+}
+
+::placeholder{
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 14px;
+}
+
+.fa-regular{
+    color: black;
+}
+
+.new-user-sign{
+    text-decoration: none;
+    color: black;
+}
+
+.new-user-sign:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+.end{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2vh;
 }

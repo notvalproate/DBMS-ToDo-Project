@@ -1,41 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To-Do Site</title>
+<html>
 
-    <link rel="stylesheet" href="css/loginsignup.css">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <title>Login Page</title>
+    <link rel="stylesheet" href="css/loginsignup.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Sofia+Sans&family=Stint+Ultra+Expanded&display=swap" rel="stylesheet">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    <div class="login-wrapper">
-        <h2 class="login-title">Login</h2>
-        <form class="login-box" action="/login" method="POST">
-            <div class="input-wrapper">
-                <label class="input-label" for="username">Username</label>
-                <input class="input-box" type="text" id="username" name="username" autocomplete="off" required>
-            </div>
-            <div class="input-wrapper">
-                <label class="input-label" for="password">Password</label>
-                <div class="password-wrapper">
-                    <input class="input-box" type="password" id="password" name="password" autocomplete="off" required>
-                    <div class="icon-wrapper" id="password-toggle">
-                        <i class="fa-regular fa-eye-slash" id="password-icon"></i>
+    <div class="wrapper">
+        <div class="left">
+            <h1 class="master-text">Master
+                <span class="task-text">Task</span>
+            </h1>
+        </div>
+        <div class="right">
+            <form class="form-container">
+                <h1 class="form-title">Login</h1>
+
+                <div class="form-inputs-wrapper">
+                    <label class="label-text" for="username">Username</label>
+                    <input class="input-box" type="text" name="username" id="username" placeholder="Enter Username" autocomplete="off">
+
+                    <label class="label-text" for="password">Password</label>
+                    <div class="input-wrapper">
+                        <input class="input-box" type="password" name="password" id="password" placeholder="Enter Password" autocomplete="off">
+                        <div class="password-toggle" id="password-toggle">
+                            <i class="fa-regular fa-eye-slash icons" id="password-icon"></i>
+                        </div>
                     </div>
-                    <span class="password-match opacity-zero">The password does not match!</span>
+
+                    <span class="password-match opacity-zero">Placeholder</span>
                 </div>
-            </div>
-            <button class="submit-button" type="submit">Submit</button>
-        </form>
-        <a class="dont-have" href="/signup">Don't have an account? Click here to sign up instead!</a>
+
+                <div class="end">
+                    <button class="submit-button" type="submit">Login</button>
+                    <a class="new-user-sign" href="/signup">New user? Click here to sign up!</a>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="js/login.js" charset="utf-8"></script>
 </body>
+
 </html>
