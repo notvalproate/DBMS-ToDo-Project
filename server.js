@@ -3,9 +3,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-var cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser')
 require("dotenv").config();
-
 
 // Server Setup
 const app = express();
