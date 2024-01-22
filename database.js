@@ -17,9 +17,15 @@ async function getCity(cityName) {
     return city;
 }
 
+async function describeTable(tableName) {
+    const [result] = await pool.query(`DESCRIBE ${tableName}`);
+    console.log(result);
+}
+
 async function main() {
     const city = await getCity("Paris");
     console.log(city);
+    describeTable("city");
 }
 
 main();
