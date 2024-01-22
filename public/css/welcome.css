@@ -159,4 +159,7 @@ body {
 
 .welcome-buttons:hover {
     cursor: pointer;
+    background-color: #b261e3;
+    box-shadow: 0 0 10px #ffff, 0 0 20px #b261e3, 0 0 30px #b261e3;
+    color: white;
 }
