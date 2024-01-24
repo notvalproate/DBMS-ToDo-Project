@@ -82,9 +82,25 @@ $(document).ready(() => {
             return;
         }
 
-        if(passwordMatching) {
-            form.submit();
-        }
+        $.ajax({
+            type: "POST",
+            url: "/usernameExists",
+            data: JSON.stringify({ username:  $("#username").val() }),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: (data) => {
+                if(data.exists) {
+                    console.log("user exists");
+                    return;
+                }
+                if(passwordMatching) {
+                    form.submit();
+                }
+            },
+            error: (data) => {
+                console.log("Error checking if username exists, try again later");
+            }
+        });
     });
 });
 

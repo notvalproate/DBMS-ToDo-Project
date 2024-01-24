@@ -38,7 +38,7 @@ app.post("/signup", async (req, res) => {
     const user = users.find((user) => user.username === req.body.username);
 
     if(user != null) {
-        res.status(400).send("User already exists!");
+        res.status(400).render("signup");
         return;
     }
 
@@ -55,6 +55,18 @@ app.post("/signup", async (req, res) => {
         res.status(500).render("signupresult", { successful: false });
     }
 });
+
+
+app.post("/usernameExists", (req, res) => {
+    const user = users.find((user) => user.username === req.body.username);
+
+    if(user != null) {
+        res.json({ exists: true });
+        return;
+    }
+
+    res.json({ exists: false });
+})
 
 
 app.get("/login", redirectIfAuthenticated, (req, res) => {
