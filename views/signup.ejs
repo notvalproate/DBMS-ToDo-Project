@@ -27,7 +27,10 @@
 
                 <div class="form-inputs-wrapper">
                     <label class="label-text" for="username">Username</label>
-                    <input class="input-box" type="text" name="username" id="username" placeholder="Enter Username" autocomplete="off">
+                    <div class="username-wrapper">
+                        <input class="input-box" type="text" name="username" id="username" placeholder="Enter Username" autocomplete="off">
+                        <span class="password-match opacity-zero" id="username-match">This username already exists!</span>
+                    </div>
 
                     <label class="label-text" for="password">Password</label>
                     <div class="input-wrapper">
@@ -45,7 +48,7 @@
                         </div>
                     </div>
                     
-                    <span class="password-match opacity-zero">The password does not match!</span>
+                    <span class="password-match opacity-zero" id="password-match">The password does not match!</span>
                 </div>
 
                 <div class="end">

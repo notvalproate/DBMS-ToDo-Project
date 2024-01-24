@@ -36,16 +36,22 @@ $(document).ready(() => {
 
     const form = $(".form-container");
     const submitButton = $(".submit-button");
+
     const repasswordInput = $("#repassword");
     const repasswordInputWrapper = $("#repassword-wrapper");
+
     const passwordInput = $("#password");
     const usernameInput = $("#username");
-    const passwordAlert = $(".password-match");
+
+    const passwordAlert = $("#password-match");
+    const usernameAlert = $("#username-match");
 
     let passwordMatching = false;
 
     usernameInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
+        usernameAlert.addClass("opacity-zero");
+        usernameInput.removeClass("password-wrong");
     })
 
     passwordInput.on("input", (e) => {
@@ -90,7 +96,8 @@ $(document).ready(() => {
             traditional: true,
             success: (data) => {
                 if(data.exists) {
-                    console.log("user exists");
+                    usernameAlert.removeClass("opacity-zero");
+                    usernameInput.addClass("password-wrong");
                     return;
                 }
                 if(passwordMatching) {

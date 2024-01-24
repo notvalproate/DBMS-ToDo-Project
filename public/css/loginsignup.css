@@ -87,6 +87,18 @@ body {
     width: 300px;
 }
 
+.username-wrapper {
+    position: relative;
+}
+
+#username-match {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(105%, -50%);
+}
+
 .password-toggle {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
