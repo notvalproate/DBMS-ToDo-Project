@@ -1,25 +1,73 @@
 body {
     margin: 0;
     padding: 0;
+}
+
+.wrapper {
+    display: flex;
+}
+
+.left {
+    height: 100vh;
+    width: 40vw;
     display: flex;
     justify-content: center;
-    align-items: center;
+}
+
+.master-text {
+    margin-top: 25vh;
+    font-size: 75px;
+    position: relative;
+    height: fit-content;
+    font-family: 'Stint Ultra Expanded', serif;
+    color: #974dc5;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 50px;
+    transform: translate(-50%, -60%);
+    font-family: 'Marck Script', cursive;
+    color: black;
+}
+
+.right {
+    font-family: 'Sofia Sans', sans-serif;
     height: 100vh;
-    background-color: #23022E;
+    width: 60vw;
+    padding-left: 5vw;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(180deg, #974dc5, rgba(151, 77, 197, 0));
 }
 
-.result-wrapper {
-    background-color: #eff8e2;
-    color: #573280;
-    font-family: 'Montserrat', sans-serif;
-    border-radius: 10px;
-    padding: 30px 80px;
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 6vh;
 }
 
-.result-title {
-    font-size: 3rem;
+.form-title {
+    margin: 0;
+    color: white;
+    font-size: 3.5rem;
+    width: 100%;
 }
 
-.result-subtitle {
-    font-size: 1.2rem;
+.new-user-sign{
+    text-decoration: none;
+    color: black;
+}
+
+.new-user-sign:hover {
+    text-decoration: underline;
+    color: black;
+}
+
+::placeholder{
+    font-family: 'Sofia Sans', sans-serif;
+    font-size: 14px;
 }

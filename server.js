@@ -71,7 +71,7 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
@@ -82,8 +82,8 @@ app.post("/login", async (req, res) => {
 });
 
 
-app.get("/account", authenticateToken, async (req, res) => {
-    res.send(`Accessing account of user: ${req.user.username}`);
+app.get("/home", authenticateToken, async (req, res) => {
+    res.render("home", { username: req.user.username });
 });
 
 
@@ -110,6 +110,7 @@ function authenticateToken(req, res, next) {
     });
 }
 
+
 function redirectIfAuthenticated(req, res, next) {
     let authenticated = false;
 
@@ -130,7 +131,7 @@ function redirectIfAuthenticated(req, res, next) {
     });
 
     if(authenticated) {
-        return res.redirect("/account");
+        return res.redirect("/home");
     }
     
     next();

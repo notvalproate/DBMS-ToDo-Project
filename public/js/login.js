@@ -38,7 +38,7 @@ $(document).ready(() => {
             success: (data) => {
                 passwordAlert.addClass("opacity-zero");
                 document.cookie = `ACT=${data.accessToken}`;
-                window.location.replace("/account");
+                window.location.replace("/home");
             },
             error: (data) => {
                 requestProcessing = false;
