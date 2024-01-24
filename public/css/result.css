@@ -43,11 +43,10 @@ body {
     background: linear-gradient(180deg, #974dc5, rgba(151, 77, 197, 0));
 }
 
-.form-container {
+.result-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: 6vh;
+    row-gap: 4vh;
 }
 
 .form-title {
@@ -58,6 +57,7 @@ body {
 }
 
 .new-user-sign{
+    font-size: 1.2rem;
     text-decoration: none;
     color: black;
 }
