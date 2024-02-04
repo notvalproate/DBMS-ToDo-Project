@@ -143,13 +143,14 @@ nav a:hover {
 }
 
 .enter-diary {
-    padding: 10px;
+    padding: 20px;
     font-family: "Sofia Sans", sans-serif;
     font-size: 18px;
-    width: 50vw;
-    height: 50vh;
+    width: 45vw;
+    height: 45vh;
     border-color: #974dc5;
     resize: none;
+    border-radius: 12px;
 }
 
 .submit-button{
