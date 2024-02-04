@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diary Page</title>
+    <link rel="stylesheet" href="css/diary.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Sofia+Sans&family=Stint+Ultra+Expanded&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="home-wrapper">
+        <div class="header">
+            <div class="logo">
+                <h1 class="master-text">Master
+                    <span class="task-text">Task</span>
+                </h1>
+            </div>
+            <nav>
+                <a href="#">Home</a>
+                <a href="#">To Do List</a>
+                <a href="#">Send a Message</a>
+            </nav>
+        </div>
+
+        <div class="diary">
+            <div class="mood">
+                <label for="Ask" class="ask-diary">Mood Meter</label>
+                <div class="slider">
+                    <input type="range" class="mood-range" id="mood-range" min="1" max="101" step="25" value="0">
+                    <div class="slider-emo">
+                        <i class="fa-regular fa-face-tired"></i>
+                        <i class="fa-regular fa-face-frown"></i>
+                        <i class="fa-regular fa-face-meh"></i>
+                        <i class="fa-regular fa-face-smile"></i>
+                        <i class="fa-regular fa-face-laugh-beam"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="entry">
+                <label for="Ask" class="ask-diary">Diary</label>
+                <textarea class="enter-diary" id="enter-diary" placeholder="How are you feeling today?"></textarea>
+            </div>
+
+            <div class = "end">
+                <button class="submit-button" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
