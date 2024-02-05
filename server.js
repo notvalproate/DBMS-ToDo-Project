@@ -83,12 +83,13 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
         }
     } catch (e) {
+        console.log(e);
         res.status(500).send("Error logging in, Please try again!");
     }
 });
@@ -156,6 +157,9 @@ app.delete("/logout", (req, res) => {
     res.sendStatus(204);
 });
 
+app.get("/diary", (req, res) => {
+    res.render("diary");
+})
 
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");

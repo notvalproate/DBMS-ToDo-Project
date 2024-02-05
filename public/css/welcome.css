@@ -155,6 +155,7 @@ body {
     padding: 0;
     padding-left: 20px;
     background-color: white;
+    text-decoration: none;
 }
 
 .welcome-buttons:hover {
