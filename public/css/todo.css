@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.home-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.logo {
+    display: flex;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    width: 100vw;
+    background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
+    height: 10vh;
+    justify-content: space-between;
+}
+
+.master-text {
+    font-size: 37.5px;
+    position: relative;
+    height: fit-content;
+    font-family: "Stint Ultra Expanded", serif;
+    color: #974dc5;
+    margin-left: 2rem;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 25px;
+    transform: translate(-50%, -60%);
+    font-family: "Marck Script", cursive;
+    color: black;
+}
+
+nav {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    column-gap: 2rem;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+nav a {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.15rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
+.mid-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.top{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    column-gap: 20px;
+}
+
+.end{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.question{
+    margin-bottom: 0;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 3rem;
+    color: #974dc5;
+}
+
+.todo-in{
+    box-shadow: none;
+    background-color: transparent; 
+    border-color: #caa7e1;
+    border-radius: 10px;
+    width: 25vw;
+    height: 2vh;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 15px;
+    padding: 20px;
+}
+
+.todo-in:hover{
+    border-color: #974dc5;
+    box-shadow: 0 0 5px #ffff, 0 0 5px #b261e3, 0 0 5px #b261e3;
+}
+
+.fa-solid{
+    font-size: 2rem;
+    color: #caa7e1;
+    ;
+}
+
+.fa-solid:hover{
+    font-size: 2rem;
+    color: #974dc5;
+}
+
+#second{
+    margin-top: 0;
+}
+
+.checker{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    justify-content: center;
+}
+
+.inner{
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.5rem;
+    color: #974dc5;
+}
+
+.check-it{
+    margin: 0;
+    width: 1.75rem;
+    height: 1.75rem;
+}
