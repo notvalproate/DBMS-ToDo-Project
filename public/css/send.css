@@ -1,0 +1,166 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.home-wrapper {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+.logo {
+    display: flex;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    position: relative;
+    width: 100vw;
+    background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
+    height: 10vh;
+    justify-content: space-between;
+}
+
+.master-text {
+    font-size: 37.5px;
+    position: relative;
+    height: fit-content;
+    font-family: "Stint Ultra Expanded", serif;
+    color: #974dc5;
+    margin-left: 2rem;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 25px;
+    transform: translate(-50%, -60%);
+    font-family: "Marck Script", cursive;
+    color: black;
+}
+
+nav {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    column-gap: 2rem;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+nav a {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.15rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
+.msg {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    position: relative;
+}
+
+.ask-date {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 25px;
+    color: #974dc5;
+    text-align: center;
+}
+
+.entry {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    position: relative;
+}
+
+.dater {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    position: relative;
+    width: 10vw;
+}
+
+.slider {
+    display: flex;
+    width: 300px;
+    position: relative;
+    row-gap: 10px;
+    flex-direction: column;
+}
+
+.enter-msg {
+    padding: 20px;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 18px;
+    width: 45vw;
+    height: 45vh;
+    border-color: #974dc5;
+    resize: none;
+    border-radius: 12px;
+}
+
+.submit-button {
+    position: relative;
+    display: inline-block;
+    font-weight: 800;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    background-color: #974dc5;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #b261e3;
+    box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
+.set-date {
+    font-family: "Sofia Sans", sans-serif;
+    color: #fff;
+    padding: 8px;
+    background-color: #974dc5;
+    border: 1px solid #974dc5;
+    border-radius: 5px;
+    border-color: #ffff;
+    box-shadow: 0 0 5px #ffff, 0 0 5px #974dc5, 0 0 5px #974dc5;
+    font-size: 16px;
+    outline: none;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.set-date::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+}
+
+
+.set-date:hover {
+    background-color: #fff;
+    border-color: #71269f;
+    color: #71269f;
+}
+
+.set-date:hover::-webkit-calendar-picker-indicator {
+    filter: invert(0);
+}
