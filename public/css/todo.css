@@ -92,6 +92,7 @@ nav a:hover {
     font-family: "Sofia Sans", sans-serif;
     font-size: 3rem;
     color: #974dc5;
+    text-align: center;
 }
 
 .todo-in{
@@ -124,6 +125,7 @@ nav a:hover {
 
 #second{
     margin-top: 0;
+    font-size: 2.5rem;
 }
 
 .checker{
