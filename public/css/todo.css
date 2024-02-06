@@ -68,7 +68,6 @@ nav a:hover {
 .mid-wrapper{
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
     row-gap: 30px;
 }
@@ -81,12 +80,12 @@ nav a:hover {
     column-gap: 20px;
 }
 
-.end{
+.bottom{
     display: flex;
-    justify-content: center;
     flex-direction: column;
     row-gap: 20px;
 }
+
 .question{
     margin-bottom: 0;
     font-family: "Sofia Sans", sans-serif;
@@ -125,27 +124,37 @@ nav a:hover {
 
 #second{
     margin-top: 0;
-    font-size: 2.5rem;
+    font-size: 2rem;
 }
 
 .checker{
+    text-align: center;
     display: flex;
+    row-gap: 2px;
     flex-direction: column;
-    row-gap: 10px;
     justify-content: center;
+    align-items: center;
 }
 
 .inner{
+    width: 97vw;
+    background-color: #d6bee7;
+    align-items: center;
     display: flex;
     flex-direction: row;
     column-gap: 10px;
     font-family: "Sofia Sans", sans-serif;
-    font-size: 1.5rem;
-    color: #974dc5;
+    font-size: 1rem;
+    color: #612a84;
+}
+
+.inner:hover{
+    cursor: pointer;
+    background-color: #974dc5;
+    color: #ffff;
 }
 
 .check-it{
-    margin: 0;
     width: 1.75rem;
     height: 1.75rem;
 }
