@@ -1,0 +1,114 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.logo {
+    display: flex;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    width: 100vw;
+    background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
+    height: 10vh;
+    justify-content: space-between;
+}
+
+.master-text {
+    font-size: 37.5px;
+    position: relative;
+    height: fit-content;
+    font-family: "Stint Ultra Expanded", serif;
+    color: #974dc5;
+    margin-left: 2rem;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 25px;
+    transform: translate(-50%, -60%);
+    font-family: "Marck Script", cursive;
+    color: black;
+}
+
+nav {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    column-gap: 2rem;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+nav a {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.15rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
+.msg{
+    height: 80vh;
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    row-gap: 20px;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.completed{
+    margin: 0px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: #974dc5;
+}
+
+.submit-wrapper{
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    column-gap: 30px;
+}
+
+.submit-button {
+    font-size: 1rem;
+    font-family: "Sofia Sans", sans-serif;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    background-color: #974dc5;
+    border-radius: 10px;
+    width: 150px;
+    height: 40px;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #b261e3;
+    box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
