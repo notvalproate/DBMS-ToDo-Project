@@ -144,48 +144,21 @@ function redirectIfAuthenticated(req, res, next) {
     next();
 }
 
-function allowIfAuthenticated(req, res, next) {
-    let authenticated = false;
-
-    const cookies = req.cookies;
-
-    let token = null;
-
-    if(cookies.ACT) {
-        token = cookies.ACT;
-    } else {
-        return res.redirect("/login");
-    }
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-        if(!err) {
-            authenticated = true;
-        }
-    });
-
-    if(!authenticated) {
-        return res.redirect("/login");
-    }
-    
-    next();
-}
-
-
 app.delete("/logout", (req, res) => {
     res.sendStatus(204);
 });
 
 // GET REQUESTS FOR PAGES
 
-app.get("/diary", allowIfAuthenticated, (req, res) => {
+app.get("/diary", authenticateToken, (req, res) => {
     res.render("diary");
 })
 
-app.get("/todo", allowIfAuthenticated, (req, res) => {
+app.get("/todo", authenticateToken, (req, res) => {
     res.render("todo");
 })
 
-app.get("/message", allowIfAuthenticated, (req, res) => {
+app.get("/message", authenticateToken, (req, res) => {
     res.render("send");
 })
 
