@@ -2,12 +2,16 @@ const mysql = require("mysql2");
 require("dotenv").config();
 
 const queries = {
+    // USER TABLE QUERIES
+
     CreateUserTable :
     `
     CREATE TABLE IF NOT EXISTS user (
         userid INT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(16) UNIQUE NOT NULL,
-        password VARCHAR(128) NOT NULL
+        password VARCHAR(128) NOT NULL,
+        total_tasks INT NOT NULL DEFAULT 0,
+        current_mood INT NOT NULL DEFAULT 3 CHECK(current_mood >= 0 and current_mood <= 5)
     );
     `,
     
@@ -21,6 +25,18 @@ const queries = {
     `
     SELECT * FROM user WHERE username = ?
     `,
+
+    // TASK TABLE QUERIES
+    
+    CreateTaskTable:
+    `
+    CREATE TABLE IF NOT EXISTS tasks (
+        userid INT NOT NULL,
+        task VARCHAR(100) NOT NULL,
+        completed BIT(1) NOT NULL DEFAULT b'0',
+        FOREIGN KEY (userid) REFERENCES user(userid)
+    );
+    `
 };
 
 
@@ -38,6 +54,7 @@ class DatabaseManager {
 
     async createTables() {
         await this.pool.query(queries.CreateUserTable);
+        await this.pool.query(queries.CreateTaskTable);
     }
 
     async createUser(username, password) {
