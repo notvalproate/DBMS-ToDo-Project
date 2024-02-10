@@ -46,6 +46,8 @@ $(document).ready(() => {
     const passwordAlert = $("#password-match");
     const usernameAlert = $("#username-match");
 
+    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/;
+    const passwordStrong = $("#password-strong");
     let passwordMatching = false;
 
     usernameInput.on("input", (e) => {
@@ -59,6 +61,14 @@ $(document).ready(() => {
         if(e.target.value.length === 0) {
             repasswordInputWrapper.removeClass("password-wrong")
             passwordAlert.addClass("opacity-zero");
+        }
+
+        const strongEnough = passwordRegex.test($("#password").val());
+
+        if(!strongEnough) {
+            passwordStrong.removeClass("opacity-zero");
+        } else {
+            passwordStrong.addClass("opacity-zero");
         }
 
         if($("#password").val() !== $("#repassword").val()) {
@@ -85,6 +95,12 @@ $(document).ready(() => {
         e.preventDefault();
 
         if($("#username").val().length === 0) {
+            return;
+        }
+
+        const strongEnough = passwordRegex.test($("#password").val());
+
+        if(!strongEnough) {
             return;
         }
 

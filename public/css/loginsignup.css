@@ -64,6 +64,7 @@ body {
 }
 
 .input-wrapper {
+    position: relative;
     display: flex;
     border-radius: 10px;
 }
@@ -116,6 +117,14 @@ body {
 
 .icons {
     color: #974dc5 !important;
+}
+
+.password-strong {
+    width: 300px;
+    position: absolute;
+    top: 50%;
+    left: 105%;
+    transform: translate(0%, -50%);
 }
 
 .password-wrong {
