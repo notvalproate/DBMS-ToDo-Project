@@ -31,12 +31,38 @@ const queries = {
     CreateTaskTable:
     `
     CREATE TABLE IF NOT EXISTS tasks (
+        taskid INT PRIMARY KEY AUTO_INCREMENT,
         userid INT NOT NULL,
         task VARCHAR(100) NOT NULL,
         completed BIT(1) NOT NULL DEFAULT b'0',
         FOREIGN KEY (userid) REFERENCES user(userid)
     );
+    `,
+
+    CreateNewTask:
     `
+    INSERT INTO tasks (userid, task)     
+    VALUES (?, ?)
+    `,
+
+    UpdateTaskCompletion:
+    `
+    UPDATE tasks
+    SET completed = ?
+    WHERE taskid = ?
+    `,
+
+    CreateTaskTrigger:
+    `
+    CREATE TRIGGER update_total_tasks
+    AFTER INSERT ON tasks
+    FOR EACH ROW
+    BEGIN
+        UPDATE user
+        SET total_tasks = (SELECT COUNT(*) FROM tasks WHERE userid = NEW.userid)
+        WHERE userid = NEW.userid;
+    END;
+    `,
 };
 
 
@@ -55,11 +81,12 @@ class DatabaseManager {
     async createTables() {
         await this.pool.query(queries.CreateUserTable);
         await this.pool.query(queries.CreateTaskTable);
+        await this.pool.query(queries.CreateTaskTrigger);
     }
 
     async createUser(username, password) {
         try {
-            const [result] = await this.pool.query(queries.CreateNewUser, [username, password]);
+            await this.pool.query(queries.CreateNewUser, [username, password]);
         } catch (error) {
             console.error('Error inserting user:', error.message);
         }
@@ -84,6 +111,24 @@ class DatabaseManager {
         } catch (error) {
             console.error('Error retrieving user by username:', error.message);
             return null; 
+        }
+    }
+
+    async createTask(username, task) {
+        try {
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            await this.pool.query(queries.CreateNewTask, [userResult.userid, task]);
+        } catch (error) {
+            console.error('Error inserting task:', error.message);
+        }
+    }
+
+    async updateTaskCompletion(taskid, isCompleted) {
+        try {
+            await this.pool.query(queries.UpdateTaskCompletion, [isCompleted, taskid]);
+        } catch (error) {
+            console.error('Error updating task completion status:', error.message);
         }
     }
 };
