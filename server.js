@@ -6,11 +6,13 @@ const jwt = require("jsonwebtoken");
 const cookieParser = require('cookie-parser')
 require("dotenv").config();
 
+// Database
+const DatabaseManager = require('./database');
+
+let DatabaseHandler = new DatabaseManager();
+
 // Server Setup
 const app = express();
-
-let users = [];
-
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -35,9 +37,9 @@ app.get("/signup", redirectIfAuthenticated, (req, res) => {
 
 
 app.post("/signup", async (req, res) => {
-    const user = users.find((user) => user.username === req.body.username);
+    const userExists = await DatabaseHandler.doesUsernameExist(req.body.username);
 
-    if(user != null) {
+    if(userExists) {
         res.status(400).render("signup");
         return;
     }
@@ -45,10 +47,7 @@ app.post("/signup", async (req, res) => {
     try {
         const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
-        users.push({
-            username: req.body.username,
-            password: hashedPassword,
-        });
+        await DatabaseHandler.createUser(req.body.username, hashedPassword);
 
         res.status(201).render("signupresult", { successful: true });
     } catch (e) {
@@ -57,15 +56,8 @@ app.post("/signup", async (req, res) => {
 });
 
 
-app.post("/usernameExists", (req, res) => {
-    const user = users.find((user) => user.username === req.body.username);
-
-    if(user != null) {
-        res.json({ exists: true });
-        return;
-    }
-
-    res.json({ exists: false });
+app.post("/usernameExists", async (req, res) => {
+    res.json({ exists: await DatabaseHandler.doesUsernameExist(req.body.username) });
 })
 
 
@@ -75,15 +67,17 @@ app.get("/login", redirectIfAuthenticated, (req, res) => {
 
 
 app.post("/login", async (req, res) => {
-    const user = users.find((user) => user.username === req.body.username);
+    const userExists = await DatabaseHandler.doesUsernameExist(req.body.username);
 
-    if (user == null) {
+    if (!userExists) {
         return res.status(400).send("Username or password is incorrect!");
     }
 
+    const user = await DatabaseHandler.getUserByUsername(req.body.username);
+
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
@@ -152,8 +146,6 @@ function redirectIfAuthenticated(req, res, next) {
 
 
 app.delete("/logout", (req, res) => {
-    const refreshToken = req.body.token;
-    refreshTokens = refreshTokens.filter((token) => token !== refreshToken);
     res.sendStatus(204);
 });
 
