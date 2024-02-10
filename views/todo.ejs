@@ -16,23 +16,11 @@
     <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
 </head>
 
-<header class="begin">
-    <div class="header">
-        <div class="logo">
-            <h1 class="master-text">Master
-                <span class="task-text">Task</span>
-            </h1>
-        </div>
-        <nav>
-            <a href="#">Home</a>
-            <a href="#">Diary</a>
-            <a href="#">Send a Message</a>
-            <a href="#">My Logs</a>
-        </nav>
-    </div>
-</header>
-
 <body>
+    <header class="begin">
+        <%- include('partials/_nav.ejs') %>
+    </header>
+
     <div class="home-wrapper">
         <div class="mid-wrapper">
             <h2 class="question">What do you want to do today?</h2>

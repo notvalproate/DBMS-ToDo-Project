@@ -149,8 +149,18 @@ app.delete("/logout", (req, res) => {
     res.sendStatus(204);
 });
 
+// GET REQUESTS FOR PAGES
+
 app.get("/diary", (req, res) => {
     res.render("diary");
+})
+
+app.get("/todo", (req, res) => {
+    res.render("todo");
+})
+
+app.get("/message", (req, res) => {
+    res.render("send");
 })
 
 app.listen(3000, () => {
