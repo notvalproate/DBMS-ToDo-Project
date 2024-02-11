@@ -121,6 +121,8 @@ class DatabaseManager {
         await this.pool.query(queries.CreateTaskTrigger);
     }
 
+    // USER QUERIES
+
     async createUser(username, password) {
         try {
             await this.pool.query(queries.CreateNewUser, [username, password]);
@@ -150,6 +152,8 @@ class DatabaseManager {
             return null; 
         }
     }
+
+    // TASK QUERIES
 
     async createTask(username, task) {
         try {

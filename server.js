@@ -150,15 +150,15 @@ app.delete("/logout", (req, res) => {
 
 // GET REQUESTS FOR PAGES
 
-app.get("/diary", authenticateToken, (req, res) => {
+app.get("/diary", authenticateToken, async (req, res) => {
     res.render("diary");
 })
 
-app.get("/todo", authenticateToken, (req, res) => {
+app.get("/todo", authenticateToken, async (req, res) => {
     res.render("todo");
 })
 
-app.get("/message", authenticateToken, (req, res) => {
+app.get("/message", authenticateToken, async (req, res) => {
     res.render("send");
 })
 
