@@ -18,12 +18,12 @@ const queries = {
     CreateNewUser: 
     `
     INSERT INTO user (username, password) 
-    VALUES (?, ?)
+    VALUES (?, ?);
     `,
 
     FindWithUsername:
     `
-    SELECT * FROM user WHERE username = ?
+    SELECT * FROM user WHERE username = ?;
     `,
 
     // TASK TABLE QUERIES
@@ -34,7 +34,7 @@ const queries = {
         taskid INT PRIMARY KEY AUTO_INCREMENT,
         userid INT NOT NULL,
         task VARCHAR(100) NOT NULL,
-        task_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        task_date DATE NOT NULL DEFAULT (CURRENT_DATE),
         completed BIT(1) NOT NULL DEFAULT b'0',
         FOREIGN KEY (userid) REFERENCES user(userid)
     );
@@ -43,25 +43,55 @@ const queries = {
     CreateNewTask:
     `
     INSERT INTO tasks (userid, task)     
-    VALUES (?, ?)
+    VALUES (?, ?);
     `,
 
     UpdateTaskCompletion:
     `
     UPDATE tasks
     SET completed = ?
-    WHERE taskid = ?
+    WHERE taskid = ?;
     `,
 
     GetTasksForCurrentDate:
     `
     SELECT * FROM tasks
-    WHERE task_date = CURRENT_DATE
+    WHERE task_date = CURRENT_DATE and userid = ?;
+    `,
+
+    GetTotalTasksInLast7Days:
+    `
+    SELECT COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
+    `,
+
+    GetTotalTasksSumForLast7Days:
+    `
+    SELECT task_date, COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+        GROUP BY task_date;
+    `,
+
+    GetTotalTasksCompletedInLast7Days:
+    `
+    SELECT COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
+    `,
+
+    GetCompletedTasksSumForLast7Days:
+    `
+    SELECT task_date, COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+        GROUP BY task_date;
     `,
 
     CreateTaskTrigger:
     `
-    CREATE TRIGGER update_total_tasks
+    CREATE TRIGGER IF NOT EXISTS update_total_tasks
     AFTER INSERT ON tasks
     FOR EACH ROW
     BEGIN
@@ -139,12 +169,38 @@ class DatabaseManager {
         }
     }
 
-    async getTasksForCurrentDate() {
+    async getTasksForCurrentDate(username) {
         try {
-            const [rows] = await this.pool.query(queries.GetTasksForCurrentDate);
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            const [rows] = await this.pool.query(queries.GetTasksForCurrentDate, [userResult.userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving tasks for the current date:', error.message);
+            return [];
+        }
+    }
+
+    async getTotalTasksSumForLast7Days(username) {
+        try {
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast7Days, [userResult.userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return [];
+        }
+    }
+
+    async getCompletedTasksSumForLast7Days(username) {
+        try {
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            const [rows] = await this.pool.query(queries.getCompletedTasksSumForLast7Days, [userResult.userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
             return [];
         }
     }
