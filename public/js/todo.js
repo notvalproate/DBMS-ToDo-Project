@@ -3,6 +3,50 @@ $(document).ready(() => {
     const todoInput = $('.todo-in');
     const checkerDiv = $('.checker');
 
+    $.ajax({
+        type: "POST",
+        url: "/getTodaysTodos",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: (todaysTodos) => {
+            for(let i = 0; i < todaysTodos.length; i++) {
+                let checked = "checked";
+
+                if(!todaysTodos[i].completed.data[0]) {
+                    checked = "";
+                }
+
+                checkerDiv.append(`
+                <div class="inner">
+                    <input type="checkbox" class="check-it" id="taskid${todaysTodos[i].taskid}" ${checked}>
+                    <label for="taskid${todaysTodos[i].taskid}">${todaysTodos[i].task}</label>
+                </div>
+                `);
+
+                $(`#taskid${todaysTodos[i].taskid}`).click(() => {
+                    console.log("added");
+    
+                    let checked = false;
+                    
+                    if ($(`#taskid${todaysTodos[i].taskid}`).is(':checked')) {
+                        checked = true;
+                    }
+    
+                    $.ajax({
+                        type: "POST",
+                        url: "/setTodo",
+                        data: JSON.stringify({ taskid: todaysTodos[i].taskid, isCompleted: checked }),
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: (data) => {
+                            console.log(data);
+                        },
+                    });
+                })
+            }
+        },
+    });
+
     addButton.click(() => {
         const taskText = todoInput.val();
 
@@ -39,7 +83,7 @@ $(document).ready(() => {
                             console.log(data);
                         },
                     });
-                })
+                });
             },
         });
     })

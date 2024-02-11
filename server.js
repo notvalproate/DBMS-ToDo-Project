@@ -156,11 +156,13 @@ app.get("/diary", authenticateToken, async (req, res) => {
 })
 
 app.get("/todo", authenticateToken, async (req, res) => {
+    res.render("todo");
+})
+
+app.post("/getTodaysTodos", authenticateToken, async (req, res) => {
     const todaysTodos = await DatabaseHandler.getTasksForCurrentDate(req.user.username);
 
-    console.log(todaysTodos);
-
-    res.render("todo");
+    res.json(todaysTodos);
 })
 
 app.post("/addTodo", authenticateToken, async (req, res) => {
