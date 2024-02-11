@@ -181,6 +181,18 @@ class DatabaseManager {
         }
     }
 
+    async getTotalTasksInLast7Days(username) {
+        try {
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            const [[rows]] = await this.pool.query(queries.getTotalTasksInLast7Days, [userResult.userid]);
+            return rows.tasks_sum;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return 0;
+        }
+    }
+
     async getTotalTasksSumForLast7Days(username) {
         try {
             const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
@@ -190,6 +202,18 @@ class DatabaseManager {
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
             return [];
+        }
+    }
+
+    async getTotalTasksCompletedInLast7Days(username) {
+        try {
+            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            const [[rows]] = await this.pool.query(queries.getTotalTasksCompletedInLast7Days, [userResult.userid]);
+            return rows.tasks_sum;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return 0;
         }
     }
 
