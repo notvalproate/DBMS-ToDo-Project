@@ -8,6 +8,7 @@ require("dotenv").config();
 
 // Database
 const DatabaseManager = require('./database');
+const { authPlugins } = require("mysql2");
 
 let DatabaseHandler = new DatabaseManager();
 
@@ -77,7 +78,7 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '15s' });
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
@@ -156,6 +157,22 @@ app.get("/diary", authenticateToken, async (req, res) => {
 
 app.get("/todo", authenticateToken, async (req, res) => {
     res.render("todo");
+})
+
+app.post("/getTodaysTodos", authenticateToken, async (req, res) => {
+    const todaysTodos = await DatabaseHandler.getTasksForCurrentDate(req.user.username);
+
+    res.json(todaysTodos);
+})
+
+app.post("/addTodo", authenticateToken, async (req, res) => {
+    const taskCreated = await DatabaseHandler.createTask(req.user.username, req.body.taskText);
+    res.status(201).json(taskCreated);
+})
+
+app.post("/setTodo", authenticateToken, async (req, res) => {
+    await DatabaseHandler.updateTaskCompletion(req.body.taskid, req.body.isCompleted);
+    res.status(201).send("Task set successfully");
 })
 
 app.get("/message", authenticateToken, async (req, res) => {

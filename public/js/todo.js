@@ -1,26 +1,90 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.querySelector('.fa-circle-plus');
-    const todoInput = document.querySelector('.todo-in');
-    const checkerDiv = document.querySelector('.checker');
+$(document).ready(() => {
+    const addButton = $('.fa-circle-plus');
+    const todoInput = $('.todo-in');
+    const checkerDiv = $('.checker');
 
-    addButton.addEventListener('click', function () {
-        const taskText = todoInput.value;
+    $.ajax({
+        type: "POST",
+        url: "/getTodaysTodos",
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: (todaysTodos) => {
+            for(let i = 0; i < todaysTodos.length; i++) {
+                let checked = "checked";
 
-        const newTaskDiv = document.createElement('div');
-        newTaskDiv.classList.add('inner');
+                if(!todaysTodos[i].completed.data[0]) {
+                    checked = "";
+                }
 
-        const newCheckbox = document.createElement('input');
-        newCheckbox.type = 'checkbox';
-        newCheckbox.classList.add('check-it');
-        newCheckbox.name = 'checkbox';
+                checkerDiv.append(`
+                <div class="inner">
+                    <input type="checkbox" class="check-it" id="taskid${todaysTodos[i].taskid}" ${checked}>
+                    <label for="taskid${todaysTodos[i].taskid}">${todaysTodos[i].task}</label>
+                </div>
+                `);
 
-        const newLabel = document.createElement('label');
-        newLabel.textContent = taskText;
-
-        newTaskDiv.appendChild(newCheckbox);
-        newTaskDiv.appendChild(newLabel);
-        checkerDiv.appendChild(newTaskDiv);
-
-        todoInput.value = '';
+                $(`#taskid${todaysTodos[i].taskid}`).click(() => {
+                    console.log("added");
+    
+                    let checked = false;
+                    
+                    if ($(`#taskid${todaysTodos[i].taskid}`).is(':checked')) {
+                        checked = true;
+                    }
+    
+                    $.ajax({
+                        type: "POST",
+                        url: "/setTodo",
+                        data: JSON.stringify({ taskid: todaysTodos[i].taskid, isCompleted: checked }),
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: (data) => {
+                            console.log(data);
+                        },
+                    });
+                })
+            }
+        },
     });
+
+    addButton.click(() => {
+        const taskText = todoInput.val();
+
+        $.ajax({
+            type: "POST",
+            url: "/addTodo",
+            data: JSON.stringify({ taskText: taskText }),
+            contentType: "application/json; charset=utf-8",
+            traditional: true,
+            success: (data) => {
+                checkerDiv.append(`
+                <div class="inner">
+                    <input type="checkbox" class="check-it" id="taskid${data.taskid}">
+                    <label for="taskid${data.taskid}">${taskText}</label>
+                </div>
+                `);
+
+                $(`#taskid${data.taskid}`).click(() => {
+                    console.log("added");
+
+                    let checked = false;
+                    
+                    if ($(`#taskid${data.taskid}`).is(':checked')) {
+                        checked = true;
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/setTodo",
+                        data: JSON.stringify({ taskid: data.taskid, isCompleted: checked }),
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: (data) => {
+                            console.log(data);
+                        },
+                    });
+                });
+            },
+        });
+    })
 });
