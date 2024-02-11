@@ -155,7 +155,17 @@ app.get("/diary", authenticateToken, async (req, res) => {
 })
 
 app.get("/todo", authenticateToken, async (req, res) => {
+    const todaysTodos = DatabaseHandler.getTasksForCurrentDate(req.user.username);
+
+    console.log(todaysTodos);
+
     res.render("todo");
+})
+
+app.post("/addTodo", authenticateToken, async (req, res) => {
+    DatabaseHandler.createTask(req.user.username, req.body.taskText);
+
+    res.status(201).send("Added todo successfully!");
 })
 
 app.get("/message", authenticateToken, async (req, res) => {

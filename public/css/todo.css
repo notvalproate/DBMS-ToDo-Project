@@ -114,12 +114,12 @@ nav a:hover {
 .fa-solid{
     font-size: 2rem;
     color: #caa7e1;
-    ;
 }
 
 .fa-solid:hover{
     font-size: 2rem;
     color: #974dc5;
+    cursor: pointer;
 }
 
 #second{

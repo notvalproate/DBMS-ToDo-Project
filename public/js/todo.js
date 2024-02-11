@@ -1,26 +1,18 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const addButton = document.querySelector('.fa-circle-plus');
-    const todoInput = document.querySelector('.todo-in');
-    const checkerDiv = document.querySelector('.checker');
+$(document).ready(() => {
+    const addButton = $('.fa-circle-plus');
+    const todoInput = $('.todo-in');
+    const checkerDiv = $('.checker');
 
-    addButton.addEventListener('click', function () {
-        const taskText = todoInput.value;
+    addButton.click(() => {
+        const taskText = todoInput.val();
 
-        const newTaskDiv = document.createElement('div');
-        newTaskDiv.classList.add('inner');
 
-        const newCheckbox = document.createElement('input');
-        newCheckbox.type = 'checkbox';
-        newCheckbox.classList.add('check-it');
-        newCheckbox.name = 'checkbox';
 
-        const newLabel = document.createElement('label');
-        newLabel.textContent = taskText;
-
-        newTaskDiv.appendChild(newCheckbox);
-        newTaskDiv.appendChild(newLabel);
-        checkerDiv.appendChild(newTaskDiv);
-
-        todoInput.value = '';
-    });
+        checkerDiv.append(`
+        <div class="inner">
+            <input type="checkbox" class="check-it">
+            <label>${taskText}</label>
+        </div>
+        `);
+    })
 });
