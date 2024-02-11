@@ -4,7 +4,7 @@ require("dotenv").config();
 const queries = {
     // USER TABLE QUERIES
 
-    CreateUserTable :
+    CreateUserTable:
     `
     CREATE TABLE IF NOT EXISTS user (
         userid INT PRIMARY KEY AUTO_INCREMENT,
@@ -15,13 +15,13 @@ const queries = {
     );
     `,
     
-    CreateNewUser : 
+    CreateNewUser: 
     `
     INSERT INTO user (username, password) 
     VALUES (?, ?)
     `,
 
-    FindWithUsername :
+    FindWithUsername:
     `
     SELECT * FROM user WHERE username = ?
     `,
@@ -34,6 +34,7 @@ const queries = {
         taskid INT PRIMARY KEY AUTO_INCREMENT,
         userid INT NOT NULL,
         task VARCHAR(100) NOT NULL,
+        task_date DATE NOT NULL DEFAULT CURRENT_DATE,
         completed BIT(1) NOT NULL DEFAULT b'0',
         FOREIGN KEY (userid) REFERENCES user(userid)
     );
@@ -50,6 +51,12 @@ const queries = {
     UPDATE tasks
     SET completed = ?
     WHERE taskid = ?
+    `,
+
+    GetTasksForCurrentDate:
+    `
+    SELECT * FROM tasks
+    WHERE task_date = CURRENT_DATE
     `,
 
     CreateTaskTrigger:
@@ -129,6 +136,16 @@ class DatabaseManager {
             await this.pool.query(queries.UpdateTaskCompletion, [isCompleted, taskid]);
         } catch (error) {
             console.error('Error updating task completion status:', error.message);
+        }
+    }
+
+    async getTasksForCurrentDate() {
+        try {
+            const [rows] = await this.pool.query(queries.GetTasksForCurrentDate);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving tasks for the current date:', error.message);
+            return [];
         }
     }
 };
