@@ -46,6 +46,12 @@ const queries = {
     VALUES (?, ?);
     `,
 
+    GetTaskById:
+    `
+    SELECT * FROM tasks
+    WHERE taskid = ?
+    `,
+
     UpdateTaskCompletion:
     `
     UPDATE tasks
@@ -205,7 +211,11 @@ class DatabaseManager {
         try {
             const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
 
-            await this.pool.query(queries.CreateNewTask, [userResult.userid, task]);
+            const [result] = await this.pool.query(queries.CreateNewTask, [userResult.userid, task]);
+
+            const [[insertedTask]] = await this.pool.query(queries.GetTaskById, [result.insertId]);
+
+            return insertedTask;
         } catch (error) {
             console.error('Error inserting task:', error.message);
         }

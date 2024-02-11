@@ -8,6 +8,7 @@ require("dotenv").config();
 
 // Database
 const DatabaseManager = require('./database');
+const { authPlugins } = require("mysql2");
 
 let DatabaseHandler = new DatabaseManager();
 
@@ -155,7 +156,7 @@ app.get("/diary", authenticateToken, async (req, res) => {
 })
 
 app.get("/todo", authenticateToken, async (req, res) => {
-    const todaysTodos = DatabaseHandler.getTasksForCurrentDate(req.user.username);
+    const todaysTodos = await DatabaseHandler.getTasksForCurrentDate(req.user.username);
 
     console.log(todaysTodos);
 
@@ -163,9 +164,13 @@ app.get("/todo", authenticateToken, async (req, res) => {
 })
 
 app.post("/addTodo", authenticateToken, async (req, res) => {
-    DatabaseHandler.createTask(req.user.username, req.body.taskText);
+    const taskCreated = await DatabaseHandler.createTask(req.user.username, req.body.taskText);
+    res.status(201).json(taskCreated);
+})
 
-    res.status(201).send("Added todo successfully!");
+app.post("/setTodo", authenticateToken, async (req, res) => {
+    await DatabaseHandler.updateTaskCompletion(req.body.taskid, req.body.isCompleted);
+    res.status(201).send("Task set successfully");
 })
 
 app.get("/message", authenticateToken, async (req, res) => {
