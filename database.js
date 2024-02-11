@@ -100,6 +100,51 @@ const queries = {
         WHERE userid = NEW.userid;
     END;
     `,
+
+    // DIARY TABLE QUERIES
+
+    CreateDiaryTable:
+    `
+    CREATE TABLE IF NOT EXISTS diarys (
+        userid INT NOT NULL,
+        content NVARCHAR(2000) NOT NULL,
+        mood INT NOT NULL CHECK(mood >= 1 AND mood <= 5),
+        diary_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+        FOREIGN KEY (userid) REFERENCES user(userid)
+    );
+    `,
+
+    CreateNewDiaryEntry:
+    `
+    INSERT INTO diarys (userid, content, mood)
+    VALUES (?, ?, ?);
+    `,
+
+    GetDiaryEntriesByUserIdLast30Days:
+    `
+    SELECT * FROM diarys
+    WHERE userid = ? AND diary_date >= CURDATE() - INTERVAL 30 DAY;
+    `,
+
+    GetAverageMoodLast7Days:
+    `
+    SELECT AVG(mood) as average_mood
+    FROM diarys
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+    `,
+
+    GetAverageMoodLast30Days:
+    `
+    SELECT AVG(mood) as average_mood
+    FROM diarys
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 29 DAY AND CURDATE()
+    `,
+
+    GetDiariesByUserIdBetweenDates:
+    `
+    SELECT * FROM diarys
+    WHERE userid = ? AND diary_date BETWEEN ? AND ?
+    `,
 };
 
 
@@ -119,6 +164,7 @@ class DatabaseManager {
         await this.pool.query(queries.CreateUserTable);
         await this.pool.query(queries.CreateTaskTable);
         await this.pool.query(queries.CreateTaskTrigger);
+        await this.pool.query(queries.CreateDiaryTable);
     }
 
     // USER QUERIES
@@ -229,6 +275,58 @@ class DatabaseManager {
             return rows;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return [];
+        }
+    }
+
+    // DIARY QUERIES
+
+    async insertDiaryEntry(userid, content, mood) {
+        try {
+            await this.pool.query(queries.InsertDiaryEntry, [userid, content, mood]);
+        } catch (error) {
+            console.error('Error inserting diary entry:', error.message);
+        }
+    }
+
+    async getDiariesByUserIdLast30Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetDiaryEntriesByUserIdLast30Days, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving diaries by userid for the last 30 days:', error.message);
+            return [];
+        }
+    }
+
+    async getAverageMoodLast7Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetAverageMoodLast7Days, [userid]);
+            const averageMood = rows[0] ? rows[0].average_mood : 0;
+            return averageMood;
+        } catch (error) {
+            console.error('Error retrieving average mood for the last 7 days:', error.message);
+            return 0;
+        }
+    }
+
+    async getAverageMoodLast30Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetAverageMoodLast30Days, [userid]);
+            const averageMood = rows[0] ? rows[0].average_mood : 0;
+            return averageMood;
+        } catch (error) {
+            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            return 0;
+        }
+    }
+
+    async getDiariesByUserIdBetweenDates(userid, startDate, endDate) {
+        try {
+            const [rows] = await this.pool.query(queries.GetDiariesByUserIdBetweenDates, [userid, startDate, endDate]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving diaries by userid between dates:', error.message);
             return [];
         }
     }
