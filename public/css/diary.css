@@ -2,6 +2,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
 }
 
 .home-wrapper {
@@ -171,4 +174,52 @@ nav a:hover {
     color: white;
     background-color: #b261e3;
     box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
+.old{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    background: linear-gradient(150deg, #943eca, rgba(128, 55, 173, 0));
+    height: 100vh;
+    width: 100vw;
+    
+}
+
+.each-entry:hover{
+    background-color: white;
+    border-color: #b261e3;
+    box-shadow: 0 0 20px #ffff, 0 0 20px #974dc5, 0 0 20px #ffff;
+    border: 2px solid #b261e3;
+}
+
+.old-diary{
+    color: white;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 3rem;
+    margin-top: 0;
+}
+
+.each-entry{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: white;
+    width: 90vw;
+    height: 20vh;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+.dater{
+    font-size: 20px;
+    color: #974dc5;
+}
+
+p{
+    margin: 0;
+    padding: 0;
 }
