@@ -29,7 +29,7 @@ $(document).ready(() => {
 
                 let date = formatDate(diaries[i].diary_date);
 
-                oldDiaryContainer.append(
+                oldDiaryContainer.prepend(
                     `
                     <div class="each-entry">
                         <div class="diary-title">

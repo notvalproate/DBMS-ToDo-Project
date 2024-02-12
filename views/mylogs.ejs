@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Send a Message Page</title>
-    <link rel="stylesheet" href="public/css/logs.css">
+    <link rel="stylesheet" href="css/logs.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,16 +19,16 @@
         <%- include('partials/_nav.ejs') %>
 
             <div class="msg">
-                <div class="wrapper">
+                <form class="wrapper" method="POST" action="/getLogs">
                     <div class="dater">
-                        <label for="Ask" class="ask-date">Select Date</label>
-                        <input type="date" class="set-date">
+                        <label for="date" class="ask-date">Select Date</label>
+                        <input type="date" class="set-date" id="date" name="date">
                     </div>
 
                     <div class="end">
                         <button class="submit-button" type="submit">Submit</button>
                     </div>
-                </div>
+                </form>
 
                 <div class="part-2">
                     <h2 class="question" id="second">Your To Do list!</h2>

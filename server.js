@@ -215,6 +215,20 @@ app.post("/createMessage", authenticateToken, async (req, res) => {
     res.render("msgsubmit");
 })
 
+// REQUESTS FOR LOGS
+
+app.get("/logs", authenticateToken, async (req, res) => {
+    res.render("mylogs");
+})
+
+app.post("/getLogs", authenticateToken, async (req, res) => {
+    const todos = await DatabaseHandler.getTasksByDate(req.user.userid, req.body.date);
+    const diary = await DatabaseHandler.getDiaryByDate(req.user.userid, req.body.date);
+    const messages = await DatabaseHandler.getMessagesByDate(req.user.userid, req.body.date);
+
+    res.json({ todos: todos, diary: diary, messages: messages });
+})
+
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
 });
