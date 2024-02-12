@@ -79,7 +79,7 @@ app.post("/login", async (req, res) => {
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
             const jwtUser = await DatabaseHandler.getUserByUsernameSafe(req.body.username);
-            const accessToken = jwt.sign(jwtUser, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+            const accessToken = jwt.sign(jwtUser, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");

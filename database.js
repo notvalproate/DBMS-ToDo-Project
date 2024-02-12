@@ -409,7 +409,7 @@ class DatabaseManager {
 
     async getDiaryByDate(userid, date) {
         try {
-            const [rows] = await this.pool.query(queries.GetDiaryByDate, [userid,  date]);
+            const [[rows]] = await this.pool.query(queries.GetDiaryByDate, [userid,  date]);
             return rows;
         } catch (error) {
             console.error('Error retrieving tasks for the current date:', error.message);
