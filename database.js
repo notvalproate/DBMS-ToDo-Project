@@ -151,6 +151,12 @@ const queries = {
     WHERE userid = ? AND diary_date = CURDATE();
     `,
 
+    GetDiaryEntriesByUserIdLast7Days:
+    `
+    SELECT * FROM diarys
+    WHERE userid = ? AND diary_date >= CURDATE() - INTERVAL 6 DAY;
+    `,
+
     GetDiaryEntriesByUserIdLast30Days:
     `
     SELECT * FROM diarys
@@ -331,7 +337,7 @@ class DatabaseManager {
 
     async insertDiaryEntry(userid, content, mood) {
         try {
-            await this.pool.query(queries.InsertDiaryEntry, [userid, content, mood]);
+            await this.pool.query(queries.CreateNewDiaryEntry, [userid, content, mood]);
         } catch (error) {
             console.error('Error inserting diary entry:', error.message);
         }
@@ -354,6 +360,16 @@ class DatabaseManager {
     async getDiariesByUserIdLast30Days(userid) {
         try {
             const [rows] = await this.pool.query(queries.GetDiaryEntriesByUserIdLast30Days, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving diaries by userid for the last 30 days:', error.message);
+            return [];
+        }
+    }
+
+    async getDiariesByUserIdLast7Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetDiaryEntriesByUserIdLast7Days, [userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving diaries by userid for the last 30 days:', error.message);

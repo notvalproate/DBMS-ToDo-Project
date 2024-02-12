@@ -187,6 +187,17 @@ app.get("/diary", authenticateToken, async (req, res) => {
     res.render("diary", { diaryWritten: diaryWritten });
 });
 
+app.post("/addDiaryEntry", authenticateToken, async (req, res) => {
+    await DatabaseHandler.insertDiaryEntry(req.user.userid, req.body.content, parseInt(req.body.mood));
+
+    res.status(201).send("Created diary entry successfully");
+})
+
+app.post("/getPast7Diaries", authenticateToken, async (req, res) => {
+    const diaries = await DatabaseHandler.getDiariesByUserIdLast7Days(req.user.userid);
+    res.json(diaries);
+})
+
 // REQUESTS FOR MESSAGE
 
 app.get("/message", authenticateToken, async (req, res) => {
