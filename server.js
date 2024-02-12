@@ -205,6 +205,14 @@ app.get("/message", authenticateToken, async (req, res) => {
     res.render("send");
 });
 
+app.get("/createMessage", authenticateToken, async (req, res) => {
+    res.redirect("/message");
+})
+
+app.post("/createMessage", authenticateToken, async (req, res) => {
+    res.render("msgsubmit");
+})
+
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");
 });

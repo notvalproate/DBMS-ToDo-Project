@@ -18,7 +18,7 @@
     <div class="home-wrapper">
         <%- include('partials/_nav.ejs') %>
 
-        <div class="msg">
+        <form class="msg" method="POST" action="/createMessage">
             <div class="dater">
                 <label for="Ask" class="ask-date">Select Date</label>
                 <input type="date" class="set-date">
@@ -33,7 +33,7 @@
             <div class="end">
                 <button class="submit-button" type="submit">Submit</button>
             </div>
-        </div>
+        </form>
     </div>
 
 </body>
