@@ -71,6 +71,12 @@ const queries = {
     WHERE taskid = ?
     `,
 
+    GetTaskByDate:
+    `
+    SELECT * FROM tasks
+    WHERE userid = ? AND task_date = ?;
+    `,
+
     UpdateTaskCompletion:
     `
     UPDATE tasks
@@ -134,7 +140,7 @@ const queries = {
         userid INT NOT NULL,
         content NVARCHAR(2000) NOT NULL,
         mood INT NOT NULL CHECK(mood >= 1 AND mood <= 5),
-        diary_date DATE NOT NULL DEFAULT (CURRENT_DATE),
+        diary_date DATE UNIQUE NOT NULL DEFAULT (CURRENT_DATE),
         FOREIGN KEY (userid) REFERENCES user(userid)
     );
     `,
@@ -149,6 +155,12 @@ const queries = {
     `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date = CURDATE();
+    `,
+
+    GetDiaryByDate:
+    `
+    SELECT * FROM diarys
+    WHERE userid = ? AND diary_date = ?;
     `,
 
     GetDiaryEntriesByUserIdLast7Days:
@@ -195,6 +207,12 @@ const queries = {
     );
     `,
 
+    GetMessagesByDate:
+    `
+    SELECT * FROM messages
+    WHERE userid = ? AND reminder_date = ?;
+    `,
+
     CreateNewMessageEntry:
     `
     INSERT INTO messages (userid, content, reminder_date)
@@ -231,10 +249,13 @@ class DatabaseManager {
     async createTables() {
         await this.pool.query(queries.CreateUserTable);
         await this.pool.query(queries.CreateUserView);
+
         await this.pool.query(queries.CreateTaskTable);
         await this.pool.query(queries.CreateTaskView);
         await this.pool.query(queries.CreateTaskTrigger);
+
         await this.pool.query(queries.CreateDiaryTable);
+        
         await this.pool.query(queries.CreateMessageTable);
         await this.pool.query(queries.CreateMessageCheckTrigger);
     }
@@ -318,6 +339,16 @@ class DatabaseManager {
         }
     }
 
+    async getTasksByDate(userid, date) {
+        try {
+            const [rows] = await this.pool.query(queries.GetTaskByDate, [userid,  date]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving tasks for the current date:', error.message);
+            return [];
+        }
+    }
+
     async getTotalTasksInLast7Days(username) {
         try {
             const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
@@ -373,6 +404,16 @@ class DatabaseManager {
             await this.pool.query(queries.CreateNewDiaryEntry, [userid, content, mood]);
         } catch (error) {
             console.error('Error inserting diary entry:', error.message);
+        }
+    }
+
+    async getDiaryByDate(userid, date) {
+        try {
+            const [rows] = await this.pool.query(queries.GetDiaryByDate, [userid,  date]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving tasks for the current date:', error.message);
+            return [];
         }
     }
 
@@ -449,6 +490,16 @@ class DatabaseManager {
             await this.pool.query(queries.CreateNewMessageEntry, [userid, message, date]);
         } catch (error) {
             console.error('Error creating a new message', error.message);
+            return [];
+        }
+    }
+
+    async getMessagesByDate(userid, date) {
+        try {
+            const [rows] = await this.pool.query(queries.GetMessagesByDate, [userid,  date]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving tasks for the current date:', error.message);
             return [];
         }
     }
