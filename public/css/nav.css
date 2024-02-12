@@ -1,0 +1,13 @@
+.logout-button {
+    background: none;
+    border: none;
+    width: fit-content;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.15rem;
+    color: white;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
