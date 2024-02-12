@@ -67,7 +67,18 @@ $(document).ready(() => {
             moodInt = 5;
         }
 
-        let date = '12 February, 2024';
+        const dateObject = new Date();
+
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        const day = dateObject.getDate();
+        const month = months[dateObject.getMonth()];
+        const year = dateObject.getFullYear();
+  
+        const formattedDate = `${day} ${month}, ${year}`;
 
         $.ajax({
             type: "POST",
@@ -76,11 +87,11 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: () => {
-                oldDiaryContainer.append(
+                oldDiaryContainer.prepend(
                     `
                     <div class="each-entry">
                         <div class="diary-title">
-                            <p class="dater">${date}</p>
+                            <p class="dater">${formattedDate}</p>
                             <p class="dater">Feeling: ${feeling}</p>
                         </div>
                         <p>${diaryEntry}</p>
