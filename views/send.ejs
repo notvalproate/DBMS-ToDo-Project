@@ -21,13 +21,12 @@
         <form class="msg" method="POST" action="/createMessage">
             <div class="dater">
                 <label for="Ask" class="ask-date">Select Date</label>
-                <input type="date" class="set-date">
+                <input type="date" class="set-date" name="date">
             </div>
 
             <div class="entry">
                 <label for="Ask" class="ask-date">Write a message</label>
-                <textarea class="enter-msg" id="enter-msg"
-                    placeholder="What do you want to say to your future self?"></textarea>
+                <textarea class="enter-msg" id="enter-msg" name="message" placeholder="What do you want to say to your future self?"></textarea>
             </div>
 
             <div class="end">

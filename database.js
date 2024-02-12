@@ -182,6 +182,24 @@ const queries = {
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date BETWEEN ? AND ?
     `,
+
+    // MESSAGE QUERIES
+
+    CreateMessageTable:
+    `
+    CREATE TABLE IF NOT EXISTS messages (
+        userid INT NOT NULL,
+        content NVARCHAR(2000) NOT NULL,
+        reminder_date DATE NOT NULL,
+        FOREIGN KEY (userid) REFERENCES user(userid)
+    );
+    `,
+
+    CreateNewMessageEntry:
+    `
+    INSERT INTO messages (userid, content, reminder_date)
+    VALUES (?, ?, ?);
+    `,
 };
 
 
@@ -205,6 +223,7 @@ class DatabaseManager {
         await this.pool.query(queries.CreateTaskView);
         await this.pool.query(queries.CreateTaskTrigger);
         await this.pool.query(queries.CreateDiaryTable);
+        await this.pool.query(queries.CreateMessageTable);
     }
 
     // USER QUERIES
@@ -406,6 +425,17 @@ class DatabaseManager {
             return rows;
         } catch (error) {
             console.error('Error retrieving diaries by userid between dates:', error.message);
+            return [];
+        }
+    }
+
+    // MESSAGE QUERIES
+
+    async insertMessageEntry(userid, message, date) {
+        try {
+            await this.pool.query(queries.CreateNewMessageEntry, [userid, message, date]);
+        } catch (error) {
+            console.error('Error creating a new message', error.message);
             return [];
         }
     }

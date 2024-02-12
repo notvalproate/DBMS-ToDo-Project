@@ -210,6 +210,8 @@ app.get("/createMessage", authenticateToken, async (req, res) => {
 })
 
 app.post("/createMessage", authenticateToken, async (req, res) => {
+    await DatabaseHandler.insertMessageEntry(req.user.userid, req.body.message, req.body.date);
+
     res.render("msgsubmit");
 })
 
