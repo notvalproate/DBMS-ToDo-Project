@@ -69,6 +69,7 @@ nav a:hover {
 }
 
 .diary {
+    padding: 4rem 0;
     justify-content: center;
     align-items: center;
     display: flex;
