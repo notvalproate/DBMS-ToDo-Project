@@ -22,10 +22,15 @@ $(document).ready(() => {
             feeling = 'Happy';
         }
 
+        let date = '12 February, 2024';
+
         oldDiaryContainer.append(
             `
             <div class="each-entry">
-                <p class="dater">Feeling: ${feeling}}</p>
+                <div class="diary-title">
+                    <p class="dater">${date}</p>
+                    <p class="dater">Feeling: ${feeling}</p>
+                </div>
                 <p>${diaryEntry}</p>
             </div>
             `
