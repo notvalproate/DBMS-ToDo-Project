@@ -20,6 +20,8 @@
     <div class="home-wrapper">
         <%- include('partials/_nav.ejs') %>
 
+        <% if(!diaryWritten) { %>
+    
         <div class="diary">
             <div class="mood">
                 <label for="Ask" class="ask-diary">Mood Meter</label>
@@ -44,6 +46,8 @@
                 <button class="submit-button" type="submit">Submit</button>
             </div>
         </div>
+
+        <% } %>
     
         <div class="title-wrapper">
             <h1 class="old-diary">Your Diaries</h1>

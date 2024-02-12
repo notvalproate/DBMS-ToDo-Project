@@ -182,7 +182,9 @@ app.post("/getTasksByDate", authenticateToken, async (req, res) => {
 // REQUESTS FOR DIARY
 
 app.get("/diary", authenticateToken, async (req, res) => {
-    res.render("diary");
+    const diaryWritten = await DatabaseHandler.getIfDiaryWrittenToday(req.user.userid);
+
+    res.render("diary", { diaryWritten: diaryWritten });
 });
 
 // REQUESTS FOR MESSAGE

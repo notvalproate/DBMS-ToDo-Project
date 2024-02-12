@@ -145,6 +145,12 @@ const queries = {
     VALUES (?, ?, ?);
     `,
 
+    GetTodaysDiary:
+    `
+    SELECT * FROM diarys
+    WHERE userid = ? AND diary_date = CURDATE();
+    `,
+
     GetDiaryEntriesByUserIdLast30Days:
     `
     SELECT * FROM diarys
@@ -328,6 +334,20 @@ class DatabaseManager {
             await this.pool.query(queries.InsertDiaryEntry, [userid, content, mood]);
         } catch (error) {
             console.error('Error inserting diary entry:', error.message);
+        }
+    }
+
+    async getIfDiaryWrittenToday(userid) {
+        try {
+            const [result] = await this.pool.query(queries.GetTodaysDiary, [userid]);
+
+            if(result.length == 1) {
+                return true;
+            }
+
+            return false;
+        } catch (error) {
+            console.error('Error checking diary entry:', error.message);
         }
     }
 
