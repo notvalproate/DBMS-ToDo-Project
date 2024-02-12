@@ -200,6 +200,18 @@ const queries = {
     INSERT INTO messages (userid, content, reminder_date)
     VALUES (?, ?, ?);
     `,
+
+    CreateMessageCheckTrigger:
+    `
+    CREATE TRIGGER IF NOT EXISTS date_check_message
+    BEFORE INSERT ON messages
+    FOR EACH ROW
+    BEGIN
+        IF NEW.reminder_date <= CURDATE() THEN
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid date!';
+        END IF;
+    END;
+    `
 };
 
 
@@ -224,6 +236,7 @@ class DatabaseManager {
         await this.pool.query(queries.CreateTaskTrigger);
         await this.pool.query(queries.CreateDiaryTable);
         await this.pool.query(queries.CreateMessageTable);
+        await this.pool.query(queries.CreateMessageCheckTrigger);
     }
 
     // USER QUERIES
