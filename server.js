@@ -195,6 +195,9 @@ app.post("/addDiaryEntry", authenticateToken, async (req, res) => {
 
 app.post("/getPast7Diaries", authenticateToken, async (req, res) => {
     const diaries = await DatabaseHandler.getDiariesByUserIdLast7Days(req.user.userid);
+
+    console.log(diaries);
+
     res.json(diaries);
 })
 
