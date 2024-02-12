@@ -20,8 +20,8 @@
 
         <form class="msg" method="POST" action="/createMessage">
             <div class="dater">
-                <label for="Ask" class="ask-date">Select Date</label>
-                <input type="date" class="set-date" name="date">
+                <label for="date" class="ask-date">Select Date</label>
+                <input type="date" class="set-date" name="date" id="date">
             </div>
 
             <div class="entry">
@@ -35,6 +35,12 @@
         </form>
     </div>
 
+    <script>
+        var tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        var tomorrowISOString = tomorrow.toISOString().split('T')[0];
+        document.getElementById("date").setAttribute('min', tomorrowISOString);
+    </script>
 </body>
 
 </html>
