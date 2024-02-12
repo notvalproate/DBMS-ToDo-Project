@@ -78,7 +78,8 @@ app.post("/login", async (req, res) => {
 
     try {
         if (await bcrypt.compare(req.body.password, user.password)) {
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+            const jwtUser = await DatabaseHandler.getUserByUsernameSafe(req.body.username);
+            const accessToken = jwt.sign(jwtUser, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
             res.json({ accessToken: accessToken });
         } else {
             res.status(401).send("Username or password is incorrect!");
@@ -151,33 +152,44 @@ app.delete("/logout", (req, res) => {
 
 // GET REQUESTS FOR PAGES
 
-app.get("/diary", authenticateToken, async (req, res) => {
-    res.render("diary");
-})
+// REQUESTS FOR THE TODOS
 
 app.get("/todo", authenticateToken, async (req, res) => {
     res.render("todo");
-})
+});
 
 app.post("/getTodaysTodos", authenticateToken, async (req, res) => {
     const todaysTodos = await DatabaseHandler.getTasksForCurrentDate(req.user.username);
 
     res.json(todaysTodos);
-})
+});
 
 app.post("/addTodo", authenticateToken, async (req, res) => {
     const taskCreated = await DatabaseHandler.createTask(req.user.username, req.body.taskText);
     res.status(201).json(taskCreated);
-})
+});
 
 app.post("/setTodo", authenticateToken, async (req, res) => {
     await DatabaseHandler.updateTaskCompletion(req.body.taskid, req.body.isCompleted);
     res.status(201).send("Task set successfully");
-})
+});
+
+app.post("/getTasksByDate", authenticateToken, async (req, res) => {
+    const tasks = [{test: "hi"}];
+    res.json(tasks);
+});
+
+// REQUESTS FOR DIARY
+
+app.get("/diary", authenticateToken, async (req, res) => {
+    res.render("diary");
+});
+
+// REQUESTS FOR MESSAGE
 
 app.get("/message", authenticateToken, async (req, res) => {
     res.render("send");
-})
+});
 
 app.listen(3000, () => {
     console.log("Server running at http://localhost:3000");

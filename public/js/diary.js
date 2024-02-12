@@ -1,12 +1,13 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const submitButton = document.querySelector('.submit-button');
-    const moodRange = document.querySelector('.mood-range');
-    const enterDiary = document.querySelector('.enter-diary');
-    const oldDiaryContainer = document.querySelector('.old');
+$(document).ready(() => {
+    const submitButton = $('.submit-button');
+    const moodRange = $('.mood-range');
+    const enterDiary = $('.enter-diary');
+    const oldDiaryContainer = $('.old');
+    const diaryForm = $('.diary');
 
-    submitButton.addEventListener('click', function () {
-        const moodValue = parseInt(moodRange.value);
-        const diaryEntry = enterDiary.value;
+    submitButton.click(() => {
+        const moodValue = parseInt(moodRange.val());
+        const diaryEntry = enterDiary.val();
 
         let feeling = '';
         if (moodValue >= 1 && moodValue <= 25) {
@@ -21,21 +22,17 @@ document.addEventListener('DOMContentLoaded', function () {
             feeling = 'Happy';
         }
 
-        const newEntryDiv = document.createElement('div');
-        newEntryDiv.classList.add('each-entry');
+        oldDiaryContainer.append(
+            `
+            <div class="each-entry">
+                <p class="dater">Feeling: ${feeling}}</p>
+                <p>${diaryEntry}</p>
+            </div>
+            `
+        );
 
-        const moodParagraph = document.createElement('p');
-        moodParagraph.classList.add('dater');
-        moodParagraph.textContent = 'Feeling: ' + feeling;
-        newEntryDiv.appendChild(moodParagraph);
+        diaryForm.remove();
+    })
 
-        const diaryParagraph = document.createElement('p');
-        diaryParagraph.textContent = diaryEntry;
-        newEntryDiv.appendChild(diaryParagraph);
-
-        oldDiaryContainer.appendChild(newEntryDiv);
-
-        moodRange.value = 0;
-        enterDiary.value = '';
-    });
+   
 });

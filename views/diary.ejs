@@ -11,14 +11,16 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Marck+Script&family=Sofia+Sans&family=Stint+Ultra+Expanded&display=swap"
         rel="stylesheet">
-    <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/841b46b139.js" crossorigin="anonymous"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 </head>
 
 <body>
     <div class="home-wrapper">
         <%- include('partials/_nav.ejs') %>
 
-        <div class="diary">
+        <!-- <div class="diary">
             <div class="mood">
                 <label for="Ask" class="ask-diary">Mood Meter</label>
                 <div class="slider">
@@ -42,12 +44,15 @@
                 <button class="submit-button" type="submit">Submit</button>
             </div>
         </div>
-    
-        <div class="old">
+     -->
+        <div class="title-wrapper">
             <h1 class="old-diary">Your Diaries</h1>
         </div>
+        <div class="old">
+        </div>
     </div>
-    <script src="public/js/diary.js"></script>
+
+    <script src="js/diary.js"></script>
 </body>
 
 </html>

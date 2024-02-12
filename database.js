@@ -14,6 +14,13 @@ const queries = {
         current_mood INT NOT NULL DEFAULT 3 CHECK(current_mood >= 0 and current_mood <= 5)
     );
     `,
+
+    CreateUserView:
+    `
+    CREATE OR REPLACE VIEW user_view AS
+    SELECT userid, username, current_mood 
+    FROM user;
+    `,
     
     CreateNewUser: 
     `
@@ -24,6 +31,11 @@ const queries = {
     FindWithUsername:
     `
     SELECT * FROM user WHERE username = ?;
+    `,
+
+    FindWithUsernameSafe:
+    `
+    SELECT * FROM user_view WHERE username = ?;
     `,
 
     // TASK TABLE QUERIES
@@ -40,6 +52,13 @@ const queries = {
     );
     `,
 
+    CreateTaskView:
+    `
+    CREATE OR REPLACE VIEW task_view AS
+    SELECT taskid, task, task_date, completed 
+    FROM tasks;
+    `,
+
     CreateNewTask:
     `
     INSERT INTO tasks (userid, task)     
@@ -48,7 +67,7 @@ const queries = {
 
     GetTaskById:
     `
-    SELECT * FROM tasks
+    SELECT * FROM task_view
     WHERE taskid = ?
     `,
 
@@ -168,7 +187,9 @@ class DatabaseManager {
 
     async createTables() {
         await this.pool.query(queries.CreateUserTable);
+        await this.pool.query(queries.CreateUserView);
         await this.pool.query(queries.CreateTaskTable);
+        await this.pool.query(queries.CreateTaskView);
         await this.pool.query(queries.CreateTaskTrigger);
         await this.pool.query(queries.CreateDiaryTable);
     }
@@ -197,6 +218,17 @@ class DatabaseManager {
     async getUserByUsername(username) {
         try {
             const [rows] = await this.pool.query(queries.FindWithUsername, [username]);
+
+            return rows.length > 0 ? rows[0] : null;
+        } catch (error) {
+            console.error('Error retrieving user by username:', error.message);
+            return null; 
+        }
+    }
+
+    async getUserByUsernameSafe(username) {
+        try {
+            const [rows] = await this.pool.query(queries.FindWithUsernameSafe, [username]);
 
             return rows.length > 0 ? rows[0] : null;
         } catch (error) {
