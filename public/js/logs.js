@@ -59,6 +59,22 @@ $(document).ready(() => {
                 <p class="dater">Feeling: ${feeling}</p>
                 ${diary.content}
                 `);
+
+                // MESSAGE SECTION
+
+                const messages = data.messages;
+
+                for(let i = 0; i < messages.length; i++) {
+
+                    messagesSection.append(
+                    `
+                    <div>
+                        <span class="complete">Message ${i + 1}: </span>
+                        <span class="task-content">${messages[i].content}</span>
+                    </div>
+                    `
+                    );
+                }
             },
         });
     })
