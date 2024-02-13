@@ -213,6 +213,12 @@ const queries = {
     WHERE userid = ? AND reminder_date = ?;
     `,
 
+    GetTodaysMessage:
+    `
+    SELECT * FROM messages
+    WHERE userid = ? AND reminder_date = CURDATE();
+    `,
+
     CreateNewMessageEntry:
     `
     INSERT INTO messages (userid, content, reminder_date)
