@@ -56,7 +56,7 @@ $(document).ready(() => {
 
                 diarySection.append(
                 `
-                <p class="dater">Feeling: ${feeling}</p>
+                <p class="dater-two">Feeling: ${feeling}</p>
                 ${diary.content}
                 `);
 
