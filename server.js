@@ -174,9 +174,9 @@ app.post("/setTodo", authenticateToken, async (req, res) => {
     res.status(201).send("Task set successfully");
 });
 
-app.post("/getTasksByDate", authenticateToken, async (req, res) => {
-    const tasks = [{test: "hi"}];
-    res.json(tasks);
+app.post("/removeTodo", authenticateToken, async (req, res) => {
+    await DatabaseHandler.deleteTask(req.body.taskid);
+    res.status(200).send("Task deleted successfully");
 });
 
 // REQUESTS FOR DIARY

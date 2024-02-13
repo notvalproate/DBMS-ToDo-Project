@@ -89,6 +89,12 @@ const queries = {
     WHERE taskid = ?;
     `,
 
+    DeleteTaskByTaskId:
+    `
+    DELETE FROM tasks
+    WHERE taskid = ?;
+    `,
+
     GetTasksForCurrentDate:
     `
     SELECT * FROM tasks
@@ -340,6 +346,14 @@ class DatabaseManager {
             await this.pool.query(queries.UpdateTaskCompletion, [isCompleted, taskid]);
         } catch (error) {
             console.error('Error updating task completion status:', error.message);
+        }
+    }
+
+    async deleteTask(taskid) {
+        try {
+            await this.pool.query(queries.DeleteTaskByTaskId, [taskid]);
+        } catch (error) {
+            console.error('Error deleting tasks for the taskid:', error.message);
         }
     }
 

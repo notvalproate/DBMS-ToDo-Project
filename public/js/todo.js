@@ -23,15 +23,13 @@ $(document).ready(() => {
                             <div class="cr-input"></div>
                             <span>${todaysTodos[i].task}</span>
                         </label>
-                        <div class="remove-item">
+                        <div class="remove-item" id="remtaskid${todaysTodos[i].taskid}">
                             <i class="fa-solid fa-xmark"></i>
                         </div>
                     </div>
                 `);
 
                 $(`#taskid${todaysTodos[i].taskid}`).click(() => {
-                    console.log("added");
-    
                     let checked = false;
                     
                     if ($(`#taskid${todaysTodos[i].taskid}`).is(':checked')) {
@@ -46,6 +44,19 @@ $(document).ready(() => {
                         traditional: true,
                         success: (data) => {
                             console.log(data);
+                        },
+                    });
+                })
+
+                $(`#remtaskid${todaysTodos[i].taskid}`).click(() => {
+                    $.ajax({
+                        type: "POST",
+                        url: "/removeTodo",
+                        data: JSON.stringify({ taskid: todaysTodos[i].taskid }),
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: (data) => {
+                            $(`#remtaskid${todaysTodos[i].taskid}`).remove();
                         },
                     });
                 })
