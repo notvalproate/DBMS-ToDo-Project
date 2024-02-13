@@ -38,6 +38,11 @@ const queries = {
     SELECT * FROM user_view WHERE username = ?;
     `,
 
+    CreateUserIndex:
+    `
+    CREATE INDEX username_index ON user (username);  
+    `,
+
     // TASK TABLE QUERIES
     
     CreateTaskTable:
@@ -253,17 +258,22 @@ class DatabaseManager {
     }
 
     async createTables() {
-        await this.pool.query(queries.CreateUserTable);
-        await this.pool.query(queries.CreateUserView);
+        try {
+            await this.pool.query(queries.CreateUserTable);
+            await this.pool.query(queries.CreateUserView);
+            await this.pool.query(queries.CreateUserIndex);
 
-        await this.pool.query(queries.CreateTaskTable);
-        await this.pool.query(queries.CreateTaskView);
-        await this.pool.query(queries.CreateTaskTrigger);
+            await this.pool.query(queries.CreateTaskTable);
+            await this.pool.query(queries.CreateTaskView);
+            await this.pool.query(queries.CreateTaskTrigger);
 
-        await this.pool.query(queries.CreateDiaryTable);
-        
-        await this.pool.query(queries.CreateMessageTable);
-        await this.pool.query(queries.CreateMessageCheckTrigger);
+            await this.pool.query(queries.CreateDiaryTable);
+            
+            await this.pool.query(queries.CreateMessageTable);
+            await this.pool.query(queries.CreateMessageCheckTrigger);
+        } catch (error) {
+            console.error('Error creating: ', error.message);
+        }
     }
 
     // USER QUERIES
