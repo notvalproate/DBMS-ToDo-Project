@@ -17,10 +17,13 @@ $(document).ready(() => {
                 }
 
                 checkerDiv.append(`
-                <div class="inner">
-                    <input type="checkbox" class="check-it" id="taskid${todaysTodos[i].taskid}" ${checked}>
-                    <label for="taskid${todaysTodos[i].taskid}">${todaysTodos[i].task}</label>
-                </div>
+                    <div class="item-wrapper">
+                        <label class="cr-wrapper" for="taskid${todaysTodos[i].taskid}">
+                            <input type="checkbox" id="taskid${todaysTodos[i].taskid}" ${checked} />
+                            <div class="cr-input"></div>
+                            <span>${todaysTodos[i].task}</span>
+                        </label>
+                    </div>
                 `);
 
                 $(`#taskid${todaysTodos[i].taskid}`).click(() => {
