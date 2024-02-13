@@ -17,7 +17,7 @@ $(document).ready(() => {
                 }
 
                 checkerDiv.append(`
-                    <div class="item-wrapper">
+                    <div class="item-wrapper" id="wraptaskid${todaysTodos[i].taskid}">
                         <label class="cr-wrapper" for="taskid${todaysTodos[i].taskid}">
                             <input type="checkbox" id="taskid${todaysTodos[i].taskid}" ${checked} />
                             <div class="cr-input"></div>
@@ -56,7 +56,7 @@ $(document).ready(() => {
                         contentType: "application/json; charset=utf-8",
                         traditional: true,
                         success: (data) => {
-                            $(`#remtaskid${todaysTodos[i].taskid}`).remove();
+                            $(`#wraptaskid${todaysTodos[i].taskid}`).remove();
                         },
                     });
                 })
@@ -75,9 +75,15 @@ $(document).ready(() => {
             traditional: true,
             success: (data) => {
                 checkerDiv.append(`
-                <div class="inner">
-                    <input type="checkbox" class="check-it" id="taskid${data.taskid}">
-                    <label for="taskid${data.taskid}">${taskText}</label>
+                <div class="item-wrapper" id="jtaskid${data.taskid}">
+                    <label class="cr-wrapper" for="taskid${data.taskid}">
+                        <input type="checkbox" id="taskid${data.taskid}"/>
+                        <div class="cr-input"></div>
+                        <span>${taskText}</span>
+                    </label>
+                    <div class="remove-item" id="remtaskid${data.taskid}">
+                        <i class="fa-solid fa-xmark"></i>
+                    </div>
                 </div>
                 `);
 
@@ -101,6 +107,19 @@ $(document).ready(() => {
                         },
                     });
                 });
+
+                $(`#remtaskid${data.taskid}`).click(() => {
+                    $.ajax({
+                        type: "POST",
+                        url: "/removeTodo",
+                        data: JSON.stringify({ taskid: data.taskid }),
+                        contentType: "application/json; charset=utf-8",
+                        traditional: true,
+                        success: () => {
+                            $(`#jtaskid${data.taskid}`).remove();
+                        },
+                    });
+                })
             },
         });
     })
