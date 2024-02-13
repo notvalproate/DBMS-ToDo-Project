@@ -23,6 +23,9 @@ $(document).ready(() => {
                             <div class="cr-input"></div>
                             <span>${todaysTodos[i].task}</span>
                         </label>
+                        <div class="remove-item">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
                     </div>
                 `);
 
