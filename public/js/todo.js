@@ -24,7 +24,7 @@ $(document).ready(() => {
                             <span>${todaysTodos[i].task}</span>
                         </label>
                         <div class="remove-item" id="remtaskid${todaysTodos[i].taskid}">
-                            <i class="fa-solid fa-xmark"></i>
+                            <i class="fa-solid fa-trash-can"></i>
                         </div>
                     </div>
                 `);
@@ -82,7 +82,7 @@ $(document).ready(() => {
                         <span>${taskText}</span>
                     </label>
                     <div class="remove-item" id="remtaskid${data.taskid}">
-                        <i class="fa-solid fa-xmark"></i>
+                        <i class="fa-solid fa-trash-can"></i>
                     </div>
                 </div>
                 `);
