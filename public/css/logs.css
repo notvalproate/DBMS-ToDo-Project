@@ -5,6 +5,7 @@ body {
 }
 
 .dater-two{
+    padding: 0;
     margin: 0;
     font-size: 30px;
     color: #974dc5;
@@ -13,7 +14,6 @@ body {
 .home-wrapper {
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
     overflow-x: hidden;
 }
 
@@ -88,7 +88,6 @@ nav a:hover {
     align-items: center;
     display: flex;
     flex-direction: column;
-    row-gap: 30px;
     position: relative;
 }
 
@@ -257,13 +256,22 @@ nav a:hover {
     width: 100vw;
     display: flex;
     position: relative;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
-p{
+.past-text {
     margin: 0;
     font-family: "Sofia Sans", sans-serif;
     color: #b17fd0;
     font-size: 1.25rem;
     padding: 2rem;
+    padding-top: 0.5rem;
+}
+
+.past-value {
+    margin: 0;
+    text-align: center;
+    font-family: "Sofia Sans", sans-serif;
+    color: #965abb;
+    font-size: 2rem;
 }
