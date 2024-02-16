@@ -108,6 +108,13 @@ const queries = {
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
+    GetTotalTasksInLast30Days:
+    `
+    SELECT COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
+    `,
+
     GetTotalTasksSumForLast7Days:
     `
     SELECT task_date, COUNT(taskid) as tasks_sum
@@ -121,6 +128,13 @@ const queries = {
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
+    `,
+
+    GetTotalTasksCompletedInLast30Days:
+    `
+    SELECT COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
     GetCompletedTasksSumForLast7Days:
@@ -379,11 +393,9 @@ class DatabaseManager {
         }
     }
 
-    async getTotalTasksInLast7Days(username) {
+    async getTotalTasksInLast7Days(userid) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
-
-            const [[rows]] = await this.pool.query(queries.getTotalTasksInLast7Days, [userResult.userid]);
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast7Days, [userid]);
             return rows.tasks_sum;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
@@ -391,11 +403,19 @@ class DatabaseManager {
         }
     }
 
-    async getTotalTasksSumForLast7Days(username) {
+    async getTotalTasksInLast30Days(userid) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast30Days, [userid]);
+            return rows.tasks_sum;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return 0;
+        }
+    }
 
-            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast7Days, [userResult.userid]);
+    async getTotalTasksSumForLast7Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast7Days, [userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
@@ -403,11 +423,9 @@ class DatabaseManager {
         }
     }
 
-    async getTotalTasksCompletedInLast7Days(username) {
+    async getTotalTasksCompletedInLast7Days(userid) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
-
-            const [[rows]] = await this.pool.query(queries.getTotalTasksCompletedInLast7Days, [userResult.userid]);
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast7Days, [userid]);
             return rows.tasks_sum;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
@@ -415,11 +433,19 @@ class DatabaseManager {
         }
     }
 
-    async getCompletedTasksSumForLast7Days(username) {
+    async getTotalTasksCompletedInLast30Days(userid) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast30Days, [userid]);
+            return rows.tasks_sum;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return 0;
+        }
+    }
 
-            const [rows] = await this.pool.query(queries.getCompletedTasksSumForLast7Days, [userResult.userid]);
+    async getCompletedTasksSumForLast7Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast7Days, [userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);

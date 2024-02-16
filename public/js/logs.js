@@ -17,10 +17,10 @@ $(document).ready(() => {
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (data) => {
-            averageMoodWeek.html(data.averageMoodWeek);
-            productivityWeek.html(data.productivityWeek);
-            averageMoodMonth.html(data.averageMoodMonth);
-            productivityMonth.html(data.productivityMonth);
+            averageMoodWeek.html(getFeelingFromMoodValue(Math.round(data.averageMoodWeek)));
+            productivityWeek.html(`${(data.productivityWeek).toFixed(2)}%`);
+            averageMoodMonth.html(getFeelingFromMoodValue(Math.round(data.averageMoodMonth)));
+            productivityMonth.html(`${(data.productivityMonth).toFixed(2)}%`);
         },
     });
 
@@ -62,18 +62,7 @@ $(document).ready(() => {
                 const diary = data.diary;
                 const moodValue = diary.mood;
 
-                let feeling = '';
-                if (moodValue === 1) {
-                    feeling = 'Depressed';
-                } else if (moodValue === 2) {
-                    feeling = 'Sad';
-                } else if (moodValue === 3) {
-                    feeling = 'Okay';
-                } else if (moodValue === 4) {
-                    feeling = 'Good';
-                } else if (moodValue === 5) {
-                    feeling = 'Happy';
-                }
+                let feeling = getFeelingFromMoodValue(moodValue);
 
                 diarySection.append(
                 `
@@ -100,3 +89,17 @@ $(document).ready(() => {
         });
     })
 });
+
+function getFeelingFromMoodValue(moodValue) {
+    if (moodValue === 1) {
+        return 'Depressed';
+    } else if (moodValue === 2) {
+        return 'Sad';
+    } else if (moodValue === 3) {
+        return 'Okay';
+    } else if (moodValue === 4) {
+        return 'Good';
+    } else if (moodValue === 5) {
+        return 'Happy';
+    }
+}

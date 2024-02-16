@@ -234,17 +234,28 @@ app.post("/getLogs", authenticateToken, async (req, res) => {
 })
 
 app.post("/getData", authenticateToken, async (req, res) => {
-    const productivityWeek = '100%';
-    const productivityMonth = '100%';
-    const averageMoodWeek = 'Happy';
-    const averageMoodMonth = 'Happy';
+    const averageMoodWeek = await DatabaseHandler.getAverageMoodLast7Days(req.user.userid);
 
-    res.json({ 
+    const totalLastWeek = await DatabaseHandler.getTotalTasksInLast7Days(req.user.userid);
+    const totalCompletedLastWeek = await DatabaseHandler.getTotalTasksCompletedInLast7Days(req.user.userid);
+    const productivityWeek = (totalCompletedLastWeek * 100) / totalLastWeek;
+
+    const averageMoodMonth = await DatabaseHandler.getAverageMoodLast30Days(req.user.userid);
+
+    const totalLastMonth = await DatabaseHandler.getTotalTasksInLast30Days(req.user.userid);
+    const totalCompletedLastMonth = await DatabaseHandler.getTotalTasksCompletedInLast30Days(req.user.userid);
+    const productivityMonth = (totalCompletedLastMonth * 100) / totalLastMonth;
+
+    const obj = { 
         productivityWeek: productivityWeek, 
         productivityMonth: productivityMonth,
         averageMoodWeek: averageMoodWeek,
         averageMoodMonth: averageMoodMonth,
-    });
+    }
+
+    console.log(obj);
+
+    res.json(obj);
 })
 
 app.listen(3000, () => {
