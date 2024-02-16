@@ -234,6 +234,8 @@ app.post("/getLogs", authenticateToken, async (req, res) => {
 })
 
 app.post("/getData", authenticateToken, async (req, res) => {
+    // Get data for the values
+
     const averageMoodWeek = await DatabaseHandler.getAverageMoodLast7Days(req.user.userid);
 
     const totalLastWeek = await DatabaseHandler.getTotalTasksInLast7Days(req.user.userid);
@@ -246,11 +248,19 @@ app.post("/getData", authenticateToken, async (req, res) => {
     const totalCompletedLastMonth = await DatabaseHandler.getTotalTasksCompletedInLast30Days(req.user.userid);
     const productivityMonth = (totalCompletedLastMonth * 100) / totalLastMonth;
 
+    // Get data for the graphs
+
+    const graphTotalTasks = await DatabaseHandler.getTotalTasksSumForLast7Days(req.user.userid);
+    const graphCompletedTasks = await DatabaseHandler.getCompletedTasksSumForLast7Days(req.user.userid);
+
     const obj = { 
         productivityWeek: productivityWeek, 
         productivityMonth: productivityMonth,
         averageMoodWeek: averageMoodWeek,
         averageMoodMonth: averageMoodMonth,
+
+        graphTotalTasks: graphTotalTasks,
+        graphCompletedTasks: graphCompletedTasks,  
     }
 
     console.log(obj);

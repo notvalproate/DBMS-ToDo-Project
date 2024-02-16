@@ -120,4 +120,4 @@ function formatDate(inputDate) {
     const formattedDate = `${day} ${month}, ${year}`;
   
     return formattedDate;
-  }
+}

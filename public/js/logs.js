@@ -6,9 +6,7 @@ $(document).ready(() => {
     const messagesSection = $('#messages');
 
     const averageMoodWeek = $('#average-mood-week');
-    const productivityWeek = $('#productivity-week');
     const averageMoodMonth = $('#average-mood-month');
-    const productivityMonth = $('#productivity-month');
 
     $.ajax({
         type: "POST",
@@ -18,9 +16,15 @@ $(document).ready(() => {
         traditional: true,
         success: (data) => {
             averageMoodWeek.html(getFeelingFromMoodValue(Math.round(data.averageMoodWeek)));
-            productivityWeek.html(`${(data.productivityWeek).toFixed(2)}%`);
+            new numberRush('productivity-week', {
+                maxNumber: Math.round(data.productivityWeek),
+                speed: 15,
+            });
             averageMoodMonth.html(getFeelingFromMoodValue(Math.round(data.averageMoodMonth)));
-            productivityMonth.html(`${(data.productivityMonth).toFixed(2)}%`);
+            new numberRush('productivity-month', {
+                maxNumber: Math.round(data.productivityMonth),
+                speed: 15,
+            });
         },
     });
 
