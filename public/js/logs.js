@@ -1,8 +1,28 @@
 $(document).ready(() => {
     const submitButton = $('.submit-button');
+
     const todoSection = $('#todos');
     const diarySection = $('#diary');
     const messagesSection = $('#messages');
+
+    const averageMoodWeek = $('#average-mood-week');
+    const productivityWeek = $('#productivity-week');
+    const averageMoodMonth = $('#average-mood-month');
+    const productivityMonth = $('#productivity-month');
+
+    $.ajax({
+        type: "POST",
+        url: "/getData",
+        data: JSON.stringify({ date:  $("#date").val() }),
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: (data) => {
+            averageMoodWeek.html(data.averageMoodWeek);
+            productivityWeek.html(data.productivityWeek);
+            averageMoodMonth.html(data.averageMoodMonth);
+            productivityMonth.html(data.productivityMonth);
+        },
+    });
 
     submitButton.click((e) => {
         e.preventDefault();
@@ -18,6 +38,7 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: (data) => {
+
                 // TODO SECTION
                 const todos = data.todos;
 

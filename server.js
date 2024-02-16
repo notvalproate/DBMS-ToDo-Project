@@ -226,7 +226,25 @@ app.post("/getLogs", authenticateToken, async (req, res) => {
     const diary = await DatabaseHandler.getDiaryByDate(req.user.userid, req.body.date);
     const messages = await DatabaseHandler.getMessagesByDate(req.user.userid, req.body.date);
 
-    res.json({ todos: todos, diary: diary, messages: messages });
+    res.json({ 
+        todos: todos, 
+        diary: diary, 
+        messages: messages,
+    });
+})
+
+app.post("/getData", authenticateToken, async (req, res) => {
+    const productivityWeek = '100%';
+    const productivityMonth = '100%';
+    const averageMoodWeek = 'Happy';
+    const averageMoodMonth = 'Happy';
+
+    res.json({ 
+        productivityWeek: productivityWeek, 
+        productivityMonth: productivityMonth,
+        averageMoodWeek: averageMoodWeek,
+        averageMoodMonth: averageMoodMonth,
+    });
 })
 
 app.listen(3000, () => {
