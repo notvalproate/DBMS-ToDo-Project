@@ -201,49 +201,6 @@ function generateFeelingChart(target, moods) {
         ]
     };
 
-    const moodChartOptions = {
-        resposive: true,
-        scales: {
-            x: {
-                ticks: {
-                    font: {
-                        family: 'Sofia Sans',
-                    },
-                    color: "#974dc5",
-                },
-                grid: {
-                    color: "#d6bee7",
-                },
-            },
-            y: {
-                suggestedMin: 1,
-                suggestedMax: 5,
-                ticks: {
-                    callback: ((context, index) => {
-                        return getFeelingFromMoodValue(context);
-                    }),
-                    font: {
-                        family: 'Sofia Sans',
-                    },
-                    color: "#974dc5",
-                },
-                grid: {
-                    color: "#d6bee7",
-                },
-            },
-        },
-        plugins: {
-            legend: {
-                labels: {
-                    font: {
-                        family: 'Sofia Sans',
-                    },
-                    color: "#974dc5",
-                }
-            }
-        },
-    }
-
     const config = {
         type: 'line',
         data: data,
@@ -254,7 +211,7 @@ function generateFeelingChart(target, moods) {
 }
 
 const prodChartOptions = {
-    resposive: true,
+    responsive: true,
     scales: {
         x: {
             ticks: {
@@ -270,6 +227,49 @@ const prodChartOptions = {
         y: {
             beginAtZero: true,
             ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+    },
+    plugins: {
+        legend: {
+            labels: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            }
+        }
+    },
+}
+
+const moodChartOptions = {
+    responsive: true,
+    scales: {
+        x: {
+            ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+        y: {
+            suggestedMin: 1,
+            suggestedMax: 5,
+            ticks: {
+                callback: ((context, index) => {
+                    return getFeelingFromMoodValue(context);
+                }),
                 font: {
                     family: 'Sofia Sans',
                 },
