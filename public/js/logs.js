@@ -25,6 +25,95 @@ $(document).ready(() => {
                 maxNumber: Math.round(data.productivityMonth),
                 speed: 15,
             });
+
+            // CHARTS
+
+            // OPTIONS
+            const options = {
+                resposive: true,
+                scales: {
+                    x: {
+                        ticks: {
+                            font: {
+                                family: 'Sofia Sans',
+                            },
+                            color: "#974dc5",
+                        },
+                        grid: {
+                            color: "#d6bee7",
+                        },
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            font: {
+                                family: 'Sofia Sans',
+                            },
+                            color: "#974dc5",
+                        },
+                        grid: {
+                            color: "#d6bee7",
+                        },
+                    },
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            font: {
+                                family: 'Sofia Sans',
+                            },
+                            color: "#974dc5",
+                        }
+                    }
+                },
+            }
+
+            // PRODUCITIVTY WEEK
+
+            const productivityWeekChart = document.getElementById('productivityWeekChart');
+
+            const taskDatesWeek = data.graphTotalTasks.map(entry => entry.task_date.substring(0, 10));
+            const taskSumsWeek = data.graphTotalTasks.map(entry => entry.tasks_sum);
+            const taskSumsWeekComplete = [];
+
+            let j = 0;
+            for(let i = 0; i < taskDatesWeek.length; i++) {
+                if(taskDatesWeek[i] === (data.graphCompletedTasks[j].task_date).substring(0, 10)) {
+                    taskSumsWeekComplete.push(data.graphCompletedTasks[j].tasks_sum);
+                    j++;
+                    continue;
+                }
+
+                taskSumsWeekComplete.push(0);
+            }           
+
+            const productivityWeekdata = {
+                labels: taskDatesWeek,
+                datasets: [
+                    {
+                        label: 'Total',
+                        data: taskSumsWeek,
+                        borderColor: '#a857da',
+                        backgroundColor: '#a857da',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Completed',
+                        data: taskSumsWeekComplete,
+                        borderColor: '#caa7e1',
+                        backgroundColor: '#caa7e1',
+                        tension: 0.3
+                    }
+                ]
+            };
+
+            const productivityWeekconfig = {
+                type: 'line',
+                data: productivityWeekdata,
+                options: options,
+            };
+
+            new Chart(productivityWeekChart, productivityWeekconfig);
         },
     });
 
