@@ -25,8 +25,13 @@ body {
 
 .ask-diary {
     font-family: "Sofia Sans", sans-serif;
-    font-size: 25px;
-    color: #974dc5;
+    font-size: 2rem;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
     text-align: center;
 }
 
@@ -65,6 +70,10 @@ body {
     width: 25vw;
 }
 
+.mood-range:hover {
+    cursor: pointer;
+}
+
 .fa-face-tired {
     color: #974dc5;
     font-size: 1.5rem;
@@ -99,6 +108,16 @@ body {
     border-color: #974dc5;
     resize: none;
     border-radius: 12px;
+    transition: 200ms;
+}
+
+.enter-diary:hover {
+    box-shadow: 0 0 5px #b261e3;
+}
+
+.enter-diary:focus {
+    outline: none;
+    box-shadow: 0 0 5px #b261e3;
 }
 
 .submit-button{
@@ -113,6 +132,7 @@ body {
     width: 150px;
     height: 40px;
     border: none;
+    transition: 200ms;
 }
 
 .submit-button:hover {
@@ -126,7 +146,7 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding-top: 2rem;
+    padding: 2rem 0;
     row-gap: 20px; 
     background: linear-gradient(150deg, #943eca, rgba(128, 55, 173, 0));
     min-height: 100vh;
