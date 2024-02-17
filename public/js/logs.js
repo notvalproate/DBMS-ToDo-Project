@@ -137,8 +137,15 @@ function generateProductivityChart(target, totalTasks, completedTasks) {
         values1 = totalTasks.map(entry => entry.tasks_sum);
     }
 
+
     j = 0;
     for(let i = 0; i < values1.length; i++) {
+        if(j >= completedTasks.length) {
+            values2.push(0);
+            j++;
+            continue;
+        }
+
         if(dateLabels[i] === (completedTasks[j].task_date).substring(5, 10)) {
             values2.push(completedTasks[j].tasks_sum);
             j++;
@@ -147,6 +154,7 @@ function generateProductivityChart(target, totalTasks, completedTasks) {
 
         values2.push(0);
     }           
+    
 
     const data = {
         labels: dateLabels,
