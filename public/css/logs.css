@@ -30,7 +30,7 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 4rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
@@ -261,9 +261,17 @@ nav a:hover {
     justify-content: space-around;
 }
 
+.past-wrapper {
+    border: 2px #ddbef1 solid;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 20%;
+}
+
 .past-text {
     margin: 0;
     font-family: "Sofia Sans", sans-serif;
+    text-align: center;
     color: #b17fd0;
     font-size: 1.25rem;
     padding: 2rem;
