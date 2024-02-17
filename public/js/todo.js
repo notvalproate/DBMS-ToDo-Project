@@ -1,7 +1,11 @@
 $(document).ready(() => {
+    AOS.init();
+
     const addButton = $('.fa-circle-plus');
     const todoInput = $('.todo-in');
     const checkerDiv = $('.checker');
+
+    let currentDelay = 0;
 
     $.ajax({
         type: "POST",
@@ -17,7 +21,7 @@ $(document).ready(() => {
                 }
 
                 checkerDiv.append(`
-                    <div class="item-wrapper" id="wraptaskid${todaysTodos[i].taskid}">
+                    <div class="item-wrapper" id="wraptaskid${todaysTodos[i].taskid}" data-aos="fade-up" data-aos-delay="${currentDelay}" data-aos-duration="800">
                         <label class="cr-wrapper" for="taskid${todaysTodos[i].taskid}">
                             <input type="checkbox" id="taskid${todaysTodos[i].taskid}" ${checked} />
                             <div class="cr-input"></div>
@@ -28,6 +32,8 @@ $(document).ready(() => {
                         </div>
                     </div>
                 `);
+
+                currentDelay += 150;
 
                 $(`#taskid${todaysTodos[i].taskid}`).click(() => {
                     let checked = false;
@@ -119,7 +125,9 @@ $(document).ready(() => {
                             $(`#jtaskid${data.taskid}`).remove();
                         },
                     });
-                })
+                });
+
+                todoInput.val("");
             },
         });
     })
