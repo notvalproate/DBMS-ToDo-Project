@@ -220,20 +220,36 @@ const queries = {
     `
     SELECT AVG(mood) as average_mood
     FROM diarys
-    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
     GetAverageMoodLast30Days:
     `
     SELECT AVG(mood) as average_mood
     FROM diarys
-    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 29 DAY AND CURDATE()
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
+    `,
+
+    GetMoodPastWeek:
+    `
+    SELECT diary_date, mood
+    FROM diarys
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE()
+    ORDER BY diary_date ASC;
+    `,
+
+    GetMoodPastMonth:
+    `
+    SELECT diary_date, mood
+    FROM diarys
+    WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
+    ORDER BY diary_date ASC;
     `,
 
     GetDiariesByUserIdBetweenDates:
     `
     SELECT * FROM diarys
-    WHERE userid = ? AND diary_date BETWEEN ? AND ?
+    WHERE userid = ? AND diary_date BETWEEN ? AND ?;
     `,
 
     // MESSAGE QUERIES
@@ -562,6 +578,26 @@ class DatabaseManager {
         } catch (error) {
             console.error('Error retrieving average mood for the last 30 days:', error.message);
             return 0;
+        }
+    }
+
+    async getMoodPastWeek(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetMoodPastWeek, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            return [];
+        }
+    }
+
+    async getMoodPastMonth(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetMoodPastMonth, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            return [];
         }
     }
 

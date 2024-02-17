@@ -256,6 +256,9 @@ app.post("/getData", authenticateToken, async (req, res) => {
     const graphTotalTasks30 = await DatabaseHandler.getTotalTasksSumForLast30Days(req.user.userid);
     const graphCompletedTasks30 = await DatabaseHandler.getCompletedTasksSumForLast30Days(req.user.userid);
 
+    const moodPastWeek = await DatabaseHandler.getMoodPastWeek(req.user.userid);
+    const moodPastMonth = await DatabaseHandler.getMoodPastMonth(req.user.userid);
+
     const obj = { 
         productivityWeek: productivityWeek, 
         productivityMonth: productivityMonth,
@@ -266,6 +269,9 @@ app.post("/getData", authenticateToken, async (req, res) => {
         graphCompletedTasks7: graphCompletedTasks7,  
         graphTotalTasks30: graphTotalTasks30,
         graphCompletedTasks30: graphCompletedTasks30,
+
+        moodPastWeek: moodPastWeek,
+        moodPastMonth: moodPastMonth,
     }
 
     console.log(obj);

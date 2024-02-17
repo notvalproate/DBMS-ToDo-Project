@@ -29,6 +29,9 @@ $(document).ready(() => {
             // CHARTS
             generateProductivityChart('productivityWeekChart', data.graphTotalTasks7, data.graphCompletedTasks7);
             generateProductivityChart('productivityMonthChart', data.graphTotalTasks30, data.graphCompletedTasks30);
+
+            generateFeelingChart('moodWeekChart', data.moodPastWeek);
+            generateFeelingChart('moodMonthChart', data.moodPastMonth);
         },
     });
 
@@ -153,13 +156,41 @@ function generateProductivityChart(target, totalTasks, completedTasks) {
     const config = {
         type: 'line',
         data: data,
-        options: chartOptions,
+        options: prodChartOptions,
     };
 
     new Chart(targetChart, config);
 }
 
-const chartOptions = {
+function generateFeelingChart(target, moods) {
+    const targetChart = document.getElementById(target);
+
+    const dateLabels = moods.map(entry => entry.diary_date.substring(5, 10));
+    const values = moods.map(entry => entry.mood);      
+
+    const data = {
+        labels: dateLabels,
+        datasets: [
+            {
+                label: 'Mood',
+                data: values,
+                borderColor: '#a857da',
+                backgroundColor: '#a857da',
+                tension: 0.3
+            },
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: moodChartOptions,
+    };
+
+    new Chart(targetChart, config);
+}
+
+const prodChartOptions = {
     resposive: true,
     scales: {
         x: {
@@ -176,6 +207,47 @@ const chartOptions = {
         y: {
             beginAtZero: true,
             ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+    },
+    plugins: {
+        legend: {
+            labels: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            }
+        }
+    },
+}
+
+const moodChartOptions = {
+    resposive: true,
+    scales: {
+        x: {
+            ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+        y: {
+            ticks: {
+                callback: ((context, index) => {
+                    return getFeelingFromMoodValue(context);
+                }),
                 font: {
                     family: 'Sofia Sans',
                 },
