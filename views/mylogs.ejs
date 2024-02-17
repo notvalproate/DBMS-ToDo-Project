@@ -16,6 +16,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="js/number-rush.js" charset="utf-8"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 </head>
 
 <body>
@@ -27,28 +29,28 @@
                     <h1 class="past-title">Your Stats</h1>
 
                     <div class="past">
-                        <div class="past-wrapper">
+                        <div class="past-wrapper" data-aos="fade-up" data-aos-duration="800">
                             <p class="past-value" id="average-mood-week"></p>
                             <p class="past-text">Your mood this week</p>
                             <div class="past-chart">
                                 <canvas id="moodWeekChart"></canvas>
                             </div>
                         </div>
-                        <div class="past-wrapper">
+                        <div class="past-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                             <p class="past-value"><span id="productivity-week"></span>%</p>
                             <p class="past-text">Your productivity rate this week</p>
                             <div class="past-chart">
                                 <canvas id="productivityWeekChart"></canvas>
                             </div>
                         </div>
-                        <div class="past-wrapper">
+                        <div class="past-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                             <p class="past-value" id="average-mood-month"></p>
                             <p class="past-text">Your mood this month</p>
                             <div class="past-chart">
                                 <canvas id="moodMonthChart"></canvas>
                             </div>
                         </div>
-                        <div class="past-wrapper">
+                        <div class="past-wrapper" data-aos="fade-up" data-aos-duration="800" data-aos-delay="300">
                             <p class="past-value"><span id="productivity-month"></span>%</p>
                             <p class="past-text">Your productivity rate this month</p>
                             <div class="past-chart">
@@ -57,7 +59,7 @@
                         </div>
                     </div>
 
-                    <div class="date-form">
+                    <div class="date-form" data-aos="fade-up" data-aos-duration="800" data-aos-delay="600">
                         <div class="dater">
                             <label for="date" class="ask-date">Select Date</label>
                             <input type="date" class="set-date" id="date" name="date">

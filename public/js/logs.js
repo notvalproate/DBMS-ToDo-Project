@@ -1,4 +1,6 @@
 $(document).ready(() => {
+    AOS.init();
+
     const submitButton = $('.submit-button');
 
     const todoSection = $('#todos');
@@ -16,15 +18,19 @@ $(document).ready(() => {
         traditional: true,
         success: (data) => {
             averageMoodWeek.html(getFeelingFromMoodValue(Math.round(data.averageMoodWeek)));
-            new numberRush('productivity-week', {
-                maxNumber: Math.round(data.productivityWeek),
-                speed: 15,
-            });
+            setTimeout(() => {
+                new numberRush('productivity-week', {
+                    maxNumber: Math.round(data.productivityWeek),
+                    speed: 15,
+                });
+            }, 200);
             averageMoodMonth.html(getFeelingFromMoodValue(Math.round(data.averageMoodMonth)));
-            new numberRush('productivity-month', {
-                maxNumber: Math.round(data.productivityMonth),
-                speed: 15,
-            });
+            setTimeout(() => {
+                new numberRush('productivity-month', {
+                    maxNumber: Math.round(data.productivityMonth),
+                    speed: 15,
+                });
+            }, 400);
 
             // CHARTS
             generateProductivityChart('productivityWeekChart', data.graphTotalTasks7, data.graphCompletedTasks7);
@@ -49,7 +55,7 @@ $(document).ready(() => {
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: (data) => {
-
+                console.log(data);
                 // TODO SECTION
                 const todos = data.todos;
 
