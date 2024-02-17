@@ -27,140 +27,8 @@ $(document).ready(() => {
             });
 
             // CHARTS
-
-            // OPTIONS
-            const options = {
-                resposive: true,
-                scales: {
-                    x: {
-                        ticks: {
-                            font: {
-                                family: 'Sofia Sans',
-                            },
-                            color: "#974dc5",
-                        },
-                        grid: {
-                            color: "#d6bee7",
-                        },
-                    },
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            font: {
-                                family: 'Sofia Sans',
-                            },
-                            color: "#974dc5",
-                        },
-                        grid: {
-                            color: "#d6bee7",
-                        },
-                    },
-                },
-                plugins: {
-                    legend: {
-                        labels: {
-                            font: {
-                                family: 'Sofia Sans',
-                            },
-                            color: "#974dc5",
-                        }
-                    }
-                },
-            }
-
-            // PRODUCITIVTY WEEK
-
-            const productivityWeekChart = document.getElementById('productivityWeekChart');
-
-            const taskDatesWeek = data.graphTotalTasks7.map(entry => entry.task_date.substring(5, 10));
-            const taskSumsWeek = data.graphTotalTasks7.map(entry => entry.tasks_sum);
-            const taskSumsWeekComplete = [];
-
-            let j = 0;
-            for(let i = 0; i < taskDatesWeek.length; i++) {
-                if(taskDatesWeek[i] === (data.graphCompletedTasks7[j].task_date).substring(5, 10)) {
-                    taskSumsWeekComplete.push(data.graphCompletedTasks7[j].tasks_sum);
-                    j++;
-                    continue;
-                }
-
-                taskSumsWeekComplete.push(0);
-            }           
-
-            const productivityWeekdata = {
-                labels: taskDatesWeek,
-                datasets: [
-                    {
-                        label: 'Total',
-                        data: taskSumsWeek,
-                        borderColor: '#a857da',
-                        backgroundColor: '#a857da',
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Completed',
-                        data: taskSumsWeekComplete,
-                        borderColor: '#caa7e1',
-                        backgroundColor: '#caa7e1',
-                        tension: 0.3
-                    }
-                ]
-            };
-
-            const productivityWeekconfig = {
-                type: 'line',
-                data: productivityWeekdata,
-                options: options,
-            };
-
-            new Chart(productivityWeekChart, productivityWeekconfig);
-
-            // Producitivty month
-
-            const productivityMonthChart = document.getElementById('productivityMonthChart');
-
-            const taskDatesMonth = data.graphTotalTasks30.map(entry => entry.task_date.substring(5, 10));
-            const taskSumsMonth = data.graphTotalTasks30.map(entry => entry.tasks_sum);
-            const taskSumsMonthComplete = [];
-
-            j = 0;
-            for(let i = 0; i < taskDatesMonth.length; i++) {
-                if(taskDatesMonth[i] === (data.graphCompletedTasks30[j].task_date).substring(5, 10)) {
-                    taskSumsMonthComplete.push(data.graphCompletedTasks30[j].tasks_sum);
-                    j++;
-                    continue;
-                }
-
-                taskSumsMonthComplete.push(0);
-            }           
-
-            const productivityMonthdata = {
-                labels: taskDatesMonth,
-                datasets: [
-                    {
-                        label: 'Total',
-                        data: taskSumsMonth,
-                        borderColor: '#a857da',
-                        backgroundColor: '#a857da',
-                        tension: 0.3
-                    },
-                    {
-                        label: 'Completed',
-                        data: taskSumsMonthComplete,
-                        borderColor: '#caa7e1',
-                        backgroundColor: '#caa7e1',
-                        tension: 0.3
-                    }
-                ]
-            };
-
-            const productivityMonthconfig = {
-                type: 'line',
-                data: productivityMonthdata,
-                options: options,
-            };
-
-            new Chart(productivityMonthChart, productivityMonthconfig);
+            generateProductivityChart('productivityWeekChart', data.graphTotalTasks7, data.graphCompletedTasks7);
+            generateProductivityChart('productivityMonthChart', data.graphTotalTasks30, data.graphCompletedTasks30);
         },
     });
 
@@ -242,4 +110,90 @@ function getFeelingFromMoodValue(moodValue) {
     } else if (moodValue === 5) {
         return 'Happy';
     }
+}
+
+function generateProductivityChart(target, totalTasks, completedTasks) {
+    const targetChart = document.getElementById(target);
+
+    const dateLabels = totalTasks.map(entry => entry.task_date.substring(5, 10));
+    const values1 = totalTasks.map(entry => entry.tasks_sum);
+    const values2 = [];
+
+    j = 0;
+    for(let i = 0; i < values1.length; i++) {
+        if(dateLabels[i] === (completedTasks[j].task_date).substring(5, 10)) {
+            values2.push(completedTasks[j].tasks_sum);
+            j++;
+            continue;
+        }
+
+        values2.push(0);
+    }           
+
+    const data = {
+        labels: dateLabels,
+        datasets: [
+            {
+                label: 'Total',
+                data: values1,
+                borderColor: '#a857da',
+                backgroundColor: '#a857da',
+                tension: 0.3
+            },
+            {
+                label: 'Completed',
+                data: values2,
+                borderColor: '#caa7e1',
+                backgroundColor: '#caa7e1',
+                tension: 0.3
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: chartOptions,
+    };
+
+    new Chart(targetChart, config);
+}
+
+const chartOptions = {
+    resposive: true,
+    scales: {
+        x: {
+            ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+        y: {
+            beginAtZero: true,
+            ticks: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            },
+            grid: {
+                color: "#d6bee7",
+            },
+        },
+    },
+    plugins: {
+        legend: {
+            labels: {
+                font: {
+                    family: 'Sofia Sans',
+                },
+                color: "#974dc5",
+            }
+        }
+    },
 }
