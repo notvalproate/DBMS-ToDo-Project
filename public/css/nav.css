@@ -1,3 +1,57 @@
+.logo {
+    display: flex;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    width: 100vw;
+    background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
+    height: 10vh;
+    justify-content: space-between;
+}
+
+.master-text {
+    font-size: 37.5px;
+    position: relative;
+    height: fit-content;
+    font-family: "Stint Ultra Expanded", serif;
+    color: #974dc5;
+    margin-left: 2rem;
+}
+
+.task-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 25px;
+    transform: translate(-50%, -60%);
+    font-family: "Marck Script", cursive;
+    color: black;
+}
+
+nav {
+    justify-content: flex-end;
+    position: relative;
+    display: flex;
+    column-gap: 2rem;
+    padding: 10px;
+    padding-right: 30px;
+}
+
+nav a {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 1.15rem;
+    color: white;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+nav a:hover {
+    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+}
+
 .logout-button {
     background: none;
     border: none;
