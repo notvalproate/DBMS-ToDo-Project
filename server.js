@@ -250,8 +250,8 @@ app.post("/getData", authenticateToken, async (req, res) => {
 
     // Get data for the graphs
 
-    const graphTotalTasks = await DatabaseHandler.getTotalTasksSumForLast7Days(req.user.userid);
-    const graphCompletedTasks = await DatabaseHandler.getCompletedTasksSumForLast7Days(req.user.userid);
+    const graphTotalTasks7 = await DatabaseHandler.getTotalTasksSumForLast7Days(req.user.userid);
+    const graphCompletedTasks7 = await DatabaseHandler.getCompletedTasksSumForLast7Days(req.user.userid);
 
     const obj = { 
         productivityWeek: productivityWeek, 
@@ -259,8 +259,8 @@ app.post("/getData", authenticateToken, async (req, res) => {
         averageMoodWeek: averageMoodWeek,
         averageMoodMonth: averageMoodMonth,
 
-        graphTotalTasks: graphTotalTasks,
-        graphCompletedTasks: graphCompletedTasks,  
+        graphTotalTasks7: graphTotalTasks7,
+        graphCompletedTasks7: graphCompletedTasks7,  
     }
 
     console.log(obj);

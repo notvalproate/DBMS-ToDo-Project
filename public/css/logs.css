@@ -30,7 +30,7 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    row-gap: 4rem;
+    row-gap: 2rem;
     padding-top: 1.5rem;
     padding-bottom: 1.5rem;
 }
@@ -192,7 +192,7 @@ nav a:hover {
     flex-direction: column;
     padding-top: 2rem;
     row-gap: 20px; 
-    background: #b17fd0;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
     width: 100vw;
     min-height: 100vh;
 }
@@ -261,19 +261,37 @@ nav a:hover {
     justify-content: space-around;
 }
 
+.past-title {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 3rem;
+}
+
 .past-wrapper {
     border: 2px #ddbef1 solid;
     padding: 1rem;
     border-radius: 10px;
     width: 20%;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
 }
 
 .past-text {
     margin: 0;
     font-family: "Sofia Sans", sans-serif;
     text-align: center;
-    color: #b17fd0;
+    background: linear-gradient(300deg, rgb(239, 216, 255), rgb(255, 255, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-size: 1.25rem;
+    font-weight: 600;
     padding: 2rem;
     padding-top: 0.5rem;
 }
@@ -282,8 +300,14 @@ nav a:hover {
     margin: 0;
     text-align: center;
     font-family: "Sofia Sans", sans-serif;
-    color: #965abb;
+    color: white;
     font-size: 2rem;
+}
+
+.past-chart {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
 }
 
 .date-form {
@@ -293,5 +317,5 @@ nav a:hover {
     row-gap: 1rem;
     padding: 2rem;
     border-radius: 10px;
-    background-color: #f2e5fb;
+    border: 2px #ddbef1 solid;
 }

@@ -72,14 +72,14 @@ $(document).ready(() => {
 
             const productivityWeekChart = document.getElementById('productivityWeekChart');
 
-            const taskDatesWeek = data.graphTotalTasks.map(entry => entry.task_date.substring(0, 10));
-            const taskSumsWeek = data.graphTotalTasks.map(entry => entry.tasks_sum);
+            const taskDatesWeek = data.graphTotalTasks7.map(entry => entry.task_date.substring(5, 10));
+            const taskSumsWeek = data.graphTotalTasks7.map(entry => entry.tasks_sum);
             const taskSumsWeekComplete = [];
 
             let j = 0;
             for(let i = 0; i < taskDatesWeek.length; i++) {
-                if(taskDatesWeek[i] === (data.graphCompletedTasks[j].task_date).substring(0, 10)) {
-                    taskSumsWeekComplete.push(data.graphCompletedTasks[j].tasks_sum);
+                if(taskDatesWeek[i] === (data.graphCompletedTasks7[j].task_date).substring(5, 10)) {
+                    taskSumsWeekComplete.push(data.graphCompletedTasks7[j].tasks_sum);
                     j++;
                     continue;
                 }
