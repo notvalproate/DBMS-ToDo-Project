@@ -5,22 +5,27 @@
 
 .header {
     display: flex;
+    box-sizing: border-box;
     width: 100vw;
     background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
     height: 10vh;
     justify-content: space-between;
+    padding: 0 100px;
 }
 
 .master-text {
+    user-select: none;
     font-size: 37.5px;
     position: relative;
     height: fit-content;
     font-family: "Stint Ultra Expanded", serif;
     color: #974dc5;
+    margin-top: 2rem;
     margin-left: 2rem;
 }
 
 .task-text {
+    user-select: none;
     position: absolute;
     left: 0;
     top: 0;
@@ -46,10 +51,12 @@ nav a {
     text-decoration: none;
     display: flex;
     align-items: center;
+    transition: 200ms ease-out;
 }
 
 nav a:hover {
-    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    text-shadow: 0 0 15px #ffffff;
+    transform: scale(1.05);
 }
 
 .logout-button {
