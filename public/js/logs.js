@@ -114,6 +114,53 @@ $(document).ready(() => {
             };
 
             new Chart(productivityWeekChart, productivityWeekconfig);
+
+            // Producitivty month
+
+            const productivityMonthChart = document.getElementById('productivityMonthChart');
+
+            const taskDatesMonth = data.graphTotalTasks30.map(entry => entry.task_date.substring(5, 10));
+            const taskSumsMonth = data.graphTotalTasks30.map(entry => entry.tasks_sum);
+            const taskSumsMonthComplete = [];
+
+            j = 0;
+            for(let i = 0; i < taskDatesMonth.length; i++) {
+                if(taskDatesMonth[i] === (data.graphCompletedTasks30[j].task_date).substring(5, 10)) {
+                    taskSumsMonthComplete.push(data.graphCompletedTasks30[j].tasks_sum);
+                    j++;
+                    continue;
+                }
+
+                taskSumsMonthComplete.push(0);
+            }           
+
+            const productivityMonthdata = {
+                labels: taskDatesMonth,
+                datasets: [
+                    {
+                        label: 'Total',
+                        data: taskSumsMonth,
+                        borderColor: '#a857da',
+                        backgroundColor: '#a857da',
+                        tension: 0.3
+                    },
+                    {
+                        label: 'Completed',
+                        data: taskSumsMonthComplete,
+                        borderColor: '#caa7e1',
+                        backgroundColor: '#caa7e1',
+                        tension: 0.3
+                    }
+                ]
+            };
+
+            const productivityMonthconfig = {
+                type: 'line',
+                data: productivityMonthdata,
+                options: options,
+            };
+
+            new Chart(productivityMonthChart, productivityMonthconfig);
         },
     });
 
