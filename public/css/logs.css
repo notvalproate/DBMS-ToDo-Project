@@ -223,6 +223,9 @@ body {
 }
 
 .past-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     border: 2px #ddbef1 solid;
     padding: 1rem;
     border-radius: 10px;

@@ -66,7 +66,7 @@ $(document).ready(() => {
 
                     todoSection.append(
                     `
-                    <div class="expander" data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="800">
+                    <div data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="800">
                         <span class="${completed ? "complete" : "incomplete"}">
                             ${completed ? "Completed: " : "Incomplete: "}
                         </span>
@@ -212,6 +212,7 @@ function generateFeelingChart(target, moods) {
 
 const prodChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
         x: {
             ticks: {
@@ -251,6 +252,7 @@ const prodChartOptions = {
 
 const moodChartOptions = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
         x: {
             ticks: {
