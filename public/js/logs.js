@@ -59,12 +59,14 @@ $(document).ready(() => {
                 // TODO SECTION
                 const todos = data.todos;
 
+                let delay = 0;
+
                 for(let i = 0; i < todos.length; i++) {
                     const completed = todos[i].completed.data[0];
 
                     todoSection.append(
                     `
-                    <div>
+                    <div class="expander" data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="800">
                         <span class="${completed ? "complete" : "incomplete"}">
                             ${completed ? "Completed: " : "Incomplete: "}
                         </span>
@@ -72,6 +74,8 @@ $(document).ready(() => {
                     </div>
                     `
                     );
+
+                    delay += 50;
                 }
 
                 // DIARY SECTION
@@ -124,9 +128,14 @@ function getFeelingFromMoodValue(moodValue) {
 function generateProductivityChart(target, totalTasks, completedTasks) {
     const targetChart = document.getElementById(target);
 
-    const dateLabels = totalTasks.map(entry => entry.task_date.substring(5, 10));
-    const values1 = totalTasks.map(entry => entry.tasks_sum);
-    const values2 = [];
+    let dateLabels = [];
+    let values1 = [];
+    let values2 = [];
+
+    if(totalTasks.length > 0) {
+        dateLabels = totalTasks.map(entry => entry.task_date.substring(5, 10));
+        values1 = totalTasks.map(entry => entry.tasks_sum);
+    }
 
     j = 0;
     for(let i = 0; i < values1.length; i++) {
@@ -171,8 +180,13 @@ function generateProductivityChart(target, totalTasks, completedTasks) {
 function generateFeelingChart(target, moods) {
     const targetChart = document.getElementById(target);
 
-    const dateLabels = moods.map(entry => entry.diary_date.substring(5, 10));
-    const values = moods.map(entry => entry.mood);      
+    let dateLabels = [];
+    let values = [];
+
+    if(moods.length > 0) {
+        dateLabels = moods.map(entry => entry.diary_date.substring(5, 10));
+        values = moods.map(entry => entry.mood);
+    }
 
     const data = {
         labels: dateLabels,
@@ -202,6 +216,8 @@ function generateFeelingChart(target, moods) {
                 },
             },
             y: {
+                suggestedMin: 1,
+                suggestedMax: 5,
                 ticks: {
                     callback: ((context, index) => {
                         return getFeelingFromMoodValue(context);
