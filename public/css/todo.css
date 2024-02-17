@@ -89,8 +89,12 @@ nav a:hover {
 .question{
     margin-bottom: 0;
     font-family: "Sofia Sans", sans-serif;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
     font-size: 3rem;
-    color: #974dc5;
     text-align: center;
 }
 
@@ -312,7 +316,12 @@ nav a:hover {
     width: 90%;
     border-radius: 10px;
     display: flex;
-    justify-content: space-between  ;
+    justify-content: space-between;
+    transition: 200ms;
+}
+
+.item-wrapper:hover {
+    box-shadow: 0px 0px 10px rgb(218, 166, 251);
 }
 
 .remove-item {
