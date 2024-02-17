@@ -108,11 +108,11 @@ const queries = {
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
-    GetTotalTasksInLast30Days:
+    GetTotalTasksCompletedInLast7Days:
     `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
-        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
     GetTotalTasksSumForLast7Days:
@@ -120,14 +120,22 @@ const queries = {
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
-        GROUP BY task_date;
+        GROUP BY task_date ORDER BY task_date ASC;
     `,
 
-    GetTotalTasksCompletedInLast7Days:
+    GetCompletedTasksSumForLast7Days:
+    `
+    SELECT task_date, COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
+        GROUP BY task_date ORDER BY task_date ASC;
+    `,
+
+    GetTotalTasksInLast30Days:
     `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
-        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
+        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
     GetTotalTasksCompletedInLast30Days:
@@ -137,12 +145,20 @@ const queries = {
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
-    GetCompletedTasksSumForLast7Days:
+    GetTotalTasksSumForLast30Days:
     `
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
-        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
-        GROUP BY task_date;
+        WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
+        GROUP BY task_date ORDER BY task_date ASC;
+    `,
+
+    GetCompletedTasksSumForLast30Days:
+    `
+    SELECT task_date, COUNT(taskid) as tasks_sum
+        FROM tasks
+        WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
+        GROUP BY task_date ORDER BY task_date ASC;
     `,
 
     CreateTaskTrigger:
@@ -403,9 +419,9 @@ class DatabaseManager {
         }
     }
 
-    async getTotalTasksInLast30Days(userid) {
+    async getTotalTasksCompletedInLast7Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast30Days, [userid]);
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast7Days, [userid]);
             return rows.tasks_sum;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
@@ -423,9 +439,19 @@ class DatabaseManager {
         }
     }
 
-    async getTotalTasksCompletedInLast7Days(userid) {
+    async getCompletedTasksSumForLast7Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast7Days, [userid]);
+            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast7Days, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return [];
+        }
+    }
+
+    async getTotalTasksInLast30Days(userid) {
+        try {
+            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast30Days, [userid]);
             return rows.tasks_sum;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
@@ -443,9 +469,19 @@ class DatabaseManager {
         }
     }
 
-    async getCompletedTasksSumForLast7Days(userid) {
+    async getTotalTasksSumForLast30Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast7Days, [userid]);
+            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast30Days, [userid]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            return [];
+        }
+    }
+
+    async getCompletedTasksSumForLast30Days(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast30Days, [userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
