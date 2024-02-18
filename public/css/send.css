@@ -8,6 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    overflow-x: hidden;
 }
 
 .msg {
@@ -125,4 +126,67 @@ body {
 
 .set-date:hover::-webkit-calendar-picker-indicator {
     filter: invert(0);
+}
+
+
+.todays-messages {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem 0;
+    row-gap: 20px; 
+    background: linear-gradient(300deg, #943eca, rgb(189, 137, 222));
+    width: 100vw;
+}
+
+
+.title-wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.todays-msg-title{
+    width: fit-content;
+    background: -webkit-linear-gradient(150deg, #d090f8, rgb(153, 79, 199));
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 3rem;
+    margin: 1rem;
+    text-align: center;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.each-entry{
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    background-color: white;
+    width: 90vw;
+    height: 20vh;
+    border-radius: 10px;
+    padding: 15px;
+    font-family: "Sofia Sans", sans-serif;
+    transition: 200ms;
+}
+
+.each-entry:hover{
+    cursor: pointer;
+    background-color: white;
+    border-color: #b261e3;
+    box-shadow: 0 0 20px #ffff, 0 0 20px #974dc5, 0 0 20px #ffff;
+}
+
+.no-messages {
+    font-family: "Sofia Sans", sans-serif;
+    font-size: 2rem;
+    background: linear-gradient(300deg, #fcf6ff, rgb(240, 215, 255));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 600;
+    padding: 4rem 0;
 }

@@ -215,6 +215,12 @@ app.post("/createMessage", authenticateToken, async (req, res) => {
     res.render("msgsubmit");
 })
 
+app.post("/getTodaysMessages", authenticateToken, async (req, res) => {
+    const messages = await DatabaseHandler.getTodaysMessages(req.user.userid);
+
+    res.json({ todaysMessages: messages });
+})
+
 // REQUESTS FOR LOGS
 
 app.get("/logs", authenticateToken, async (req, res) => {

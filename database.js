@@ -270,7 +270,7 @@ const queries = {
     WHERE userid = ? AND reminder_date = ?;
     `,
 
-    GetTodaysMessage:
+    GetTodaysMessages:
     `
     SELECT * FROM messages
     WHERE userid = ? AND reminder_date = CURDATE();
@@ -625,6 +625,16 @@ class DatabaseManager {
     async getMessagesByDate(userid, date) {
         try {
             const [rows] = await this.pool.query(queries.GetMessagesByDate, [userid,  date]);
+            return rows;
+        } catch (error) {
+            console.error('Error retrieving tasks for the current date:', error.message);
+            return [];
+        }
+    }
+
+    async getTodaysMessages(userid) {
+        try {
+            const [rows] = await this.pool.query(queries.GetTodaysMessages, [userid]);
             return rows;
         } catch (error) {
             console.error('Error retrieving tasks for the current date:', error.message);
