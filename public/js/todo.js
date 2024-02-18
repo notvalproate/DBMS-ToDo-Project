@@ -1,6 +1,9 @@
 $(document).ready(() => {
     AOS.init();
 
+    window.addEventListener('load', AOS.refresh);
+
+
     const addButton = $('.fa-circle-plus');
     const todoInput = $('.todo-in');
     const checkerDiv = $('.checker');
@@ -21,7 +24,7 @@ $(document).ready(() => {
                 }
 
                 checkerDiv.append(`
-                    <div class="item-wrapper aos-init" id="wraptaskid${todaysTodos[i].taskid}" data-aos="fade-up" data-aos-delay="${currentDelay}" data-aos-duration="800">
+                    <div class="item-wrapper" id="wraptaskid${todaysTodos[i].taskid}">
                         <label class="cr-wrapper" for="taskid${todaysTodos[i].taskid}">
                             <input type="checkbox" id="taskid${todaysTodos[i].taskid}" ${checked} />
                             <div class="cr-input"></div>

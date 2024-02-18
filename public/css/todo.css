@@ -2,6 +2,9 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
+    width: 100vw;
+    box-sizing: border-box;
 }
 
 .home-wrapper {
@@ -9,12 +12,16 @@ body {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
+    width: 100vw;
+    box-sizing: border-box;
+    overflow-x: hidden;
 }
 
 .mid-wrapper{
     display: flex;
     justify-content: center;
     flex-direction: column;
+    max-width: 100%;
     row-gap: 30px;
 }
 
@@ -30,6 +37,7 @@ body {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
+    padding-bottom: 3rem;
 }
 
 .question{
