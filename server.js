@@ -232,6 +232,8 @@ app.post("/getLogs", authenticateToken, async (req, res) => {
     const diary = await DatabaseHandler.getDiaryByDate(req.user.userid, req.body.date);
     const messages = await DatabaseHandler.getMessagesByDate(req.user.userid, req.body.date);
 
+    console.log(messages);
+
     res.json({ 
         todos: todos, 
         diary: diary, 
@@ -279,8 +281,6 @@ app.post("/getData", authenticateToken, async (req, res) => {
         moodPastWeek: moodPastWeek,
         moodPastMonth: moodPastMonth,
     }
-
-    console.log(obj);
 
     res.json(obj);
 })

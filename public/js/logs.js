@@ -81,15 +81,18 @@ $(document).ready(() => {
                 // DIARY SECTION
 
                 const diary = data.diary;
-                const moodValue = diary.mood;
 
-                let feeling = getFeelingFromMoodValue(moodValue);
+                if(diary) {
+                    const moodValue = diary.mood;
 
-                diarySection.append(
-                `
-                <p class="dater-two">Feeling: ${feeling}</p>
-                ${diary.content}
-                `);
+                    let feeling = getFeelingFromMoodValue(moodValue);
+
+                    diarySection.append(
+                    `
+                    <p class="dater-two">Feeling: ${feeling}</p>
+                    ${diary.content}
+                    `);
+                }
 
                 // MESSAGE SECTION
 
