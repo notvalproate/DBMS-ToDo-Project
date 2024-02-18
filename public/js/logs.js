@@ -66,7 +66,7 @@ $(document).ready(() => {
 
                     todoSection.append(
                     `
-                    <div data-aos="fade-up" data-aos-delay="${delay}" data-aos-duration="800">
+                    <div>
                         <span class="${completed ? "complete" : "incomplete"}">
                             ${completed ? "Completed: " : "Incomplete: "}
                         </span>
