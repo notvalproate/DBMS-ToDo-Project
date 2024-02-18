@@ -1,4 +1,17 @@
 $(document).ready(() => {
+    $.ajax({
+        type: "POST",
+        url: "/checkAuth",
+        data: JSON.stringify({ date:  $("#date").val() }),
+        contentType: "application/json; charset=utf-8",
+        traditional: true,
+        success: (data) => {
+            if(!data.authenticated) {
+                window.location.href = '/login';
+            }
+        },
+    });
+    
     const submitButton = $('.submit-button');
     const moodRange = $('.mood-range');
     const enterDiary = $('.enter-diary');

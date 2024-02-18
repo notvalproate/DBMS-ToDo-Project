@@ -95,6 +95,26 @@ app.get("/home", authenticateToken, async (req, res) => {
     res.render("home", { username: req.user.username });
 });
 
+app.post("/checkAuth", async (req, res) => {
+    let authenticated = false;
+
+    const cookies = req.cookies;
+
+    let token = null;
+
+    if(cookies.ACT) {
+        token = cookies.ACT;
+
+        jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+            if(!err) {
+                authenticated = true;
+            }
+        });
+    }
+
+    res.json({ authenticated: authenticated });
+})
+
 
 function authenticateToken(req, res, next) {
     const cookies = req.cookies;
