@@ -10,7 +10,6 @@
     background: linear-gradient(300deg, #943eca, rgba(128, 55, 173, 0));
     height: 10vh;
     justify-content: space-between;
-    padding: 0 100px;
 }
 
 .master-text {
@@ -66,9 +65,11 @@ nav a:hover {
     font-family: "Sofia Sans", sans-serif;
     font-size: 1.15rem;
     color: white;
+    transition: 200ms ease-out;
 }
 
 .logout-button:hover {
     cursor: pointer;
-    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    text-shadow: 0 0 15px #ffffff;
+    transform: scale(1.05);
 }
