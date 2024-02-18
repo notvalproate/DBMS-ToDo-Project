@@ -9,7 +9,9 @@ $(document).ready(() => {
         success: (messages) => {
             console.log(messages);
 
-            if(messages.todaysMessages.length === 0) {
+            const msgs = messages.todaysMessages;
+
+            if(msgs.length === 0) {
                 todaysMessages.html(
                     `
                     <div class="no-messages">
@@ -20,6 +22,36 @@ $(document).ready(() => {
 
                 return;
             }
+
+            for(let i = 0; i < msgs.length; i++) {
+                todaysMessages.append(
+                    `
+                    <div class="each-entry">
+                        <div class="message-title">
+                            <p class="msg-subtitle">Message ${i+1}:</p>
+                        </div>
+                        <p>${msgs[i].content}</p>
+                    </div>
+                    `
+                )
+            }
         },
     });
 });
+
+function formatDate(inputDate) {
+    const dateObject = new Date(inputDate.substring(0, 10));
+  
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+  
+    const day = dateObject.getDate();
+    const month = months[dateObject.getMonth()];
+    const year = dateObject.getFullYear();
+  
+    const formattedDate = `${day} ${month}, ${year}`;
+  
+    return formattedDate;
+}
