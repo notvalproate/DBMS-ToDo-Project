@@ -78,7 +78,15 @@ nav a:hover {
     font-family: "Sofia Sans", sans-serif;
     font-size: 3.5rem;
     font-weight: 800;
-    color: #974dc5;
+    background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.completed-emoji {
+    font-size: 3rem;
 }
 
 .submit-wrapper{
@@ -104,6 +112,7 @@ nav a:hover {
     width: 150px;
     height: 40px;
     border: none;
+    transition: 200ms;
 }
 
 .submit-button:hover {
