@@ -156,6 +156,7 @@ body {
     padding-left: 20px;
     background-color: white;
     text-decoration: none;
+    transition: 200ms;
 }
 
 .welcome-buttons:hover {
