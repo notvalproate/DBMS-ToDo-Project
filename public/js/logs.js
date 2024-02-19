@@ -2,55 +2,67 @@ $(document).ready(() => {
     $.ajax({
         type: "POST",
         url: "/checkAuth",
-        data: JSON.stringify({ date:  $("#date").val() }),
+        data: JSON.stringify({ date: $("#date").val() }),
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (data) => {
-            if(!data.authenticated) {
-                window.location.href = '/login';
+            if (!data.authenticated) {
+                window.location.href = "/login";
             }
         },
     });
 
     AOS.init();
 
-    const submitButton = $('.submit-button');
+    const submitButton = $(".submit-button");
 
-    const todoSection = $('#todos');
-    const diarySection = $('#diary');
-    const messagesSection = $('#messages');
+    const todoSection = $("#todos");
+    const diarySection = $("#diary");
+    const messagesSection = $("#messages");
 
-    const averageMoodWeek = $('#average-mood-week');
-    const averageMoodMonth = $('#average-mood-month');
+    const averageMoodWeek = $("#average-mood-week");
+    const averageMoodMonth = $("#average-mood-month");
 
     $.ajax({
         type: "POST",
         url: "/getData",
-        data: JSON.stringify({ date:  $("#date").val() }),
+        data: JSON.stringify({ date: $("#date").val() }),
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (data) => {
-            averageMoodWeek.html(getFeelingFromMoodValue(Math.round(data.averageMoodWeek)));
+            averageMoodWeek.html(
+                getFeelingFromMoodValue(Math.round(data.averageMoodWeek))
+            );
             setTimeout(() => {
-                new numberRush('productivity-week', {
+                new numberRush("productivity-week", {
                     maxNumber: Math.round(data.productivityWeek),
                     speed: 15,
                 });
             }, 200);
-            averageMoodMonth.html(getFeelingFromMoodValue(Math.round(data.averageMoodMonth)));
+            averageMoodMonth.html(
+                getFeelingFromMoodValue(Math.round(data.averageMoodMonth))
+            );
             setTimeout(() => {
-                new numberRush('productivity-month', {
+                new numberRush("productivity-month", {
                     maxNumber: Math.round(data.productivityMonth),
                     speed: 15,
                 });
             }, 400);
 
             // CHARTS
-            generateProductivityChart('productivityWeekChart', data.graphTotalTasks7, data.graphCompletedTasks7);
-            generateProductivityChart('productivityMonthChart', data.graphTotalTasks30, data.graphCompletedTasks30);
+            generateProductivityChart(
+                "productivityWeekChart",
+                data.graphTotalTasks7,
+                data.graphCompletedTasks7
+            );
+            generateProductivityChart(
+                "productivityMonthChart",
+                data.graphTotalTasks30,
+                data.graphCompletedTasks30
+            );
 
-            generateFeelingChart('moodWeekChart', data.moodPastWeek);
-            generateFeelingChart('moodMonthChart', data.moodPastMonth);
+            generateFeelingChart("moodWeekChart", data.moodPastWeek);
+            generateFeelingChart("moodMonthChart", data.moodPastMonth);
         },
     });
 
@@ -64,7 +76,7 @@ $(document).ready(() => {
         $.ajax({
             type: "POST",
             url: "/getLogs",
-            data: JSON.stringify({ date:  $("#date").val() }),
+            data: JSON.stringify({ date: $("#date").val() }),
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: (data) => {
@@ -74,11 +86,11 @@ $(document).ready(() => {
 
                 let delay = 0;
 
-                for(let i = 0; i < todos.length; i++) {
+                for (let i = 0; i < todos.length; i++) {
                     const completed = todos[i].completed.data[0];
 
                     todoSection.append(
-                    `
+                        `
                     <div>
                         <span class="${completed ? "complete" : "incomplete"}">
                             ${completed ? "Completed: " : "Incomplete: "}
@@ -95,26 +107,26 @@ $(document).ready(() => {
 
                 const diary = data.diary;
 
-                if(diary) {
+                if (diary) {
                     const moodValue = diary.mood;
 
                     let feeling = getFeelingFromMoodValue(moodValue);
 
                     diarySection.append(
-                    `
+                        `
                     <p class="dater-two">Feeling: ${feeling}</p>
                     ${diary.content}
-                    `);
+                    `
+                    );
                 }
 
                 // MESSAGE SECTION
 
                 const messages = data.messages;
 
-                for(let i = 0; i < messages.length; i++) {
-
+                for (let i = 0; i < messages.length; i++) {
                     messagesSection.append(
-                    `
+                        `
                     <div>
                         <span class="complete">Message ${i + 1}: </span>
                         <span class="task-content">${messages[i].content}</span>
@@ -124,20 +136,20 @@ $(document).ready(() => {
                 }
             },
         });
-    })
+    });
 });
 
 function getFeelingFromMoodValue(moodValue) {
     if (moodValue === 1) {
-        return 'Depressed';
+        return "Depressed";
     } else if (moodValue === 2) {
-        return 'Sad';
+        return "Sad";
     } else if (moodValue === 3) {
-        return 'Okay';
+        return "Okay";
     } else if (moodValue === 4) {
-        return 'Good';
+        return "Good";
     } else if (moodValue === 5) {
-        return 'Happy';
+        return "Happy";
     }
 }
 
@@ -148,52 +160,52 @@ function generateProductivityChart(target, totalTasks, completedTasks) {
     let values1 = [];
     let values2 = [];
 
-    if(totalTasks.length > 0) {
-        dateLabels = totalTasks.map(entry => entry.task_date.substring(5, 10));
-        values1 = totalTasks.map(entry => entry.tasks_sum);
+    if (totalTasks.length > 0) {
+        dateLabels = totalTasks.map((entry) =>
+            entry.task_date.substring(5, 10)
+        );
+        values1 = totalTasks.map((entry) => entry.tasks_sum);
     }
 
-
     j = 0;
-    for(let i = 0; i < values1.length; i++) {
-        if(j >= completedTasks.length) {
+    for (let i = 0; i < values1.length; i++) {
+        if (j >= completedTasks.length) {
             values2.push(0);
             j++;
             continue;
         }
 
-        if(dateLabels[i] === (completedTasks[j].task_date).substring(5, 10)) {
+        if (dateLabels[i] === completedTasks[j].task_date.substring(5, 10)) {
             values2.push(completedTasks[j].tasks_sum);
             j++;
             continue;
         }
 
         values2.push(0);
-    }           
-    
+    }
 
     const data = {
         labels: dateLabels,
         datasets: [
             {
-                label: 'Total',
+                label: "Total",
                 data: values1,
-                borderColor: '#a857da',
-                backgroundColor: '#a857da',
-                tension: 0.3
+                borderColor: "#a857da",
+                backgroundColor: "#a857da",
+                tension: 0.3,
             },
             {
-                label: 'Completed',
+                label: "Completed",
                 data: values2,
-                borderColor: '#caa7e1',
-                backgroundColor: '#caa7e1',
-                tension: 0.3
-            }
-        ]
+                borderColor: "#caa7e1",
+                backgroundColor: "#caa7e1",
+                tension: 0.3,
+            },
+        ],
     };
 
     const config = {
-        type: 'line',
+        type: "line",
         data: data,
         options: prodChartOptions,
     };
@@ -207,26 +219,26 @@ function generateFeelingChart(target, moods) {
     let dateLabels = [];
     let values = [];
 
-    if(moods.length > 0) {
-        dateLabels = moods.map(entry => entry.diary_date.substring(5, 10));
-        values = moods.map(entry => entry.mood);
+    if (moods.length > 0) {
+        dateLabels = moods.map((entry) => entry.diary_date.substring(5, 10));
+        values = moods.map((entry) => entry.mood);
     }
 
     const data = {
         labels: dateLabels,
         datasets: [
             {
-                label: 'Mood',
+                label: "Mood",
                 data: values,
-                borderColor: '#a857da',
-                backgroundColor: '#a857da',
-                tension: 0.3
+                borderColor: "#a857da",
+                backgroundColor: "#a857da",
+                tension: 0.3,
             },
-        ]
+        ],
     };
 
     const config = {
-        type: 'line',
+        type: "line",
         data: data,
         options: moodChartOptions,
     };
@@ -241,7 +253,7 @@ const prodChartOptions = {
         x: {
             ticks: {
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
             },
@@ -253,7 +265,7 @@ const prodChartOptions = {
             beginAtZero: true,
             ticks: {
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
             },
@@ -266,13 +278,13 @@ const prodChartOptions = {
         legend: {
             labels: {
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
-            }
-        }
+            },
+        },
     },
-}
+};
 
 const moodChartOptions = {
     responsive: true,
@@ -281,7 +293,7 @@ const moodChartOptions = {
         x: {
             ticks: {
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
             },
@@ -293,11 +305,11 @@ const moodChartOptions = {
             suggestedMin: 1,
             suggestedMax: 5,
             ticks: {
-                callback: ((context, index) => {
+                callback: (context, index) => {
                     return getFeelingFromMoodValue(context);
-                }),
+                },
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
             },
@@ -310,10 +322,10 @@ const moodChartOptions = {
         legend: {
             labels: {
                 font: {
-                    family: 'Sofia Sans',
+                    family: "Sofia Sans",
                 },
                 color: "#974dc5",
-            }
-        }
+            },
+        },
     },
-}
+};

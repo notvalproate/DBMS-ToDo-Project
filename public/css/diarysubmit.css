@@ -55,10 +55,13 @@ nav a {
 }
 
 nav a:hover {
-    text-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    text-shadow:
+        0 0 10px #ffff,
+        0 0 20px #ffff,
+        0 0 30px #ffff;
 }
 
-.msg{
+.msg {
     height: 80vh;
     display: flex;
     position: relative;
@@ -69,7 +72,7 @@ nav a:hover {
     justify-content: center;
 }
 
-.completed{
+.completed {
     margin: 0px;
     display: flex;
     position: relative;
@@ -89,7 +92,7 @@ nav a:hover {
     font-size: 3rem;
 }
 
-.submit-wrapper{
+.submit-wrapper {
     display: flex;
     position: relative;
     align-items: center;
@@ -119,5 +122,8 @@ nav a:hover {
     cursor: pointer;
     color: white;
     background-color: #b261e3;
-    box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    box-shadow:
+        0 0 10px #ffff,
+        0 0 20px #ffff,
+        0 0 30px #ffff;
 }

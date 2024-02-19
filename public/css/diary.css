@@ -35,7 +35,7 @@ body {
     text-align: center;
 }
 
-.entry{
+.entry {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -120,7 +120,7 @@ body {
     box-shadow: 0 0 5px #b261e3;
 }
 
-.submit-button{
+.submit-button {
     position: relative;
     display: inline-block;
     font-weight: 800;
@@ -139,20 +139,22 @@ body {
     cursor: pointer;
     color: white;
     background-color: #b261e3;
-    box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    box-shadow:
+        0 0 10px #ffff,
+        0 0 20px #ffff,
+        0 0 30px #ffff;
 }
 
-.old{
+.old {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 2rem 0;
-    row-gap: 20px; 
+    row-gap: 20px;
     background: linear-gradient(150deg, #943eca, rgba(128, 55, 173, 0));
     min-height: 100vh;
     width: 100vw;
 }
-
 
 .title-wrapper {
     width: 100vw;
@@ -161,7 +163,7 @@ body {
     align-items: center;
 }
 
-.old-diary{
+.old-diary {
     width: fit-content;
     background: -webkit-linear-gradient(150deg, #d090f8, rgb(153, 79, 199));
     font-family: "Sofia Sans", sans-serif;
@@ -173,7 +175,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.each-entry{
+.each-entry {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -186,11 +188,14 @@ body {
     transition: 200ms;
 }
 
-.each-entry:hover{
+.each-entry:hover {
     cursor: pointer;
     background-color: white;
     border-color: #b261e3;
-    box-shadow: 0 0 20px #ffff, 0 0 20px #974dc5, 0 0 20px #ffff;
+    box-shadow:
+        0 0 20px #ffff,
+        0 0 20px #974dc5,
+        0 0 20px #ffff;
 }
 
 .diary-title {
@@ -199,12 +204,12 @@ body {
     align-items: center;
 }
 
-.dater{
+.dater {
     font-size: 30px;
     color: #974dc5;
 }
 
-p{
+p {
     margin: 0;
     padding: 0;
 }

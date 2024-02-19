@@ -4,8 +4,7 @@ require("dotenv").config();
 const queries = {
     // USER TABLE QUERIES
 
-    CreateUserTable:
-    `
+    CreateUserTable: `
     CREATE TABLE IF NOT EXISTS user (
         userid INT PRIMARY KEY AUTO_INCREMENT,
         username VARCHAR(16) UNIQUE NOT NULL,
@@ -15,38 +14,32 @@ const queries = {
     );
     `,
 
-    CreateUserView:
-    `
+    CreateUserView: `
     CREATE OR REPLACE VIEW user_view AS
     SELECT userid, username, current_mood 
     FROM user;
     `,
-    
-    CreateNewUser: 
-    `
+
+    CreateNewUser: `
     INSERT INTO user (username, password) 
     VALUES (?, ?);
     `,
 
-    FindWithUsername:
-    `
+    FindWithUsername: `
     SELECT * FROM user WHERE username = ?;
     `,
 
-    FindWithUsernameSafe:
-    `
+    FindWithUsernameSafe: `
     SELECT * FROM user_view WHERE username = ?;
     `,
 
-    CreateUserIndex:
-    `
+    CreateUserIndex: `
     CREATE INDEX username_index ON user (username);  
     `,
 
     // TASK TABLE QUERIES
-    
-    CreateTaskTable:
-    `
+
+    CreateTaskTable: `
     CREATE TABLE IF NOT EXISTS tasks (
         taskid INT PRIMARY KEY AUTO_INCREMENT,
         userid INT NOT NULL,
@@ -57,112 +50,96 @@ const queries = {
     );
     `,
 
-    CreateTaskView:
-    `
+    CreateTaskView: `
     CREATE OR REPLACE VIEW task_view AS
     SELECT taskid, task, task_date, completed 
     FROM tasks;
     `,
 
-    CreateNewTask:
-    `
+    CreateNewTask: `
     INSERT INTO tasks (userid, task)     
     VALUES (?, ?);
     `,
 
-    GetTaskById:
-    `
+    GetTaskById: `
     SELECT * FROM task_view
     WHERE taskid = ?
     `,
 
-    GetTaskByDate:
-    `
+    GetTaskByDate: `
     SELECT * FROM tasks
     WHERE userid = ? AND task_date = ?;
     `,
 
-    UpdateTaskCompletion:
-    `
+    UpdateTaskCompletion: `
     UPDATE tasks
     SET completed = ?
     WHERE taskid = ?;
     `,
 
-    DeleteTaskByTaskId:
-    `
+    DeleteTaskByTaskId: `
     DELETE FROM tasks
     WHERE taskid = ?;
     `,
 
-    GetTasksForCurrentDate:
-    `
+    GetTasksForCurrentDate: `
     SELECT * FROM tasks
     WHERE task_date = CURRENT_DATE and userid = ?;
     `,
 
-    GetTotalTasksInLast7Days:
-    `
+    GetTotalTasksInLast7Days: `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
-    GetTotalTasksCompletedInLast7Days:
-    `
+    GetTotalTasksCompletedInLast7Days: `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
-    GetTotalTasksSumForLast7Days:
-    `
+    GetTotalTasksSumForLast7Days: `
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
         GROUP BY task_date ORDER BY task_date ASC;
     `,
 
-    GetCompletedTasksSumForLast7Days:
-    `
+    GetCompletedTasksSumForLast7Days: `
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE()
         GROUP BY task_date ORDER BY task_date ASC;
     `,
 
-    GetTotalTasksInLast30Days:
-    `
+    GetTotalTasksInLast30Days: `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
-    GetTotalTasksCompletedInLast30Days:
-    `
+    GetTotalTasksCompletedInLast30Days: `
     SELECT COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
-    GetTotalTasksSumForLast30Days:
-    `
+    GetTotalTasksSumForLast30Days: `
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
         GROUP BY task_date ORDER BY task_date ASC;
     `,
 
-    GetCompletedTasksSumForLast30Days:
-    `
+    GetCompletedTasksSumForLast30Days: `
     SELECT task_date, COUNT(taskid) as tasks_sum
         FROM tasks
         WHERE completed = b'1' AND userid = ? AND task_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
         GROUP BY task_date ORDER BY task_date ASC;
     `,
 
-    CreateTaskTrigger:
-    `
+    CreateTaskTrigger: `
     CREATE TRIGGER IF NOT EXISTS update_total_tasks
     AFTER INSERT ON tasks
     FOR EACH ROW
@@ -175,8 +152,7 @@ const queries = {
 
     // DIARY TABLE QUERIES
 
-    CreateDiaryTable:
-    `
+    CreateDiaryTable: `
     CREATE TABLE IF NOT EXISTS diarys (
         userid INT NOT NULL,
         content NVARCHAR(2000) NOT NULL,
@@ -186,76 +162,65 @@ const queries = {
     );
     `,
 
-    CreateNewDiaryEntry:
-    `
+    CreateNewDiaryEntry: `
     INSERT INTO diarys (userid, content, mood)
     VALUES (?, ?, ?);
     `,
 
-    GetTodaysDiary:
-    `
+    GetTodaysDiary: `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date = CURDATE();
     `,
 
-    GetDiaryByDate:
-    `
+    GetDiaryByDate: `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date = ?;
     `,
 
-    GetDiaryEntriesByUserIdLast7Days:
-    `
+    GetDiaryEntriesByUserIdLast7Days: `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date >= CURDATE() - INTERVAL 6 DAY;
     `,
 
-    GetDiaryEntriesByUserIdLast30Days:
-    `
+    GetDiaryEntriesByUserIdLast30Days: `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date >= CURDATE() - INTERVAL 30 DAY;
     `,
 
-    GetAverageMoodLast7Days:
-    `
+    GetAverageMoodLast7Days: `
     SELECT AVG(mood) as average_mood
     FROM diarys
     WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 6 DAY AND CURDATE();
     `,
 
-    GetAverageMoodLast30Days:
-    `
+    GetAverageMoodLast30Days: `
     SELECT AVG(mood) as average_mood
     FROM diarys
     WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE();
     `,
 
-    GetMoodPastWeek:
-    `
+    GetMoodPastWeek: `
     SELECT diary_date, mood
     FROM diarys
     WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 7 DAY AND CURDATE()
     ORDER BY diary_date ASC;
     `,
 
-    GetMoodPastMonth:
-    `
+    GetMoodPastMonth: `
     SELECT diary_date, mood
     FROM diarys
     WHERE userid = ? AND diary_date BETWEEN CURDATE() - INTERVAL 30 DAY AND CURDATE()
     ORDER BY diary_date ASC;
     `,
 
-    GetDiariesByUserIdBetweenDates:
-    `
+    GetDiariesByUserIdBetweenDates: `
     SELECT * FROM diarys
     WHERE userid = ? AND diary_date BETWEEN ? AND ?;
     `,
 
     // MESSAGE QUERIES
 
-    CreateMessageTable:
-    `
+    CreateMessageTable: `
     CREATE TABLE IF NOT EXISTS messages (
         userid INT NOT NULL,
         content NVARCHAR(2000) NOT NULL,
@@ -264,26 +229,22 @@ const queries = {
     );
     `,
 
-    GetMessagesByDate:
-    `
+    GetMessagesByDate: `
     SELECT * FROM messages
     WHERE userid = ? AND reminder_date = ?;
     `,
 
-    GetTodaysMessages:
-    `
+    GetTodaysMessages: `
     SELECT * FROM messages
     WHERE userid = ? AND reminder_date = CURDATE();
     `,
 
-    CreateNewMessageEntry:
-    `
+    CreateNewMessageEntry: `
     INSERT INTO messages (userid, content, reminder_date)
     VALUES (?, ?, ?);
     `,
 
-    CreateMessageCheckTrigger:
-    `
+    CreateMessageCheckTrigger: `
     CREATE TRIGGER IF NOT EXISTS date_check_message
     BEFORE INSERT ON messages
     FOR EACH ROW
@@ -292,19 +253,20 @@ const queries = {
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid date!';
         END IF;
     END;
-    `
+    `,
 };
-
 
 class DatabaseManager {
     constructor() {
-        this.pool = mysql.createPool({
-            host: process.env.MYSQL_HOST,
-            user: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DATABASE,
-            timezone: '+00:00',
-        }).promise();
+        this.pool = mysql
+            .createPool({
+                host: process.env.MYSQL_HOST,
+                user: process.env.MYSQL_USER,
+                password: process.env.MYSQL_PASSWORD,
+                database: process.env.MYSQL_DATABASE,
+                timezone: "+00:00",
+            })
+            .promise();
 
         this.createTables();
     }
@@ -320,11 +282,11 @@ class DatabaseManager {
             await this.pool.query(queries.CreateTaskTrigger);
 
             await this.pool.query(queries.CreateDiaryTable);
-            
+
             await this.pool.query(queries.CreateMessageTable);
             await this.pool.query(queries.CreateMessageCheckTrigger);
         } catch (error) {
-            console.error('Error creating: ', error.message);
+            console.error("Error creating: ", error.message);
         }
     }
 
@@ -334,40 +296,46 @@ class DatabaseManager {
         try {
             await this.pool.query(queries.CreateNewUser, [username, password]);
         } catch (error) {
-            console.error('Error inserting user:', error.message);
+            console.error("Error inserting user:", error.message);
         }
     }
 
     async doesUsernameExist(username) {
         try {
-            const [rows] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [rows] = await this.pool.query(queries.FindWithUsername, [
+                username,
+            ]);
 
             return rows.length > 0;
         } catch (error) {
-            console.error('Error checking username existence:', error.message);
+            console.error("Error checking username existence:", error.message);
             return false;
         }
     }
 
     async getUserByUsername(username) {
         try {
-            const [rows] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [rows] = await this.pool.query(queries.FindWithUsername, [
+                username,
+            ]);
 
             return rows.length > 0 ? rows[0] : null;
         } catch (error) {
-            console.error('Error retrieving user by username:', error.message);
-            return null; 
+            console.error("Error retrieving user by username:", error.message);
+            return null;
         }
     }
 
     async getUserByUsernameSafe(username) {
         try {
-            const [rows] = await this.pool.query(queries.FindWithUsernameSafe, [username]);
+            const [rows] = await this.pool.query(queries.FindWithUsernameSafe, [
+                username,
+            ]);
 
             return rows.length > 0 ? rows[0] : null;
         } catch (error) {
-            console.error('Error retrieving user by username:', error.message);
-            return null; 
+            console.error("Error retrieving user by username:", error.message);
+            return null;
         }
     }
 
@@ -375,23 +343,38 @@ class DatabaseManager {
 
     async createTask(username, task) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [[userResult]] = await this.pool.query(
+                queries.FindWithUsername,
+                [username]
+            );
 
-            const [result] = await this.pool.query(queries.CreateNewTask, [userResult.userid, task]);
+            const [result] = await this.pool.query(queries.CreateNewTask, [
+                userResult.userid,
+                task,
+            ]);
 
-            const [[insertedTask]] = await this.pool.query(queries.GetTaskById, [result.insertId]);
+            const [[insertedTask]] = await this.pool.query(
+                queries.GetTaskById,
+                [result.insertId]
+            );
 
             return insertedTask;
         } catch (error) {
-            console.error('Error inserting task:', error.message);
+            console.error("Error inserting task:", error.message);
         }
     }
 
     async updateTaskCompletion(taskid, isCompleted) {
         try {
-            await this.pool.query(queries.UpdateTaskCompletion, [isCompleted, taskid]);
+            await this.pool.query(queries.UpdateTaskCompletion, [
+                isCompleted,
+                taskid,
+            ]);
         } catch (error) {
-            console.error('Error updating task completion status:', error.message);
+            console.error(
+                "Error updating task completion status:",
+                error.message
+            );
         }
     }
 
@@ -399,108 +382,174 @@ class DatabaseManager {
         try {
             await this.pool.query(queries.DeleteTaskByTaskId, [taskid]);
         } catch (error) {
-            console.error('Error deleting tasks for the taskid:', error.message);
+            console.error(
+                "Error deleting tasks for the taskid:",
+                error.message
+            );
         }
     }
 
     async getTasksForCurrentDate(username) {
         try {
-            const [[userResult]] = await this.pool.query(queries.FindWithUsername, [username]);
+            const [[userResult]] = await this.pool.query(
+                queries.FindWithUsername,
+                [username]
+            );
 
-            const [rows] = await this.pool.query(queries.GetTasksForCurrentDate, [userResult.userid]);
+            const [rows] = await this.pool.query(
+                queries.GetTasksForCurrentDate,
+                [userResult.userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving tasks for the current date:', error.message);
+            console.error(
+                "Error retrieving tasks for the current date:",
+                error.message
+            );
             return [];
         }
     }
 
     async getTasksByDate(userid, date) {
         try {
-            const [rows] = await this.pool.query(queries.GetTaskByDate, [userid,  date]);
+            const [rows] = await this.pool.query(queries.GetTaskByDate, [
+                userid,
+                date,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving tasks for the current date:', error.message);
+            console.error(
+                "Error retrieving tasks for the current date:",
+                error.message
+            );
             return [];
         }
     }
 
     async getTotalTasksInLast7Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast7Days, [userid]);
+            const [[rows]] = await this.pool.query(
+                queries.GetTotalTasksInLast7Days,
+                [userid]
+            );
             return rows.tasks_sum;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getTotalTasksCompletedInLast7Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast7Days, [userid]);
+            const [[rows]] = await this.pool.query(
+                queries.GetTotalTasksCompletedInLast7Days,
+                [userid]
+            );
             return rows.tasks_sum;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getTotalTasksSumForLast7Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast7Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetTotalTasksSumForLast7Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getCompletedTasksSumForLast7Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast7Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetCompletedTasksSumForLast7Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getTotalTasksInLast30Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksInLast30Days, [userid]);
+            const [[rows]] = await this.pool.query(
+                queries.GetTotalTasksInLast30Days,
+                [userid]
+            );
             return rows.tasks_sum;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getTotalTasksCompletedInLast30Days(userid) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetTotalTasksCompletedInLast30Days, [userid]);
+            const [[rows]] = await this.pool.query(
+                queries.GetTotalTasksCompletedInLast30Days,
+                [userid]
+            );
             return rows.tasks_sum;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getTotalTasksSumForLast30Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetTotalTasksSumForLast30Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetTotalTasksSumForLast30Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getCompletedTasksSumForLast30Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetCompletedTasksSumForLast30Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetCompletedTasksSumForLast30Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving total tasks sum for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving total tasks sum for the last 7 days:",
+                error.message
+            );
             return [];
         }
     }
@@ -509,104 +558,156 @@ class DatabaseManager {
 
     async insertDiaryEntry(userid, content, mood) {
         try {
-            await this.pool.query(queries.CreateNewDiaryEntry, [userid, content, mood]);
+            await this.pool.query(queries.CreateNewDiaryEntry, [
+                userid,
+                content,
+                mood,
+            ]);
         } catch (error) {
-            console.error('Error inserting diary entry:', error.message);
+            console.error("Error inserting diary entry:", error.message);
         }
     }
 
     async getDiaryByDate(userid, date) {
         try {
-            const [[rows]] = await this.pool.query(queries.GetDiaryByDate, [userid,  date]);
+            const [[rows]] = await this.pool.query(queries.GetDiaryByDate, [
+                userid,
+                date,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving tasks for the current date:', error.message);
+            console.error(
+                "Error retrieving tasks for the current date:",
+                error.message
+            );
             return [];
         }
     }
 
     async getIfDiaryWrittenToday(userid) {
         try {
-            const [result] = await this.pool.query(queries.GetTodaysDiary, [userid]);
+            const [result] = await this.pool.query(queries.GetTodaysDiary, [
+                userid,
+            ]);
 
-            if(result.length == 1) {
+            if (result.length == 1) {
                 return true;
             }
 
             return false;
         } catch (error) {
-            console.error('Error checking diary entry:', error.message);
+            console.error("Error checking diary entry:", error.message);
         }
     }
 
     async getDiariesByUserIdLast30Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetDiaryEntriesByUserIdLast30Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetDiaryEntriesByUserIdLast30Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving diaries by userid for the last 30 days:', error.message);
+            console.error(
+                "Error retrieving diaries by userid for the last 30 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getDiariesByUserIdLast7Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetDiaryEntriesByUserIdLast7Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetDiaryEntriesByUserIdLast7Days,
+                [userid]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving diaries by userid for the last 30 days:', error.message);
+            console.error(
+                "Error retrieving diaries by userid for the last 30 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getAverageMoodLast7Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetAverageMoodLast7Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetAverageMoodLast7Days,
+                [userid]
+            );
             const averageMood = rows[0] ? rows[0].average_mood : 0;
             return averageMood;
         } catch (error) {
-            console.error('Error retrieving average mood for the last 7 days:', error.message);
+            console.error(
+                "Error retrieving average mood for the last 7 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getAverageMoodLast30Days(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetAverageMoodLast30Days, [userid]);
+            const [rows] = await this.pool.query(
+                queries.GetAverageMoodLast30Days,
+                [userid]
+            );
             const averageMood = rows[0] ? rows[0].average_mood : 0;
             return averageMood;
         } catch (error) {
-            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            console.error(
+                "Error retrieving average mood for the last 30 days:",
+                error.message
+            );
             return 0;
         }
     }
 
     async getMoodPastWeek(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetMoodPastWeek, [userid]);
+            const [rows] = await this.pool.query(queries.GetMoodPastWeek, [
+                userid,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            console.error(
+                "Error retrieving average mood for the last 30 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getMoodPastMonth(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetMoodPastMonth, [userid]);
+            const [rows] = await this.pool.query(queries.GetMoodPastMonth, [
+                userid,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving average mood for the last 30 days:', error.message);
+            console.error(
+                "Error retrieving average mood for the last 30 days:",
+                error.message
+            );
             return [];
         }
     }
 
     async getDiariesByUserIdBetweenDates(userid, startDate, endDate) {
         try {
-            const [rows] = await this.pool.query(queries.GetDiariesByUserIdBetweenDates, [userid, startDate, endDate]);
+            const [rows] = await this.pool.query(
+                queries.GetDiariesByUserIdBetweenDates,
+                [userid, startDate, endDate]
+            );
             return rows;
         } catch (error) {
-            console.error('Error retrieving diaries by userid between dates:', error.message);
+            console.error(
+                "Error retrieving diaries by userid between dates:",
+                error.message
+            );
             return [];
         }
     }
@@ -615,32 +716,47 @@ class DatabaseManager {
 
     async insertMessageEntry(userid, message, date) {
         try {
-            await this.pool.query(queries.CreateNewMessageEntry, [userid, message, date]);
+            await this.pool.query(queries.CreateNewMessageEntry, [
+                userid,
+                message,
+                date,
+            ]);
         } catch (error) {
-            console.error('Error creating a new message', error.message);
+            console.error("Error creating a new message", error.message);
             return [];
         }
     }
 
     async getMessagesByDate(userid, date) {
         try {
-            const [rows] = await this.pool.query(queries.GetMessagesByDate, [userid,  date]);
+            const [rows] = await this.pool.query(queries.GetMessagesByDate, [
+                userid,
+                date,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving tasks for the current date:', error.message);
+            console.error(
+                "Error retrieving tasks for the current date:",
+                error.message
+            );
             return [];
         }
     }
 
     async getTodaysMessages(userid) {
         try {
-            const [rows] = await this.pool.query(queries.GetTodaysMessages, [userid]);
+            const [rows] = await this.pool.query(queries.GetTodaysMessages, [
+                userid,
+            ]);
             return rows;
         } catch (error) {
-            console.error('Error retrieving tasks for the current date:', error.message);
+            console.error(
+                "Error retrieving tasks for the current date:",
+                error.message
+            );
             return [];
         }
     }
-};
+}
 
 module.exports = DatabaseManager;

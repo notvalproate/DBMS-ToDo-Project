@@ -17,7 +17,7 @@ body {
     overflow-x: hidden;
 }
 
-.mid-wrapper{
+.mid-wrapper {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -25,7 +25,7 @@ body {
     row-gap: 30px;
 }
 
-.top{
+.top {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,14 +33,14 @@ body {
     column-gap: 20px;
 }
 
-.bottom{
+.bottom {
     display: flex;
     flex-direction: column;
     row-gap: 20px;
     padding-bottom: 3rem;
 }
 
-.question{
+.question {
     margin-bottom: 0;
     font-family: "Sofia Sans", sans-serif;
     background: linear-gradient(300deg, #a857da, rgb(218, 166, 251));
@@ -52,9 +52,9 @@ body {
     text-align: center;
 }
 
-.todo-in{
+.todo-in {
     box-shadow: none;
-    background-color: transparent; 
+    background-color: transparent;
     border: 2px solid #caa7e1;
     border-radius: 10px;
     width: 25vw;
@@ -65,36 +65,42 @@ body {
     transition: 200ms;
 }
 
-.todo-in:hover{
+.todo-in:hover {
     cursor: pointer;
     border-color: #974dc5;
-    box-shadow: 0 0 5px #ffff, 0 0 5px #b261e3, 0 0 5px #b261e3;
+    box-shadow:
+        0 0 5px #ffff,
+        0 0 5px #b261e3,
+        0 0 5px #b261e3;
 }
 
 .todo-in:focus {
     outline: none;
     border-color: #974dc5;
-    box-shadow: 0 0 5px #ffff, 0 0 5px #b261e3, 0 0 5px #b261e3;
+    box-shadow:
+        0 0 5px #ffff,
+        0 0 5px #b261e3,
+        0 0 5px #b261e3;
 }
 
-.circle-plus{
+.circle-plus {
     font-size: 2rem;
     color: #caa7e1;
     transition: 200ms;
 }
 
-.circle-plus:hover{
+.circle-plus:hover {
     font-size: 2rem;
     color: #974dc5;
     cursor: pointer;
 }
 
-#second{
+#second {
     margin-top: 0;
     font-size: 2rem;
 }
 
-.checker{
+.checker {
     text-align: center;
     display: flex;
     row-gap: 1rem;
@@ -103,7 +109,7 @@ body {
     align-items: center;
 }
 
-.inner{
+.inner {
     width: 97vw;
     background-color: #d6bee7;
     align-items: center;
@@ -115,13 +121,13 @@ body {
     color: #612a84;
 }
 
-.inner:hover{
+.inner:hover {
     cursor: pointer;
     background-color: #974dc5;
     color: #ffff;
 }
 
-.check-it{
+.check-it {
     width: 1.75rem;
     height: 1.75rem;
 }
@@ -129,135 +135,135 @@ body {
 .cr-wrapper *,
 .cr-wrapper *::before,
 .cr-wrapper *::after {
-	box-sizing: content-box !important;
+    box-sizing: content-box !important;
 }
 
 .cr-wrapper input {
-	position: absolute;
-	z-index: -1;
-	opacity: 0;
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
 }
 
 .cr-wrapper span {
-	font-size: 19px;
+    font-size: 19px;
 }
 
 .cr-wrapper {
-	display: table;
-	position: relative;
-	padding-left: 40px;
-	cursor: pointer;
-	margin-bottom: 18px;
+    display: table;
+    position: relative;
+    padding-left: 40px;
+    cursor: pointer;
+    margin-bottom: 18px;
 }
 
 .cr-wrapper input[type="checkbox"] ~ .cr-input {
-	position: absolute;
-	top: 50%;
-	left: 0;
-	height: 30px;
-	width: 30px;
-	background: #FFFFFF;
-	transition: background 250ms;
-	border: 1px solid #FFDFF1;
-	border-radius: 5px;
-	transform: translate(0, -50%);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background: #ffffff;
+    transition: background 250ms;
+    border: 1px solid #ffdff1;
+    border-radius: 5px;
+    transform: translate(0, -50%);
 }
 
 .cr-wrapper input[type="radio"] ~ .cr-input {
-	position: absolute;
-	top: 50%;
-	left: 0;
-	height: 30px;
-	width: 30px;
-	background: #FFFFFF;
-	transition: background 250ms;
-	border: 1px solid #FFDFF1;
-	border-radius: 20px;
-	transform: translate(0, -50%);
+    position: absolute;
+    top: 50%;
+    left: 0;
+    height: 30px;
+    width: 30px;
+    background: #ffffff;
+    transition: background 250ms;
+    border: 1px solid #ffdff1;
+    border-radius: 20px;
+    transform: translate(0, -50%);
 }
 
 .cr-wrapper input[type="checkbox"] ~ .cr-input::after {
-	content: "";
-	position: absolute;
-	display: none;
-	left: 5px;
-	top: 4px;
-	width: 21px;
-	height: 21px;
-	transition: background 250ms;
-	background-color: #50EB38;
-	clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+    content: "";
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 4px;
+    width: 21px;
+    height: 21px;
+    transition: background 250ms;
+    background-color: #50eb38;
+    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
 }
 
 .cr-wrapper input[type="radio"] ~ .cr-input::after {
-	content: "";
-	position: absolute;
-	display: none;
-	left: 4px;
-	top: 4px;
-	width: 12px;
-	height: 12px;
-	border-radius: 20px;
-	background: #FFFFFF;
-	transition: background 250ms;
+    content: "";
+    position: absolute;
+    display: none;
+    left: 4px;
+    top: 4px;
+    width: 12px;
+    height: 12px;
+    border-radius: 20px;
+    background: #ffffff;
+    transition: background 250ms;
 }
 
 .cr-wrapper input:checked ~ .cr-input::after {
-	display: block;
+    display: block;
 }
 
 .cr-wrapper:hover input[type="checkbox"]:not([disabled]) ~ .cr-input,
 .cr-wrapper input[type="checkbox"]:focus ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FFDAF4;
+    background: #ffffff;
+    border-color: #ffdaf4;
 }
 
 .cr-wrapper:hover input[type="radio"]:not([disabled]) ~ .cr-input,
 .cr-wrapper input[type="radio"]:focus ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FFDAF4;
+    background: #ffffff;
+    border-color: #ffdaf4;
 }
 
 .cr-wrapper input[type="checkbox"]:checked ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FDC6FF;
+    background: #ffffff;
+    border-color: #fdc6ff;
 }
 
 .cr-wrapper input[type="radio"]:checked ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FDC6FF;
+    background: #ffffff;
+    border-color: #fdc6ff;
 }
 
 .cr-wrapper input[type="checkbox"]:disabled ~ .cr-input,
 .cr-wrapper input[type="radio"]:disabled ~ .cr-input {
-	opacity: 0.5;
-	cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .cr-wrapper input[type="checkbox"]:disabled ~ span,
 .cr-wrapper input[type="radio"]:disabled ~ span {
-	opacity: 0.5;
-	cursor: not-allowed;
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .cr-wrapper input[type="checkbox"]:disabled ~ .cr-input::after {
-	background: #50EB38;
+    background: #50eb38;
 }
 
 .cr-wrapper input[type="radio"]:disabled ~ .cr-input::after {
-	background: #FFFFFF;
+    background: #ffffff;
 }
 
 .cr-wrapper:hover input[type="checkbox"]:not([disabled]):checked ~ .cr-input,
 .cr-wrapper input[type="checkbox"]:checked:focus ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FDC6FF;
+    background: #ffffff;
+    border-color: #fdc6ff;
 }
 
 .cr-wrapper:hover input[type="radio"]:not([disabled]):checked ~ .cr-input,
 .cr-wrapper input[type="radio"]:checked:focus ~ .cr-input {
-	background: #FFFFFF;
-	border-color: #FDC6FF;
+    background: #ffffff;
+    border-color: #fdc6ff;
 }
 
 .item-wrapper {
@@ -293,6 +299,6 @@ body {
 
 .remove-item:hover {
     cursor: pointer;
-    color: white !important; 
+    color: white !important;
     background-color: rgb(255, 135, 135);
 }

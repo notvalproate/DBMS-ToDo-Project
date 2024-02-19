@@ -2,24 +2,23 @@ $(document).ready(() => {
     $.ajax({
         type: "POST",
         url: "/checkAuth",
-        data: JSON.stringify({ date:  $("#date").val() }),
+        data: JSON.stringify({ date: $("#date").val() }),
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (data) => {
-            if(!data.authenticated) {
-                window.location.href = '/login';
+            if (!data.authenticated) {
+                window.location.href = "/login";
             }
         },
     });
-    
+
     AOS.init();
 
-    window.addEventListener('load', AOS.refresh);
+    window.addEventListener("load", AOS.refresh);
 
-
-    const addButton = $('.fa-circle-plus');
-    const todoInput = $('.todo-in');
-    const checkerDiv = $('.checker');
+    const addButton = $(".fa-circle-plus");
+    const todoInput = $(".todo-in");
+    const checkerDiv = $(".checker");
 
     let currentDelay = 0;
 
@@ -29,10 +28,10 @@ $(document).ready(() => {
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (todaysTodos) => {
-            for(let i = 0; i < todaysTodos.length; i++) {
+            for (let i = 0; i < todaysTodos.length; i++) {
                 let checked = "checked";
 
-                if(!todaysTodos[i].completed.data[0]) {
+                if (!todaysTodos[i].completed.data[0]) {
                     checked = "";
                 }
 
@@ -53,22 +52,25 @@ $(document).ready(() => {
 
                 $(`#taskid${todaysTodos[i].taskid}`).click(() => {
                     let checked = false;
-                    
-                    if ($(`#taskid${todaysTodos[i].taskid}`).is(':checked')) {
+
+                    if ($(`#taskid${todaysTodos[i].taskid}`).is(":checked")) {
                         checked = true;
                     }
-    
+
                     $.ajax({
                         type: "POST",
                         url: "/setTodo",
-                        data: JSON.stringify({ taskid: todaysTodos[i].taskid, isCompleted: checked }),
+                        data: JSON.stringify({
+                            taskid: todaysTodos[i].taskid,
+                            isCompleted: checked,
+                        }),
                         contentType: "application/json; charset=utf-8",
                         traditional: true,
                         success: (data) => {
                             console.log(data);
                         },
                     });
-                })
+                });
 
                 $(`#remtaskid${todaysTodos[i].taskid}`).click(() => {
                     $.ajax({
@@ -81,7 +83,7 @@ $(document).ready(() => {
                             $(`#wraptaskid${todaysTodos[i].taskid}`).remove();
                         },
                     });
-                })
+                });
             }
         },
     });
@@ -113,15 +115,18 @@ $(document).ready(() => {
                     console.log("added");
 
                     let checked = false;
-                    
-                    if ($(`#taskid${data.taskid}`).is(':checked')) {
+
+                    if ($(`#taskid${data.taskid}`).is(":checked")) {
                         checked = true;
                     }
 
                     $.ajax({
                         type: "POST",
                         url: "/setTodo",
-                        data: JSON.stringify({ taskid: data.taskid, isCompleted: checked }),
+                        data: JSON.stringify({
+                            taskid: data.taskid,
+                            isCompleted: checked,
+                        }),
                         contentType: "application/json; charset=utf-8",
                         traditional: true,
                         success: (data) => {
@@ -146,5 +151,5 @@ $(document).ready(() => {
                 todoInput.val("");
             },
         });
-    })
+    });
 });

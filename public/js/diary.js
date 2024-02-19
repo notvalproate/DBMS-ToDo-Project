@@ -2,21 +2,21 @@ $(document).ready(() => {
     $.ajax({
         type: "POST",
         url: "/checkAuth",
-        data: JSON.stringify({ date:  $("#date").val() }),
+        data: JSON.stringify({ date: $("#date").val() }),
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (data) => {
-            if(!data.authenticated) {
-                window.location.href = '/login';
+            if (!data.authenticated) {
+                window.location.href = "/login";
             }
         },
     });
-    
-    const submitButton = $('.submit-button');
-    const moodRange = $('.mood-range');
-    const enterDiary = $('.enter-diary');
-    const oldDiaryContainer = $('.old');
-    const diaryForm = $('.diary');
+
+    const submitButton = $(".submit-button");
+    const moodRange = $(".mood-range");
+    const enterDiary = $(".enter-diary");
+    const oldDiaryContainer = $(".old");
+    const diaryForm = $(".diary");
 
     $.ajax({
         type: "POST",
@@ -24,20 +24,20 @@ $(document).ready(() => {
         contentType: "application/json; charset=utf-8",
         traditional: true,
         success: (diaries) => {
-            for(let i = 0; i < diaries.length; i++) {
+            for (let i = 0; i < diaries.length; i++) {
                 let moodValue = diaries[i].mood;
 
-                let feeling = '';
+                let feeling = "";
                 if (moodValue === 1) {
-                    feeling = 'Depressed';
+                    feeling = "Depressed";
                 } else if (moodValue === 2) {
-                    feeling = 'Sad';
+                    feeling = "Sad";
                 } else if (moodValue === 3) {
-                    feeling = 'Okay';
+                    feeling = "Okay";
                 } else if (moodValue === 4) {
-                    feeling = 'Good';
+                    feeling = "Good";
                 } else if (moodValue === 5) {
-                    feeling = 'Happy';
+                    feeling = "Happy";
                 }
 
                 let date = formatDate(diaries[i].diary_date);
@@ -62,35 +62,45 @@ $(document).ready(() => {
         let moodInt = 3;
         const diaryEntry = enterDiary.val();
 
-        let feeling = '';
+        let feeling = "";
         if (moodValue >= 1 && moodValue <= 25) {
-            feeling = 'Depressed';
+            feeling = "Depressed";
             moodInt = 1;
         } else if (moodValue >= 26 && moodValue <= 50) {
-            feeling = 'Sad';
+            feeling = "Sad";
             moodInt = 2;
         } else if (moodValue >= 51 && moodValue <= 75) {
-            feeling = 'Okay';
+            feeling = "Okay";
             moodInt = 3;
         } else if (moodValue >= 76 && moodValue <= 99) {
-            feeling = 'Good';
+            feeling = "Good";
             moodInt = 4;
         } else if (moodValue === 101) {
-            feeling = 'Happy';
+            feeling = "Happy";
             moodInt = 5;
         }
 
         const dateObject = new Date();
 
         const months = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
         ];
 
         const day = dateObject.getDate();
         const month = months[dateObject.getMonth()];
         const year = dateObject.getFullYear();
-  
+
         const formattedDate = `${day} ${month}, ${year}`;
 
         $.ajax({
@@ -120,17 +130,27 @@ $(document).ready(() => {
 
 function formatDate(inputDate) {
     const dateObject = new Date(inputDate.substring(0, 10));
-  
+
     const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
     ];
-  
+
     const day = dateObject.getDate();
     const month = months[dateObject.getMonth()];
     const year = dateObject.getFullYear();
-  
+
     const formattedDate = `${day} ${month}, ${year}`;
-  
+
     return formattedDate;
 }

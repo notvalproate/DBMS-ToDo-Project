@@ -96,7 +96,10 @@ body {
     cursor: pointer;
     color: white;
     background-color: #b261e3;
-    box-shadow: 0 0 10px #ffff, 0 0 20px #ffff, 0 0 30px #ffff;
+    box-shadow:
+        0 0 10px #ffff,
+        0 0 20px #ffff,
+        0 0 30px #ffff;
 }
 
 .set-date {
@@ -106,16 +109,20 @@ body {
     background-color: #974dc5;
     border: 1px solid #974dc5;
     border-radius: 5px;
-    box-shadow: 0 0 5px #ffff, 0 0 5px #974dc5, 0 0 5px #974dc5;
+    box-shadow:
+        0 0 5px #ffff,
+        0 0 5px #974dc5,
+        0 0 5px #974dc5;
     font-size: 16px;
     outline: none;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
 }
 
 .set-date::-webkit-calendar-picker-indicator {
     filter: invert(1);
 }
-
 
 .set-date:hover {
     cursor: pointer;
@@ -128,17 +135,15 @@ body {
     filter: invert(0);
 }
 
-
 .todays-messages {
     display: flex;
     align-items: center;
     flex-direction: column;
     padding: 2rem 0;
-    row-gap: 20px; 
+    row-gap: 20px;
     background: linear-gradient(300deg, #943eca, rgb(189, 137, 222));
     width: 100vw;
 }
-
 
 .title-wrapper {
     width: 100vw;
@@ -147,7 +152,7 @@ body {
     align-items: center;
 }
 
-.todays-msg-title{
+.todays-msg-title {
     width: fit-content;
     background: -webkit-linear-gradient(150deg, #d090f8, rgb(153, 79, 199));
     font-family: "Sofia Sans", sans-serif;
@@ -159,7 +164,7 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
-.each-entry{
+.each-entry {
     display: flex;
     flex-direction: column;
     row-gap: 10px;
@@ -171,11 +176,14 @@ body {
     transition: 200ms;
 }
 
-.each-entry:hover{
+.each-entry:hover {
     cursor: pointer;
     background-color: white;
     border-color: #b261e3;
-    box-shadow: 0 0 20px #ffff, 0 0 20px #974dc5, 0 0 20px #ffff;
+    box-shadow:
+        0 0 20px #ffff,
+        0 0 20px #974dc5,
+        0 0 20px #ffff;
 }
 
 .no-messages {

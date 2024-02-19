@@ -4,11 +4,11 @@ $(document).ready(() => {
 
     const repasswordToggleButton = $("#repassword-toggle");
     const repasswordIcon = $("#repassword-icon");
-    
+
     passwordToggleButton.click(() => {
         const passwordInput = $("#password");
 
-        if(passwordInput.attr("type") === "password") {
+        if (passwordInput.attr("type") === "password") {
             passwordIcon.removeClass("fa-eye-slash");
             passwordIcon.addClass("fa-eye");
             passwordInput.attr("type", "text");
@@ -22,7 +22,7 @@ $(document).ready(() => {
     repasswordToggleButton.click(() => {
         const repasswordInput = $("#repassword");
 
-        if(repasswordInput.attr("type") === "password") {
+        if (repasswordInput.attr("type") === "password") {
             repasswordIcon.removeClass("fa-eye-slash");
             repasswordIcon.addClass("fa-eye");
             repasswordInput.attr("type", "text");
@@ -32,7 +32,6 @@ $(document).ready(() => {
             repasswordInput.attr("type", "password");
         }
     });
-
 
     const form = $(".form-container");
     const submitButton = $(".submit-button");
@@ -46,7 +45,8 @@ $(document).ready(() => {
     const passwordAlert = $("#password-match");
     const usernameAlert = $("#username-match");
 
-    const passwordRegex = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/;
+    const passwordRegex =
+        /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{6,16}$/;
     const passwordStrong = $("#password-strong");
     let passwordMatching = false;
 
@@ -54,75 +54,77 @@ $(document).ready(() => {
         e.target.value = removeSpaces(e.target.value);
         usernameAlert.addClass("opacity-zero");
         usernameInput.removeClass("password-wrong");
-    })
+    });
 
     passwordInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
-        if(e.target.value.length === 0) {
-            repasswordInputWrapper.removeClass("password-wrong")
+        if (e.target.value.length === 0) {
+            repasswordInputWrapper.removeClass("password-wrong");
             passwordAlert.addClass("opacity-zero");
         }
 
         const strongEnough = passwordRegex.test($("#password").val());
 
-        if(!strongEnough) {
+        if (!strongEnough) {
             passwordStrong.removeClass("opacity-zero");
         } else {
             passwordStrong.addClass("opacity-zero");
         }
 
-        if($("#password").val() !== $("#repassword").val()) {
+        if ($("#password").val() !== $("#repassword").val()) {
             passwordMatching = false;
         } else {
             passwordMatching = true;
         }
-    })
+    });
 
     repasswordInput.on("input", (e) => {
         e.target.value = removeSpaces(e.target.value);
-        if($("#password").val() !== $("#repassword").val()) {
+        if ($("#password").val() !== $("#repassword").val()) {
             repasswordInputWrapper.addClass("password-wrong");
             passwordAlert.removeClass("opacity-zero");
             passwordMatching = false;
         } else {
-            repasswordInputWrapper.removeClass("password-wrong")
+            repasswordInputWrapper.removeClass("password-wrong");
             passwordAlert.addClass("opacity-zero");
             passwordMatching = true;
         }
-    })
+    });
 
     submitButton.click((e) => {
         e.preventDefault();
 
-        if($("#username").val().length === 0) {
+        if ($("#username").val().length === 0) {
             return;
         }
 
         const strongEnough = passwordRegex.test($("#password").val());
 
-        if(!strongEnough) {
+        if (!strongEnough) {
             return;
         }
 
         $.ajax({
             type: "POST",
             url: "/usernameExists",
-            data: JSON.stringify({ username:  $("#username").val() }),
+            data: JSON.stringify({ username: $("#username").val() }),
             contentType: "application/json; charset=utf-8",
             traditional: true,
             success: (data) => {
-                if(data.exists) {
+                if (data.exists) {
                     usernameAlert.removeClass("opacity-zero");
                     usernameInput.addClass("password-wrong");
                     return;
                 }
-                if(passwordMatching) {
+                if (passwordMatching) {
                     form.submit();
                 }
             },
             error: (data) => {
-                console.log("Error checking if username exists, try again later");
-            }
+                console.log(
+                    "Error checking if username exists, try again later"
+                );
+            },
         });
     });
 });
